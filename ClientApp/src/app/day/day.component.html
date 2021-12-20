@@ -1,0 +1,33 @@
+<div class="container" *ngIf="day">
+  <div class="card">
+    <div class="card-content">
+      <div class="columns">
+        <div class="column">
+          <div class="has-text-left">
+            {{day.date | date}}
+          </div>
+          <div class="pt-1">
+            {{day.runningTotal | currency}}
+          </div>
+        </div>
+        <div class="column">
+          <app-transaction *ngFor="let transaction of day.incomes" [transaction]="transaction"></app-transaction>
+        </div>
+        <div class="column">
+          <div *ngFor="let transaction of day.bills">
+            <app-transaction [transaction]="transaction"></app-transaction>
+          </div>
+        </div>
+        <div class="column">
+          <app-transaction *ngFor="let transaction of day.oneOffs" [transaction]="transaction"></app-transaction>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div (click)="createTransaction(3)" class="card-footer-item divButton is-clickable">Add Income</div>
+      <div (click)="createTransaction(2)" class="card-footer-item divButton is-clickable">Add Bill</div>
+      <div (click)="createTransaction(1)" class="card-footer-item divButton is-clickable">Add Transaction</div>
+    </div>
+  </div>
+</div>
+

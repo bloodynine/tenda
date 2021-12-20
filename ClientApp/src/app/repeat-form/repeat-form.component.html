@@ -1,0 +1,32 @@
+<div class="card">
+  <form [formGroup]="form">
+    <div class="card-content">
+      <div class="field">
+        <label class="label">Start Date</label>
+        <div class="control">
+          <input type="date" formControlName="startDate">
+        </div>
+      </div>
+      <div class="field"><label class="label">Repeat Frequency</label>
+        <div class="select">
+          <select formControlName="repeatType">
+            <option [value]="repeatType"
+                    *ngFor="let repeatType of repeatTypes">{{repeatTypeLabelMapping[repeatType]}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Interval</label>
+        <div class="control">
+          <input type="text" class="input" formControlName="interval">
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="card-footer-item is-clickable" (click)="cancel()">
+        Cancel
+      </div>
+      <div class="card-footer-item is-clickable" (click)="updateContract()">Save</div>
+    </div>
+  </form>
+</div>

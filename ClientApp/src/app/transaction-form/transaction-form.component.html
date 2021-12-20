@@ -1,0 +1,73 @@
+<div class="card" *ngIf="transaction">
+  <form [formGroup]="form">
+    <div *ngIf="isNewTransaction" class="card-header">
+      <div class="card-header-title">
+        Add New {{labelMapping[transaction.type]}}
+      </div>
+    </div>
+    <div class="card-content">
+      <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+          <input type="text" class="input" formControlName="transactionName">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Date</label>
+        <div class="control">
+          <app-date-selector [(startDate)]="transaction.date"></app-date-selector>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Amount</label>
+        <div class="control">
+          <input type="text" class="input" formControlName="amount">
+        </div>
+      </div>
+      <div *ngIf="isNewTransaction" class="field">
+        <label class="label">Type</label>
+        <div class="select">
+          <select formControlName="type">
+            <option [value]="transactionType"
+                    *ngFor="let transactionType of types">{{labelMapping[transactionType]}}</option>
+          </select>
+        </div>
+      </div>
+      <div *ngIf="showModifyRepeatButton" class="field">
+        <button class="button" (click)="editRepeatSettings()">Edit Repeat Settings</button>
+      </div>
+      <div *ngIf="showRepeat">
+        <div class="columns">
+          <div class="column">
+            <div class="field"><label class="label">Repeat Frequency</label>
+              <div class="select">
+                <select formControlName="repeatFrequency">
+                  <option [value]="repeatType" *ngFor="let repeatType of repeatTypes">{{repeatTypeLabelMapping[repeatType]}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">Interval</label>
+              <div class="control">
+                <input class="input" type="text" formControlName="interval">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div (click)="delete()" class="card-footer-item is-clickable deleteButton">
+        Delete
+      </div>
+      <div (click)="cancel()" class="card-footer-item is-clickable divButton">
+        Cancel
+      </div>
+      <div (click)="save()" class="card-footer-item is-clickable divButton">
+        Save
+      </div>
+    </div>
+  </form>
+</div>

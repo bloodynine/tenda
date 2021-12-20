@@ -1,0 +1,21 @@
+<div *ngIf="transaction" class="card mb-1" [ngClass]="classType">
+  <div class="card-content">
+    <div class="columns">
+      <div class="column is-full">
+        <a (click)="editTransaction()">{{transaction.name}} </a><span *ngIf="transaction.isRepeating" class="icon is-pulled-right"><i-feather name="repeat"></i-feather></span>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <span (click)="toggleResolved()" class="icon">
+          <i-feather *ngIf="!transaction.isResolved" name="square"></i-feather>
+          <i-feather *ngIf="transaction.isResolved" name="check-square"></i-feather>
+        </span>
+
+      </div>
+      <div class="column"><span class="is-pulled-right">{{transaction.amount | currency}}</span></div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-header">
+    <div class="card-header-title">Add New Transactions</div>
+  </div>
+  <div class="card-content">
+    <div class="box" *ngFor="let transaction of transactions">
+      <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+          <input type="text" class="input" [value]="transaction.name">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Amount</label>
+        <div class="control">
+          <input type="text" class="input" [value]="transaction.amount">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

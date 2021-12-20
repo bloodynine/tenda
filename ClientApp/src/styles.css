@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bulma-calendar/dist/css/bulma-calendar.min.css";
+
+.divButton:hover {
+  color: #00d1b2;
+}
+
+.deleteButton:hover {
+  color: red;
+}

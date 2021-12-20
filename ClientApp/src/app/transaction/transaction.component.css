@@ -1,0 +1,33 @@
+.Bill {
+  background-color: #0373cb;
+  color: white;
+}
+
+.Bill.faded {
+  background-color: #025698;
+}
+
+.OneOff {
+  background-color: #cb5b03;
+  color: white;
+}
+
+
+.OneOff.faded {
+  background-color: #984402;
+}
+
+.Income {
+  background-color: #0fcb03;
+  color: white;
+}
+
+.Income.faded {
+  background-color: #0b9802;
+}
+
+a {
+  color: white;
+  text-decoration-line: underline;
+  font-weight: bolder;
+}

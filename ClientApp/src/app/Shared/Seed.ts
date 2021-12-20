@@ -1,0 +1,3 @@
+﻿interface Seed {
+  amount: number;
+}
