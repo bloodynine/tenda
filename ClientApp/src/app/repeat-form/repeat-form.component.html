@@ -1,10 +1,10 @@
-<div class="card">
+<div class="card" *ngIf="repeatContract">
   <form [formGroup]="form">
     <div class="card-content">
       <div class="field">
         <label class="label">Start Date</label>
         <div class="control">
-          <input type="date" formControlName="startDate">
+          <app-date-selector [(startDate)]="repeatContract.startDate"></app-date-selector>
         </div>
       </div>
       <div class="field"><label class="label">Repeat Frequency</label>

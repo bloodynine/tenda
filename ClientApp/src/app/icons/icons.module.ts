@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 
 import { FeatherModule } from 'angular-feather';
-import {Square, CheckSquare, PlusSquare, Repeat, Plus} from 'angular-feather/icons';
+import {Square, CheckSquare, PlusSquare, Repeat, Plus, X} from 'angular-feather/icons';
 
 const icons = {
-  Square, PlusSquare, CheckSquare, Repeat, Plus
+  Square, PlusSquare, CheckSquare, Repeat, Plus, X
 };
 
 @NgModule({

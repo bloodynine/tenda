@@ -19,18 +19,24 @@
   </section>
 </div>
 
-
-<div class="modal is-active" *ngIf="malleableTransaction && !editingRepeatContract">
-  <div class="modal-background" (click)="exitEditingTransaction()"></div>
+<div class="modal is-active" *ngIf="this.currentState.modalWindow == modalWindow.Transaction">
+  <div class="modal-background" (click)="exitModal()"></div>
   <div class="modal-content" style="min-height: 700px;">
-    <app-transaction-form [transaction]="malleableTransaction"></app-transaction-form>
+    <app-transaction-form></app-transaction-form>
   </div>
-  <button class="modal-close is-large" aria-label="close" (click)="exitEditingTransaction()"></button>
+  <button class="modal-close is-large" aria-label="close" (click)="exitModal()"></button>
 </div>
-<div class="modal is-active" *ngIf="editingRepeatContract">
-  <div class="modal-background" (click)="exitEditingRepeat()"></div>
+<div class="modal is-active" *ngIf="this.currentState.modalWindow === modalWindow.RepeatSettings">
+  <div class="modal-background" (click)="exitModal()"></div>
   <div class="modal-content" style="min-height: 700px;">
-    <app-repeat-form [repeatContract]="editingRepeatContract"></app-repeat-form>
+    <app-repeat-form></app-repeat-form>
   </div>
-  <button class="modal-close is-large" aria-label="close" (click)="exitEditingRepeat()"></button>
+  <button class="modal-close is-large" aria-label="close" (click)="exitModal()"></button>
+</div>
+<div class="modal is-active" *ngIf="this.currentState.modalWindow === modalWindow.MultiTransaction">
+  <div class="modal-background" (click)="exitModal()"></div>
+  <div class="modal-content" style="min-height: 700px;">
+    <app-multi-transaction-form></app-multi-transaction-form>
+  </div>
+  <button class="modal-close is-large" aria-label="close" (click)="exitModal()"></button>
 </div>

@@ -7,7 +7,7 @@ import { TestComponent } from './test/test.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import { LoginComponent } from './login/login.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MonthComponent } from './month/month.component';
 import {TokenInterceptor} from "./token.interceptor";
 import { DayComponent } from './day/day.component';
@@ -17,6 +17,7 @@ import { TransactionFormComponent } from './transaction-form/transaction-form.co
 import { RepeatFormComponent } from './repeat-form/repeat-form.component';
 import { DateSelectorComponent } from './date-selector/date-selector.component';
 import { MultiTransactionFormComponent } from './multi-transaction-form/multi-transaction-form.component';
+import { FocusDirective } from './focus.directive';
 
 @NgModule({
   declarations: [
@@ -29,14 +30,16 @@ import { MultiTransactionFormComponent } from './multi-transaction-form/multi-tr
     TransactionFormComponent,
     RepeatFormComponent,
     DateSelectorComponent,
-    MultiTransactionFormComponent
+    MultiTransactionFormComponent,
+    FocusDirective
   ],
     imports: [
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
         ReactiveFormsModule,
-        IconsModule
+        IconsModule,
+        FormsModule
     ],
   providers: [ CookieService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

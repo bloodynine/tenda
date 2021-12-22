@@ -7,36 +7,43 @@ import {RepeatService} from "../repeat.service";
 import {StateService} from "../state.service";
 import {RepeatContract} from "../Shared/Interfaces/RepeatContract";
 import { BehaviorSubject } from "rxjs";
+import { CurrentState, ModelWindow } from "../Shared/Interfaces/CurrentState";
+import { MonthService } from "../month.service";
 
 @Component({
   selector: 'app-month',
   templateUrl: './month.component.html',
   styleUrls: ['./month.component.css']
 })
+
 export class MonthComponent implements OnInit {
   month: Month | undefined;
   total: number = 0;
   malleableTransaction: Transaction | null = null;
   editingRepeatContract: RepeatContract  | null = null;
   scrollDate: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
+  currentState: CurrentState = {} as CurrentState;
+  public modalWindow = ModelWindow;
 
   selectedDate: Date = new Date();
 
   constructor(
-    private monthService: TransactionService,
+    private transactionService: TransactionService,
     private route: ActivatedRoute,
     private changeDectectorRef: ChangeDetectorRef,
     private repeatService: RepeatService,
     private stateService: StateService,
-    private router: Router
+    private router: Router,
+    private monthService: MonthService
   ) { }
 
   ngOnInit(): void {
-    this.monthService.Month.subscribe(x => {
+    this.stateService.currentState.subscribe(x => this.currentState = x);
+    this.stateService.month.subscribe(x => {
       this.month = x;
       this.total = x.resolvedTotal;
     });
-    this.monthService.total.subscribe(x => {
+    this.transactionService.total.subscribe(x => {
       if(x != 0){
         this.total = x;
         this.changeDectectorRef.detectChanges();
@@ -46,28 +53,14 @@ export class MonthComponent implements OnInit {
       const now = new Date();
       const month = Number.parseInt(params.get('month') ?? now.getMonth().toString());
       const year = Number.parseInt(params.get('year') ?? now.getFullYear().toString());
-      this.monthService.GetMonth(year, month);
       this.selectedDate = new Date(year, month - 1);
-    })
 
-    this.monthService.malleableTransaction.subscribe(x => {
-      this.malleableTransaction = x;
-      this.changeDectectorRef.detectChanges();
+      this.monthService.GetMonth(year, month).then(x => this.stateService.UpdateMonth(x));
     });
-    this.stateService.editingRepeatSettings.subscribe(x => {
-      this.editingRepeatContract = x;
-      this.changeDectectorRef.detectChanges();
-    })
   }
 
-  exitEditingTransaction(): void {
-    this.monthService.malleableTransaction.next(undefined);
-  }
-  exitEditingRepeat(): void {
-    this.monthService.malleableRepeatSettingId.next(undefined);
-  }
-  editRepeatContract(id: string): void {
-    this.repeatService.GetRepeatContract(id);
+  exitModal(): void {
+    this.stateService.ExitAllModals();
   }
 
   goToPreviousMonth() {

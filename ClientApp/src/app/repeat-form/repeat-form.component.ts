@@ -2,7 +2,6 @@ import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {RepeatService} from "../repeat.service";
 import {RepeatContract} from "../Shared/Interfaces/RepeatContract";
 import {FormControl, FormGroup} from "@angular/forms";
-import * as bulmaCalendar from "bulma-calendar";
 import {RepeatType, RepeatTypeLabel} from "../Shared/Interfaces/RepeatSettings";
 import {StateService} from "../state.service";
 
@@ -13,7 +12,7 @@ import {StateService} from "../state.service";
 })
 export class RepeatFormComponent implements OnInit {
 
-  @Input() repeatContract: RepeatContract | undefined = undefined;
+  repeatContract: RepeatContract | undefined = undefined;
   form: FormGroup = new FormGroup({});
   calRef: any;
   public repeatTypes:RepeatType[] = [RepeatType.None, RepeatType.ByDay, RepeatType.ByWeek, RepeatType.ByMonth]
@@ -27,34 +26,27 @@ export class RepeatFormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      interval: new FormControl(this.repeatContract?.interval),
-      repeatType: new FormControl(this.repeatContract?.repeatType),
-      startDate: new FormControl(this.repeatContract?.startDate)
-    })
+    this.stateService.editingRepeatSettings.subscribe(x => {
+      this.repeatContract = x
+      this.form = new FormGroup({
+        interval: new FormControl(x.interval),
+        repeatType: new FormControl(x.repeatType),
+        startDate: new FormControl(x.startDate)
+      });
+    });
   }
-
-    ngAfterContentInit(): void {
-      this.calRef = this.elRef.nativeElement.querySelector('input[type="date"]');
-      bulmaCalendar.attach(this.calRef, {startDate: new Date(this.repeatContract?.startDate ?? '2020-11-01')});
-      this.calRef.bulmaCalendar.on('select', (x: any) => {
-        console.log('set date')
-        console.log(x.data.value())
-        this.form.controls['startDate'].setValue(x.data.value());
-      })
-    }
 
     updateContract(): void {
       if(this.repeatContract){
         this.repeatContract.repeatType = parseInt(this.form.get('repeatType')?.value);
         this.repeatContract.interval = this.form.get('interval')?.value;
         this.repeatContract.startDate = new Date(this.form.get('startDate')?.value);
-        console.log(this.repeatContract)
-        this.repeatService.UpdateRepeatContract(this.repeatContract.id, this.repeatContract);
+        this.repeatService.UpdateRepeatContract(this.repeatContract.id, this.repeatContract)
+          .then(x => this.stateService.UpdateMonth(x));
       }
     }
 
   cancel() {
-    this.stateService.NullRepeatSetting();
+    this.stateService.ExitAllModals();
   }
 }

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Transaction, TransactionType} from "../Shared/Interfaces/Transaction";
 import {TransactionService} from "../transaction.service";
+import { StateService } from "../state.service";
 
 @Component({
   selector: 'app-transaction',
@@ -10,7 +11,10 @@ import {TransactionService} from "../transaction.service";
 export class TransactionComponent implements OnInit {
   @Input() transaction: Transaction = {} as Transaction;
   classType: Array<string> = [];
-  constructor(private transactionService: TransactionService) { }
+  constructor(
+    private transactionService: TransactionService,
+    private stateService: StateService
+  ) { }
 
   ngOnInit(): void {
     if(this.transaction){
@@ -23,11 +27,11 @@ export class TransactionComponent implements OnInit {
 
   toggleResolved(){
     this.transaction.isResolved = !this.transaction.isResolved;
-    this.transactionService.UpdateTransaction(this.transaction);
+    this.transactionService.UpdateTransaction(this.transaction).then(x => this.stateService.UpdateMonth(x));
   }
 
   editTransaction(){
-    this.transactionService.malleableTransaction.next(this.transaction);
+    this.stateService.EditTransaction(this.transaction);
   }
 
 }

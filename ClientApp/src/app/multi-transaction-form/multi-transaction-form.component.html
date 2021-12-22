@@ -3,20 +3,29 @@
     <div class="card-header-title">Add New Transactions</div>
   </div>
   <div class="card-content">
-    <div class="box" *ngFor="let transaction of transactions">
-      <div class="field">
-        <label class="label">Name</label>
-        <div class="control">
-          <input type="text" class="input" [value]="transaction.name">
+      <div class="box" *ngFor="let transaction of transactions; let i = index">
+        <div (click)="removeTransaction(i)" class="icon is-pulled-right is-clickable pb-1">
+          <i-feather name="X"></i-feather>
+        </div>
+        <div class="field">
+          <label class="label">Name</label>
+          <div class="control">
+            <input appFocus type="text" class="input" [(ngModel)]="transaction.name">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Amount</label>
+          <div class="control">
+            <input type="text" class="input" [(ngModel)]="transaction.amount">
+          </div>
         </div>
       </div>
-      <div class="field">
-        <label class="label">Amount</label>
-        <div class="control">
-          <input type="text" class="input" [value]="transaction.amount">
-        </div>
-      </div>
+    <div>
+      <button (click)="addAnother()" class="button">Add Another</button>
     </div>
-
+  </div>
+  <div class="card-footer">
+    <div (click)="cancel()" class="card-footer-item is-clickable divButton">Cancel</div>
+    <div (click)="save()" class="card-footer-item is-clickable divButton">Save</div>
   </div>
 </div>

@@ -13,7 +13,7 @@ import {RepeatService} from "../repeat.service";
   styleUrls: ['./transaction-form.component.css']
 })
 export class TransactionFormComponent implements OnInit {
-  @Input() transaction: Transaction = {} as Transaction;
+  transaction: Transaction = {} as Transaction;
   form: FormGroup = new FormGroup({});
 
   public types:TransactionType[] = [TransactionType.Bill, TransactionType.Income, TransactionType.OneOff];
@@ -36,35 +36,45 @@ export class TransactionFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      transactionName: new FormControl(this.transaction.name),
-      amount: new FormControl(this.transaction.amount),
-      date: new FormControl(this.transaction.date),
-      type: new FormControl(this.transaction.type),
-      repeatFrequency: new FormControl(''),
-      interval: new FormControl('')
+    this.stateService.editingTransaction.subscribe(x => {
+      this.transaction = x;
+      this.form = new FormGroup({
+        transactionName: new FormControl(x.name),
+        amount: new FormControl(x.amount),
+        date: new FormControl(x.date),
+        type: new FormControl(x.type),
+        repeatFrequency: new FormControl(''),
+        interval: new FormControl('')
+      })
     })
   }
 
   cancel() {
-   this.transactionService.malleableTransaction.next(undefined);
+    this.stateService.ExitAllModals();
   }
 
   delete() {
-    this.transactionService.DeleteTransaction(this.transaction);
+    this.transactionService.DeleteTransaction(this.transaction)
+      .then(x => this.stateService.UpdateMonth(x));
+    this.stateService.ExitAllModals();
   }
 
   save() {
     this.patchInValues();
     if(this.isNewTransaction){
-      this.transactionService.CreateNewTransaction(this.transaction);
+      this.transactionService.CreateNewTransaction(this.transaction)
+        .then(x => this.stateService.UpdateMonth(x));
     }else{
-      this.transactionService.UpdateTransaction(this.transaction);
+      this.transactionService.UpdateTransaction(this.transaction).then(x => this.stateService.UpdateMonth(x)
+      );
     }
+    this.stateService.ExitAllModals();
   }
 
   public editRepeatSettings(): void {
-    this.repeatService.GetRepeatContract(this.transaction.associatedRepeatId);
+    this.repeatService.GetRepeatContract(this.transaction.associatedRepeatId).then(x =>{
+      this.stateService.EditRepeatSetting(x)
+      });
   }
 
   private patchInValues(): void {

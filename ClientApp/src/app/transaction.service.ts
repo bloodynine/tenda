@@ -13,7 +13,7 @@ import {Transaction, TransactionType} from "./Shared/Interfaces/Transaction";
 export class TransactionService {
 
   baseUrl: string = environment.apiUrl;
-  public Month: BehaviorSubject<Month> = new BehaviorSubject<Month>({} as Month);
+
   public total: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   public malleableRepeatSettingId: Subject<string> = new ReplaySubject<string>();
@@ -30,11 +30,6 @@ export class TransactionService {
     .build();
   constructor(private http: HttpClient) { }
 
-  public GetMonth(year: number, month: number): void{
-    this.http.get<Month>(`${this.baseUrl}/month/${month}/year/${year}`).subscribe(x => this.Month.next(x)
-    );
-  }
-
   public SubscribeToSignalR(): void {
     this.signalRConnection.start().then(x => {
     });
@@ -44,34 +39,25 @@ export class TransactionService {
     });
   }
 
-  public UpdateTransaction(transaction: Transaction): void {
-    this.http.put<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}`, transaction)
-      .toPromise()
-      .then(x => {
-        this.Month.next(x);
-        this.malleableTransaction.next(undefined);
-      });
+  public UpdateTransaction(transaction: Transaction): Promise<Month> {
+    return this.http.put<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}`, transaction)
+      .toPromise();
   }
 
-  public CreateNewTransaction(transaction: Transaction): void {
-    this.http.post<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}`, transaction).toPromise()
-      .then(x => {
-        this.Month.next(x);
-        this.malleableTransaction.next(undefined)
-      });
+  public CreateNewTransaction(transaction: Transaction): Promise<Month> {
+    return this.http.post<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}`, transaction).toPromise();
   }
 
-  public DeleteTransaction(transaction: Transaction): void {
+  public DeleteTransaction(transaction: Transaction): Promise<Month> {
     const params = new HttpParams().set('ViewDate', transaction.date.toString());
-    this.http.delete<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}/`, {params:params}).toPromise().then(x => {
-      this.Month.next(x);
-      this.malleableTransaction.next(undefined);
-    })
+    return this.http.delete<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}/`, {params:params}).toPromise();
   }
 
-  public EditRepeatSetting(repeatId: string): void {
-    this.malleableRepeatSettingId.next(repeatId);
+  public CreateBulkTransactions(transactions: Transaction[]): Promise<Month>{
+    const body = {oneOffs: transactions};
+    return this.http.post<Month>(`${this.baseUrl}/oneOffs/bulk`, body).toPromise();
   }
+
   private static GetTransactionUri(transaction: Transaction): string {
     switch (TransactionType[transaction.type]) {
       case 'Income':

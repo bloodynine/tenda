@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Day} from "../Shared/Interfaces/Day";
-import {TransactionService} from "../transaction.service";
-import {Transaction, TransactionType} from "../Shared/Interfaces/Transaction";
+import { Component, Input, OnInit } from '@angular/core';
+import { Day } from "../Shared/Interfaces/Day";
+import { TransactionService } from "../transaction.service";
+import { Transaction, TransactionType } from "../Shared/Interfaces/Transaction";
+import { StateService } from "../state.service";
 
 @Component({
   selector: 'app-day',
@@ -10,12 +11,18 @@ import {Transaction, TransactionType} from "../Shared/Interfaces/Transaction";
 })
 export class DayComponent implements OnInit {
   @Input() day : Day | undefined;
-  constructor(private transactionService: TransactionService) { }
+  constructor(
+    private transactionService: TransactionService,
+    private stateService: StateService) { }
 
   ngOnInit(): void {
   }
 
   createTransaction(type: TransactionType): void {
-    this.transactionService.malleableTransaction.next({date: this.day?.date, type: type} as Transaction)
+    if(type == TransactionType.OneOff){
+      this.stateService.EditMultiTransaction(this.day?.date);
+    }else{
+      this.stateService.EditTransaction({date: this.day?.date, type: type} as Transaction);
+    }
   }
 }
