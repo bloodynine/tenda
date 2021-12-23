@@ -1,15 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {LoginService} from "./login.service";
 import {BearerToken} from "./Shared/Interfaces/BearerToken";
+import { LoginService } from "./Shared/Services/login.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private loginService: LoginService,
-  ) {
-  }
+  constructor(
+    private loginService: LoginService,
+    private router: Router
+  ) {}
   isRefreshingToken: boolean = false;
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
@@ -19,7 +21,11 @@ export class TokenInterceptor implements HttpInterceptor {
         return next.handle(TokenInterceptor.AddAuthToRequest(request, bearerToken));
       } else {
         this.isRefreshingToken = true;
-        this.loginService.refreshToken();
+        this.loginService.refreshToken().toPromise().then(x => {
+          this.loginService.saveTokens(x);
+        }, err => {
+          this.router.navigate(['login']);
+        });
         bearerToken = TokenInterceptor.GetBearerToken();
         if (bearerToken) {
           this.isRefreshingToken = false;

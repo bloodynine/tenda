@@ -1,4 +1,4 @@
-<div class="card" *ngIf="transaction">
+<div *ngIf="transaction" class="card">
   <form [formGroup]="form">
     <div *ngIf="isNewTransaction" class="card-header">
       <div class="card-header-title">
@@ -9,7 +9,7 @@
       <div class="field">
         <label class="label">Name</label>
         <div class="control">
-          <input type="text" class="input" formControlName="transactionName">
+          <input class="input" formControlName="transactionName" type="text">
         </div>
       </div>
       <div class="field">
@@ -21,20 +21,11 @@
       <div class="field">
         <label class="label">Amount</label>
         <div class="control">
-          <input type="text" class="input" formControlName="amount">
-        </div>
-      </div>
-      <div *ngIf="isNewTransaction" class="field">
-        <label class="label">Type</label>
-        <div class="select">
-          <select formControlName="type">
-            <option [value]="transactionType"
-                    *ngFor="let transactionType of types">{{labelMapping[transactionType]}}</option>
-          </select>
+          <input class="input" formControlName="amount" type="text">
         </div>
       </div>
       <div *ngIf="showModifyRepeatButton" class="field">
-        <button class="button" (click)="editRepeatSettings()">Edit Repeat Settings</button>
+        <button (click)="editRepeatSettings()" class="button">Edit Repeat Settings</button>
       </div>
       <div *ngIf="showRepeat">
         <div class="columns">
@@ -42,7 +33,8 @@
             <div class="field"><label class="label">Repeat Frequency</label>
               <div class="select">
                 <select formControlName="repeatFrequency">
-                  <option [value]="repeatType" *ngFor="let repeatType of repeatTypes">{{repeatTypeLabelMapping[repeatType]}}</option>
+                  <option *ngFor="let repeatType of repeatTypes"
+                          [value]="repeatType">{{repeatTypeLabelMapping[repeatType]}}</option>
                 </select>
               </div>
             </div>
@@ -51,12 +43,13 @@
             <div class="field">
               <label class="label">Interval</label>
               <div class="control">
-                <input class="input" type="text" formControlName="interval">
+                <input class="input" formControlName="interval" type="text">
               </div>
             </div>
           </div>
         </div>
       </div>
+      <app-tag-input [(selectedTags)]="transaction.tags"></app-tag-input>
     </div>
     <div class="card-footer">
       <div (click)="delete()" class="card-footer-item is-clickable deleteButton">

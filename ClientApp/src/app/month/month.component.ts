@@ -38,6 +38,7 @@ export class MonthComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.transactionService.GetTags().then(x => console.log(x));
     this.stateService.currentState.subscribe(x => this.currentState = x);
     this.stateService.month.subscribe(x => {
       this.month = x;

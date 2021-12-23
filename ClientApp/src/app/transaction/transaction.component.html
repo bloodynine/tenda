@@ -7,7 +7,7 @@
     </div>
     <div class="columns">
       <div class="column">
-        <span (click)="toggleResolved()" class="icon">
+        <span (click)="toggleResolved()" class="icon is-clickable">
           <i-feather *ngIf="!transaction.isResolved" name="square"></i-feather>
           <i-feather *ngIf="transaction.isResolved" name="check-square"></i-feather>
         </span>

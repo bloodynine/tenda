@@ -1,0 +1,19 @@
+<div class="field">
+  <label class="label">Tags</label>
+  <div class="control">
+    <input (keydown.enter)="addTag()" (input)="filterList()" [(ngModel)]="typedInput" class="input" type="text">
+  </div>
+  <div role="menu" class="dropdown is-active" id="dropdown-menu" *ngIf="showDropdown && this.dropDownTags.length > 0">
+    <div class="dropdown-menu">
+      <div class="dropdown-content">
+        <a (click)="addTagFromDropDown(t)" *ngFor="let t of dropDownTags" class="dropdown-item">
+          {{t}}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="tags pt-1">
+    <span class="tag is-medium" *ngFor="let t of selectedTags; let i = index;">{{t}} <span (click)="removeTag(i)" class="delete"></span></span>
+  </div>
+</div>
+

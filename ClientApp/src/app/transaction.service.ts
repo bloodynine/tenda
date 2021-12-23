@@ -58,6 +58,10 @@ export class TransactionService {
     return this.http.post<Month>(`${this.baseUrl}/oneOffs/bulk`, body).toPromise();
   }
 
+  public GetTags(): Promise<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/tags`).toPromise();
+  }
+
   private static GetTransactionUri(transaction: Transaction): string {
     switch (TransactionType[transaction.type]) {
       case 'Income':

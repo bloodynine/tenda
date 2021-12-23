@@ -10,7 +10,7 @@ public class CreateManyOneOffsRequest : FinancialTransactionRequestBase
     public IEnumerable<FinancialTransaction> ToTransactions()
     {
         return OneOffs.Select(stub => new FinancialTransaction(stub.Name, stub.Amount, stub.Date, true, TransactionType.OneOff,
-            UserId)
+            UserId, stub.Tags)
         {
             Created = DateTime.Now,
             Updated = DateTime.Now
@@ -28,4 +28,5 @@ public class OneOffStub
     public string Name { get; set; }
     public decimal Amount { get; set; }
     public DateTime Date { get; set; }
+    public List<string> Tags { get; set; }
 }

@@ -42,7 +42,6 @@ export class TransactionFormComponent implements OnInit {
         transactionName: new FormControl(x.name),
         amount: new FormControl(x.amount),
         date: new FormControl(x.date),
-        type: new FormControl(x.type),
         repeatFrequency: new FormControl(''),
         interval: new FormControl('')
       })
@@ -80,7 +79,6 @@ export class TransactionFormComponent implements OnInit {
   private patchInValues(): void {
     this.transaction.name = this.form.get('transactionName')?.value;
     this.transaction.amount = this.form.get('amount')?.value;
-    this.transaction.type = this.form.get('type')?.value;
     if(this.form.get('repeatFrequency') && this.form.get('repeatFrequency')?.value != ''){
       this.transaction.repeatSettings = {
         type: Number.parseInt(this.form.get('repeatFrequency')?.value),

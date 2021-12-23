@@ -35,6 +35,7 @@ public class LoginService : ILoginService
             .Match(x => x.UserId == tokenItem.UserId)
             .Match(x => x.IsValid)
             .Modify(x => x.IsValid, false)
+            .Modify(x => x.InvalidatedBy, tokenItem.Token)
             .ExecuteAsync(cancellation:ct);
         throw new ApplicationException($"Invalid token submitted: Token Id {tokenItem.Token}");
     }
@@ -54,6 +55,7 @@ public class LoginService : ILoginService
         await refreshToken.SaveAsync(cancellation: ct);
         await DB.Update<RefreshToken>()
             .Match(x => x.ID != refreshToken.ID)
+            .Match(x => x.UserId == user.ID)
             .Match(x => x.IsValid)
             .Modify(x => x.IsValid, false)
             .ExecuteAsync(cancellation: ct);

@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TestComponent } from './test/test.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import { LoginComponent } from './login/login.component';
@@ -17,12 +16,12 @@ import { TransactionFormComponent } from './transaction-form/transaction-form.co
 import { RepeatFormComponent } from './repeat-form/repeat-form.component';
 import { DateSelectorComponent } from './date-selector/date-selector.component';
 import { MultiTransactionFormComponent } from './multi-transaction-form/multi-transaction-form.component';
-import { FocusDirective } from './focus.directive';
+import { TagInputComponent } from './Shared/tag-input/tag-input.component';
+import { FocusDirective } from "./Shared/Directives/focus.directive";
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent,
     LoginComponent,
     MonthComponent,
     DayComponent,
@@ -31,7 +30,8 @@ import { FocusDirective } from './focus.directive';
     RepeatFormComponent,
     DateSelectorComponent,
     MultiTransactionFormComponent,
-    FocusDirective
+    FocusDirective,
+    TagInputComponent
   ],
     imports: [
         BrowserModule,

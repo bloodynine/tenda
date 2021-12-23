@@ -12,6 +12,7 @@ export interface Transaction {
   isRepeating: boolean;
   repeatSettings: RepeatSettings | null;
   associatedRepeatId: string;
+  tags: string[];
 }
 
 export enum TransactionType {

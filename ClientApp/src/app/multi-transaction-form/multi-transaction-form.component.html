@@ -19,6 +19,7 @@
             <input type="text" class="input" [(ngModel)]="transaction.amount">
           </div>
         </div>
+        <app-tag-input [(selectedTags)]="transaction.tags"></app-tag-input>
       </div>
     <div>
       <button (click)="addAnother()" class="button">Add Another</button>

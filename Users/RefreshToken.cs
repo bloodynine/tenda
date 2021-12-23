@@ -16,4 +16,6 @@ public class RefreshToken : Entity
     public DateTime ExpiresAt { get; set; } = DateTime.Now.AddHours(3);
 
     public bool IsValid { get; set; } = true;
+
+    public string InvalidatedBy { get; set; } = "";
 }

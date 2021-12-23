@@ -9,7 +9,6 @@ namespace Tenda.All;
 public class GetAllByMonth : Endpoint<GetAllRequest, Month>
 {
     public IGetByMonthService GetByMonthService { get; set; }
-    public IHubContext<ResolvedTotal> HubContext { get; set; }
 
     public override void Configure()
     {

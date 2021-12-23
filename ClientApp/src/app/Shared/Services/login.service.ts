@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { environment } from "../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { LoginResponse } from './Shared/Interfaces/LoginResponse';
 import {CookieService} from "ngx-cookie-service";
-import {BearerToken} from "./Shared/Interfaces/BearerToken";
 import {Router} from "@angular/router";
+import { environment } from "../../../environments/environment";
+import { LoginResponse } from "../Interfaces/LoginResponse";
+import { BearerToken } from "../Interfaces/BearerToken";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -25,16 +26,12 @@ export class LoginService {
     })
   }
 
-  public refreshToken(): void {
+  public refreshToken(): Observable<LoginResponse> {
     const refreshToken = this.cookies.get('refreshToken')
-    this.http.post<LoginResponse>(`${this.baseUrl}/users/token`, {token: refreshToken}).subscribe(x => {
-      this.saveTokens(x);
-    }, err => {
-      this.router.navigate(['login']);
-    })
+    return this.http.post<LoginResponse>(`${this.baseUrl}/users/token`, {token: refreshToken});
   }
 
-  private saveTokens(tokens: LoginResponse): void {
+  public saveTokens(tokens: LoginResponse): void {
     this.cookies.set('refreshToken', tokens.refreshToken, {sameSite: "Strict", expires: new Date(tokens.refreshExpiresAt)});
     const bearerToken = {token: tokens.bearerToken, expiresAt: tokens.bearerExpiresAt} as BearerToken;
     localStorage.setItem('bearerToken', JSON.stringify(bearerToken) );
