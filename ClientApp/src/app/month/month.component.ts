@@ -56,7 +56,7 @@ export class MonthComponent implements OnInit {
       const month = Number.parseInt(params.get('month') ?? now.getMonth().toString());
       const year = Number.parseInt(params.get('year') ?? now.getFullYear().toString());
       this.selectedDate = new Date(year, month - 1);
-
+      this.stateService.UpdateViewDate(this.selectedDate);
       this.monthService.GetMonth(year, month).then(x => this.stateService.UpdateMonth(x));
     });
   }

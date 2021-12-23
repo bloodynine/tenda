@@ -1,5 +1,6 @@
 export interface CurrentState {
-  modalWindow: ModelWindow
+  modalWindow: ModelWindow,
+  currentViewDate: Date,
 }
 
 export enum ModelWindow {

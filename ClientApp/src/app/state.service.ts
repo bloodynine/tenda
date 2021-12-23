@@ -18,20 +18,23 @@ export class StateService {
   constructor() { }
 
   public EditRepeatSetting(setting: RepeatContract): void{
-    const newState = {modalWindow: ModelWindow.RepeatSettings } as CurrentState;
-    this.currentState.next(newState);
+    const state = this.currentState.getValue();
+    state.modalWindow = ModelWindow.RepeatSettings;
+    this.currentState.next(state);
     this.editingRepeatSettings.next(setting);
   }
 
   public EditTransaction(transaction: Transaction): void {
-    const newState = {modalWindow: ModelWindow.Transaction } as CurrentState;
-    this.currentState.next(newState);
+    const state = this.currentState.getValue();
+    state.modalWindow = ModelWindow.Transaction;
+    this.currentState.next(state);
     this.editingTransaction.next(transaction);
   }
 
   public EditMultiTransaction(date: Date | undefined): void {
-    const newState = {modalWindow: ModelWindow.MultiTransaction } as CurrentState;
-    this.currentState.next(newState);
+    const state = this.currentState.getValue();
+    state.modalWindow = ModelWindow.MultiTransaction;
+    this.currentState.next(state);
     this.multiTransactionDate.next(date);
   }
 
@@ -44,6 +47,15 @@ export class StateService {
   }
 
   public ExitAllModals(): void {
-    this.currentState.next({} as CurrentState);
+    const state = this.currentState.getValue();
+    state.modalWindow = ModelWindow.None;
+    this.currentState.next(state);
+  }
+
+  public UpdateViewDate(date: Date): void {
+    console.log(date)
+    const state = this.currentState.getValue();
+    state.currentViewDate = date;
+    this.currentState.next(state);
   }
 }

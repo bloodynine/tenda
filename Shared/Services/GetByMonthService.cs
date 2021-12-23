@@ -18,7 +18,9 @@ public class GetByMonthService : IGetByMonthService
     }
 
     public async Task<Month> GetMonth(DateTime date, string userId, CancellationToken ct)
-        => await GetMonth(date.Year, date.Month, userId, ct);
+    {
+        return await GetMonth(date.Year, date.Month, userId, ct);
+    }
 }
 
 public interface IGetByMonthService

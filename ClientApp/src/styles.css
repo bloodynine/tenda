@@ -6,5 +6,5 @@
 }
 
 .deleteButton:hover {
-  color: red;
+  color: red !important;
 }

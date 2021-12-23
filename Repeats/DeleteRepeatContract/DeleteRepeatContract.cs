@@ -8,7 +8,7 @@ namespace Tenda.Repeats.DeleteRepeatContract;
 
 public class DeleteRepeatContract : Endpoint<DeleteRequest, Month>
 {
-    public GetByMonthService GetByMonthService { get; set; }
+    public IGetByMonthService GetByMonthService { get; set; }
 
     public override void Configure()
     {
@@ -21,6 +21,10 @@ public class DeleteRepeatContract : Endpoint<DeleteRequest, Month>
         await DB.DeleteAsync<FinancialTransaction>(x =>
             x.AssociatedRepeatId == req.Id && x.UserId == req.UserId && !x.IsResolved);
         await DB.DeleteAsync<RepeatContracts>(req.Id);
+        await DB.Update<FinancialTransaction>()
+            .Match(x => x.AssociatedRepeatId == req.Id && x.UserId == req.UserId && x.IsResolved)
+            .Modify(x => x.AssociatedRepeatId, "")
+            .ExecuteAsync(ct);
         await SendAsync(await GetByMonthService.GetMonth(req.ViewDate, req.UserId, ct), cancellation: ct);
     }
 }
