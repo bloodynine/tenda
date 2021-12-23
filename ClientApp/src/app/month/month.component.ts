@@ -42,8 +42,9 @@ export class MonthComponent implements OnInit {
     this.stateService.currentState.subscribe(x => this.currentState = x);
     this.stateService.month.subscribe(x => {
       this.month = x;
-      this.total = x.resolvedTotal;
+      // this.total = x.resolvedTotal;
     });
+    this.transactionService.SubscribeToSignalR();
     this.transactionService.total.subscribe(x => {
       if(x != 0){
         this.total = x;

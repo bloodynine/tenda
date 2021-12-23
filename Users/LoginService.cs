@@ -1,12 +1,21 @@
 ﻿using System.Security.Cryptography;
 using FastEndpoints.Security;
+using Microsoft.Extensions.Options;
 using MongoDB.Entities;
 using Tenda.Shared;
+using Tenda.Shared.Models;
 
 namespace Tenda.Users;
 
 public class LoginService : ILoginService
 {
+    private readonly JwtSettings _settings;
+
+    public LoginService(IOptions<JwtSettings> settings)
+    {
+        _settings = settings.Value;
+    }
+
     public async Task<LoginResponse> Login(string userName, string password, CancellationToken ct)
     {
         var user = await GetUser(userName, ct);
@@ -36,15 +45,14 @@ public class LoginService : ILoginService
             .Match(x => x.IsValid)
             .Modify(x => x.IsValid, false)
             .Modify(x => x.InvalidatedBy, tokenItem.Token)
-            .ExecuteAsync(cancellation:ct);
+            .ExecuteAsync(ct);
         throw new ApplicationException($"Invalid token submitted: Token Id {tokenItem.Token}");
     }
 
     private async Task<LoginResponse> GetLoginResponse(User user, Seed seed, CancellationToken ct)
     {
-        //TODO Add sig to env
         var token = JWTBearer.CreateToken(
-            "FDJSKLfdjsklw93nfugh84hrew99",
+            _settings.Key,
             DateTime.Now.AddDays(1),
             claims: new[]
                 { ("Username", user.UserName), ("UserId", user.ID), ("SeedId", seed.ID), ("Name", user.ID) }
@@ -58,7 +66,7 @@ public class LoginService : ILoginService
             .Match(x => x.UserId == user.ID)
             .Match(x => x.IsValid)
             .Modify(x => x.IsValid, false)
-            .ExecuteAsync(cancellation: ct);
+            .ExecuteAsync(ct);
 
         return new LoginResponse(token, refreshToken.Token);
     }

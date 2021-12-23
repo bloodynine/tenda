@@ -1,19 +1,35 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Tenda.Shared.Services;
 
 namespace Tenda.Shared.Hubs;
 
 [Authorize]
 public class ResolvedTotal : Hub
 {
-    public async Task SendMessage(string user, string message)
+    private readonly ITotalService _totalService;
+    private const string QueueName = "ResolvedTotal";
+
+    public ResolvedTotal(ITotalService totalService)
     {
-        await Clients.All.SendAsync("Foo", "User", "Message");
+        _totalService = totalService;
+    }
+
+    public async Task UpdateSeedInformation(string userId, Seed? message)
+    {
+        if (message is not null) await Clients.User(userId).SendAsync(QueueName, message);
     }
 
     public override async Task OnConnectedAsync()
     {
-        var cow = this.Context.User?.Claims.ToList();
-        var moo = "cow";
+        var claims = Context.User?.Claims.ToList();
+        if (claims is not null)
+        {
+            var userId = claims.FirstOrDefault(x => x.Type == "UserId");
+            var seedId = claims.FirstOrDefault(x => x.Type == "SeedId");
+            var seed = await _totalService.CalculateTotal(userId!.Value, seedId!.Value, CancellationToken.None);
+            await this.UpdateSeedInformation(userId!.Value, seed);
+            // await Clients.User(userId.Value).SendAsync("Foo", seed, CancellationToken.None);
+        }
     }
 }

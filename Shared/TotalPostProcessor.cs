@@ -17,7 +17,7 @@ public class TotalPostProcessor<TRequest, TResponse> : IPostProcessor<TRequest, 
         if (req is FinancialTransactionRequestBase @base)
         {
             var seed = await totalService.CalculateTotal(@base.UserId, @base.SeedId, ct);
-            await hubContext.Clients.User(@base.UserId).SendAsync("Foo", seed, ct);
+            await hubContext.Clients.User(@base.UserId).SendAsync("ResolvedTotal", seed, ct);
         }
     }
 }

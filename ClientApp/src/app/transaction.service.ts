@@ -34,7 +34,7 @@ export class TransactionService {
     this.signalRConnection.start().then(x => {
     });
 
-    this.signalRConnection.on("Foo", (x: Seed) => {
+    this.signalRConnection.on("ResolvedTotal", (x: Seed) => {
       this.total.next(x.amount);
     });
   }
