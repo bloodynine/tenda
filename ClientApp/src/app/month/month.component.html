@@ -4,9 +4,14 @@
   </div>
   <div class="navbar-menu">
     <div class="navbar-start">
+
       <a (click)="goToPreviousMonth()" class="navbar-item">Previous Month</a>
       <a (click)="goToToday()" class="navbar-item">Today</a>
       <a (click)="goToNextMonth()" class="navbar-item">Next Month</a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">More</a>
+        <div class="navbar-dropdown"><a class="navbar-item">Sign Out</a></div>
+      </div>
     </div>
     <div class="navbar-end navbar-item"><h1 class="title is-5">Total: {{total | currency}}</h1></div>
   </div>

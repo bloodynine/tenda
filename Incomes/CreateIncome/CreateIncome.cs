@@ -20,9 +20,9 @@ public class CreateIncome : Endpoint<CreateIncomeRequest, Month>
     {
         var transaction = req.ToTransaction();
 
-        if (req.RepeatRequest is not null)
+        if (req.RepeatSettings is not null)
         {
-            RepeatContracts repeatSettings = new(req.RepeatRequest, req, TransactionType.Income);
+            RepeatContracts repeatSettings = new(req.RepeatSettings, req, TransactionType.Income);
             await repeatSettings.SaveAsync(cancellation: ct);
             var incomes = repeatSettings.CalculateTargets();
             await incomes.SaveAsync(cancellation: ct);

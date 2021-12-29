@@ -32,7 +32,7 @@ export class LoginService {
   }
 
   public saveTokens(tokens: LoginResponse): void {
-    this.cookies.set('refreshToken', tokens.refreshToken, {sameSite: "Strict", expires: new Date(tokens.refreshExpiresAt)});
+    this.cookies.set('refreshToken', tokens.refreshToken, {sameSite: "Strict", expires: new Date(tokens.refreshExpiresAt), path: '/'});
     const bearerToken = {token: tokens.bearerToken, expiresAt: tokens.bearerExpiresAt} as BearerToken;
     localStorage.setItem('bearerToken', JSON.stringify(bearerToken) );
   }

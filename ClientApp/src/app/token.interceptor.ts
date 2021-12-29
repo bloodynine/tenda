@@ -12,23 +12,22 @@ export class TokenInterceptor implements HttpInterceptor {
     private loginService: LoginService,
     private router: Router
   ) {}
-  isRefreshingToken: boolean = false;
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     let bearerToken = TokenInterceptor.GetBearerToken();
-    if (bearerToken && !this.isRefreshingToken) {
+    const isRequestingToken = TokenInterceptor.IsRefreshingToken(request);
+    if (bearerToken && !isRequestingToken) {
       if (new Date(bearerToken.expiresAt) > new Date()) {
         return next.handle(TokenInterceptor.AddAuthToRequest(request, bearerToken));
       } else {
-        this.isRefreshingToken = true;
         this.loginService.refreshToken().toPromise().then(x => {
+          console.log("Refreshing token")
           this.loginService.saveTokens(x);
         }, err => {
           this.router.navigate(['login']);
         });
         bearerToken = TokenInterceptor.GetBearerToken();
         if (bearerToken) {
-          this.isRefreshingToken = false;
           return next.handle(TokenInterceptor.AddAuthToRequest(request, bearerToken));
         }
       }
@@ -50,5 +49,9 @@ export class TokenInterceptor implements HttpInterceptor {
       return bearerToken;
     }
     return undefined;
+  }
+
+  private static IsRefreshingToken(request: HttpRequest<unknown>): boolean {
+    return request.url.includes("/token")
   }
 }
