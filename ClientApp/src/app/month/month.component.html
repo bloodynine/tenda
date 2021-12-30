@@ -1,47 +1,51 @@
 <nav class="navbar">
   <div class="navbar-brand">
     <div class="navbar-item">Tenda</div>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start">
 
+    <a (click)="toggleMenu()" [class.is-active]="isMenuActive" aria-expanded="false" aria-label="menu" class="navbar-burger"
+       role="button">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div [class.is-active]="isMenuActive" class="navbar-menu">
+    <div class="navbar-start">
       <a (click)="goToPreviousMonth()" class="navbar-item">Previous Month</a>
       <a (click)="goToToday()" class="navbar-item">Today</a>
       <a (click)="goToNextMonth()" class="navbar-item">Next Month</a>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">More</a>
-        <div class="navbar-dropdown"><a class="navbar-item">Sign Out</a></div>
-      </div>
+      <a (click)="signOut()" class="navbar-item">Sign Out</a>
     </div>
     <div class="navbar-end navbar-item"><h1 class="title is-5">Total: {{total | currency}}</h1></div>
   </div>
+
 </nav>
 <div *ngIf="month">
   <section class="section">
-    <div class="block" *ngFor="let day of month.days">
-      <app-day  [day]="day"></app-day>
+    <div *ngFor="let day of month.days" class="block">
+      <app-day [day]="day"></app-day>
     </div>
   </section>
 </div>
 
-<div class="modal is-active" *ngIf="this.currentState.modalWindow == modalWindow.Transaction">
-  <div class="modal-background" (click)="exitModal()"></div>
+<div *ngIf="this.currentState.modalWindow == modalWindow.Transaction" class="modal is-active">
+  <div (click)="exitModal()" class="modal-background"></div>
   <div class="modal-content" style="min-height: 700px;">
     <app-transaction-form></app-transaction-form>
   </div>
-  <button class="modal-close is-large" aria-label="close" (click)="exitModal()"></button>
+  <button (click)="exitModal()" aria-label="close" class="modal-close is-large"></button>
 </div>
-<div class="modal is-active" *ngIf="this.currentState.modalWindow === modalWindow.RepeatSettings">
-  <div class="modal-background" (click)="exitModal()"></div>
+<div *ngIf="this.currentState.modalWindow === modalWindow.RepeatSettings" class="modal is-active">
+  <div (click)="exitModal()" class="modal-background"></div>
   <div class="modal-content" style="min-height: 700px;">
     <app-repeat-form></app-repeat-form>
   </div>
-  <button class="modal-close is-large" aria-label="close" (click)="exitModal()"></button>
+  <button (click)="exitModal()" aria-label="close" class="modal-close is-large"></button>
 </div>
-<div class="modal is-active" *ngIf="this.currentState.modalWindow === modalWindow.MultiTransaction">
-  <div class="modal-background" (click)="exitModal()"></div>
+<div *ngIf="this.currentState.modalWindow === modalWindow.MultiTransaction" class="modal is-active">
+  <div (click)="exitModal()" class="modal-background"></div>
   <div class="modal-content" style="min-height: 700px;">
     <app-multi-transaction-form></app-multi-transaction-form>
   </div>
-  <button class="modal-close is-large" aria-label="close" (click)="exitModal()"></button>
+  <button (click)="exitModal()" aria-label="close" class="modal-close is-large"></button>
 </div>

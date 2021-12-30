@@ -9,6 +9,7 @@ import {RepeatContract} from "../Shared/Interfaces/RepeatContract";
 import { BehaviorSubject } from "rxjs";
 import { CurrentState, ModelWindow } from "../Shared/Interfaces/CurrentState";
 import { MonthService } from "../month.service";
+import { LoginService } from "../Shared/Services/login.service";
 
 @Component({
   selector: 'app-month',
@@ -26,6 +27,7 @@ export class MonthComponent implements OnInit {
   public modalWindow = ModelWindow;
 
   selectedDate: Date = new Date();
+  isMenuActive: boolean = false;
 
   constructor(
     private transactionService: TransactionService,
@@ -34,7 +36,8 @@ export class MonthComponent implements OnInit {
     private repeatService: RepeatService,
     private stateService: StateService,
     private router: Router,
-    private monthService: MonthService
+    private monthService: MonthService,
+    private loginSerivce: LoginService
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +60,8 @@ export class MonthComponent implements OnInit {
       const year = Number.parseInt(params.get('year') ?? now.getFullYear().toString());
       this.selectedDate = new Date(year, month - 1);
       this.stateService.UpdateViewDate(this.selectedDate);
-      this.monthService.GetMonth(year, month).then(x => this.stateService.UpdateMonth(x));
+      this.monthService.GetMonth(year, month).subscribe(x => {
+        this.stateService.UpdateMonth(x)});
     });
   }
 
@@ -82,5 +86,13 @@ export class MonthComponent implements OnInit {
 
   navigateToDay(){
     this.router.navigateByUrl(`year/${this.selectedDate.getFullYear()}/month/${this.selectedDate.getMonth() + 1}`)
+  }
+
+  toggleMenu(){
+    this.isMenuActive = !this.isMenuActive
+  }
+
+  signOut() {
+    this.loginSerivce.SignOut();
   }
 }

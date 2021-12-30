@@ -1,4 +1,4 @@
-<div *ngIf="transaction" class="card mb-1" [ngClass]="classType">
+<div *ngIf="transaction" class="card mb-1" [ngClass]="classType" xmlns:divj="http://www.w3.org/1999/html">
   <div class="card-content">
     <div class="columns">
       <div class="column is-full">
@@ -12,7 +12,9 @@
           <i-feather *ngIf="transaction.isResolved" name="check-square"></i-feather>
         </span>
       </div>
-      <div class="column"><span class="is-pulled-right">{{transaction.amount | currency}}</span></div>
+      <div class="column" style="overflow: hidden;">
+        <div class="is-pulled-right">{{transaction.amount | currency}}</div>
+      </div>
     </div>
   </div>
 </div>

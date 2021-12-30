@@ -36,4 +36,10 @@ export class LoginService {
     const bearerToken = {token: tokens.bearerToken, expiresAt: tokens.bearerExpiresAt} as BearerToken;
     localStorage.setItem('bearerToken', JSON.stringify(bearerToken) );
   }
+
+  public SignOut(): void {
+    localStorage.removeItem('bearerToken');
+    this.cookies.deleteAll('/');
+    this.router.navigateByUrl('login');
+  }
 }
