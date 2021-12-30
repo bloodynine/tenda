@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validator, Validators} from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { LoginService } from "../Shared/Services/login.service";
 
 @Component({
@@ -9,13 +9,14 @@ import { LoginService } from "../Shared/Services/login.service";
 })
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
-    username: new FormControl('test1',  Validators.required),
-    password: new FormControl('WordToYourMom', Validators.required)
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
   })
 
   constructor(
     private loginService: LoginService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
-   this.loginService.login(username, password);
+    this.loginService.login(username, password);
   }
 
 }
