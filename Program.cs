@@ -35,7 +35,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddFastEndpoints();
-builder.Services.AddSpaStaticFiles(x => x.RootPath = "ClientApp/dist");
+builder.Services.AddSpaStaticFiles(x => x.RootPath = "ClientApp/dist/ClientApp");
 builder.Services.AddSignalR();
 
 var app = builder.Build();
@@ -59,6 +59,8 @@ Task.Run(async () =>
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
+app.UseSpaStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -72,8 +74,8 @@ app.MapWhen(y => !y.Request.Path.StartsWithSegments("/api"), x =>
 {
     x.UseSpa(spa =>
     {
-        spa.Options.SourcePath = "ClientApp";
-        if (app.Environment.IsDevelopment()) spa.UseAngularCliServer("start");
+        spa.Options.SourcePath = "ClientApp/dist/ClientApp";
+        // if (app.Environment.IsDevelopment()) spa.UseAngularCliServer("start");
     });
 });
 
