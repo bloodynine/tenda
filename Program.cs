@@ -75,7 +75,7 @@ app.MapWhen(y => !y.Request.Path.StartsWithSegments("/api"), x =>
     x.UseSpa(spa =>
     {
         spa.Options.SourcePath = "ClientApp/dist/ClientApp";
-        // if (app.Environment.IsDevelopment()) spa.UseAngularCliServer("start");
+        if (app.Environment.IsDevelopment()) spa.UseAngularCliServer("start");
     });
 });
 
