@@ -1,12 +1,19 @@
 <div class="field">
   <label class="label">Tags</label>
   <div class="control">
-    <input (keydown.enter)="addTag()" (input)="filterList()" [(ngModel)]="typedInput" class="input" type="text">
+    <input (keydown.enter)="addTag()"
+           (keydown.arrowDown)="moveDown()"
+           (keydown.arrowUp)="moveUp()"
+           (keydown.escape)="escape()"
+           (input)="filterList()"
+           [(ngModel)]="typedInput"
+           class="input"
+           type="text">
   </div>
   <div role="menu" class="dropdown is-active" id="dropdown-menu" *ngIf="showDropdown && this.dropDownTags.length > 0">
     <div class="dropdown-menu">
       <div class="dropdown-content">
-        <a (click)="addTagFromDropDown(t)" *ngFor="let t of dropDownTags" class="dropdown-item">
+        <a (click)="addTagFromDropDown(t)" *ngFor="let t of dropDownTags; let i = index" class="dropdown-item" [class.is-active]="i === activeItemIndex">
           {{t}}
         </a>
       </div>

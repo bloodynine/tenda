@@ -1,5 +1,5 @@
 <div *ngIf="transaction" class="card">
-  <form [formGroup]="form">
+  <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
     <div *ngIf="isNewTransaction" class="card-header">
       <div class="card-header-title">
         Add New {{labelMapping[transaction.type]}}
