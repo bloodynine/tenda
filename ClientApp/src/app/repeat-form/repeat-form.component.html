@@ -16,11 +16,12 @@
         </div>
       </div>
       <div class="field">
-        <label class="label">Interval</label>
+        <label class="label">Interval Seriously</label>
         <div class="control">
           <input type="text" class="input" formControlName="interval">
         </div>
       </div>
+      <app-tag-input [(selectedTags)]="repeatContract.tags"></app-tag-input>
     </div>
     <div class="card-footer">
       <div class="card-footer-item is-clickable deleteButton" (click)="deleteContract()">Delete All</div>

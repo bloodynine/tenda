@@ -72,6 +72,9 @@ export class TransactionFormComponent implements OnInit {
 
   public editRepeatSettings(): void {
     this.repeatService.GetRepeatContract(this.transaction.associatedRepeatId).then(x =>{
+      // We Set the start date of the repeat contract to the current transaction date.
+      // This provides the expected context to the user doing the editing
+      x.startDate = this.transaction.date;
       this.stateService.EditRepeatSetting(x)
       });
   }
