@@ -1,6 +1,11 @@
 <div class="card" *ngIf="repeatContract">
   <form [formGroup]="form">
     <div class="card-content">
+      <div class="field"><label  class="label">Name</label>
+        <div class="control">
+          <input type="text" name="name" class="input" formControlName="name">
+        </div>
+      </div>
       <div class="field">
         <label class="label">Start Date</label>
         <div class="control">
@@ -16,7 +21,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="label">Interval Seriously</label>
+        <label class="label">Interval</label>
         <div class="control">
           <input type="text" class="input" formControlName="interval">
         </div>

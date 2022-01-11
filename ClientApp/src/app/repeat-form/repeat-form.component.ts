@@ -30,6 +30,7 @@ export class RepeatFormComponent implements OnInit {
     this.stateService.editingRepeatSettings.subscribe(x => {
       this.repeatContract = x
       this.form = new FormGroup({
+        name: new FormControl(x.name),
         interval: new FormControl(x.interval),
         repeatType: new FormControl(x.repeatType),
         startDate: new FormControl(x.startDate)
@@ -42,6 +43,7 @@ export class RepeatFormComponent implements OnInit {
       this.repeatContract.repeatType = parseInt(this.form.get('repeatType')?.value);
       this.repeatContract.interval = this.form.get('interval')?.value;
       this.repeatContract.startDate = new Date(this.form.get('startDate')?.value);
+      this.repeatContract.name = this.form.get('name')?.value;
       this.repeatService.UpdateRepeatContract(this.repeatContract.id, this.repeatContract)
         .then(x => {
           this.stateService.ExitAllModals();
