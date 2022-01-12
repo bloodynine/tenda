@@ -17,11 +17,11 @@ export class TransactionFormComponent implements OnInit {
   form: FormGroup = new FormGroup({});
 
   public types:TransactionType[] = [TransactionType.Bill, TransactionType.Income, TransactionType.OneOff];
-  public repeatTypes:RepeatType[] = [RepeatType.None, RepeatType.ByDay, RepeatType.ByWeek, RepeatType.ByMonth]
   public labelMapping = TransactionTypeLabelMapping;
-  public repeatTypeLabelMapping = RepeatTypeLabel;
 
-  constructor(private elRef: ElementRef, private transactionService: TransactionService, private stateService: StateService,
+  constructor(private elRef: ElementRef,
+              private transactionService: TransactionService,
+              private stateService: StateService,
               private repeatService: RepeatService) { }
 
   get isNewTransaction(): boolean {
@@ -93,5 +93,4 @@ export class TransactionFormComponent implements OnInit {
       this.transaction.amount = this.transaction.amount * -1;
     }
   }
-
 }

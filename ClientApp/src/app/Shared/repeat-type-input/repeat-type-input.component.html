@@ -1,0 +1,13 @@
+<form [formGroup]="form">
+<div class="field"><label class="label">Repeat Frequency</label>
+  <div class="select">
+    <select formControlName="repeatFrequency">
+      <option  *ngFor="let repeatType of repeatTypes"
+              [value]="repeatType">{{repeatTypeLabelMapping[repeatType]}}</option>
+    </select>
+  </div>
+  <div class="icon pt-3 ml-2" *ngIf="showClear" (click)="clearDropDown()">
+    <i-feather name="x-circle"></i-feather>
+  </div>
+</div>
+</form>

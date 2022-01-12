@@ -12,14 +12,7 @@
           <app-date-selector [(startDate)]="repeatContract.startDate"></app-date-selector>
         </div>
       </div>
-      <div class="field"><label class="label">Repeat Frequency</label>
-        <div class="select">
-          <select formControlName="repeatType">
-            <option [value]="repeatType"
-                    *ngFor="let repeatType of repeatTypes">{{repeatTypeLabelMapping[repeatType]}}</option>
-          </select>
-        </div>
-      </div>
+        <app-repeat-type-input [form]="form"></app-repeat-type-input>
       <div class="field">
         <label class="label">Interval</label>
         <div class="control">
