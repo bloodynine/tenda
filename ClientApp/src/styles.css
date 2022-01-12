@@ -2,9 +2,11 @@
 @import "~bulma-calendar/dist/css/bulma-calendar.min.css";
 
 .divButton:hover {
-  color: #00d1b2;
+  color: #485fc7;
+  background-color: #fafafa;
 }
 
 .deleteButton:hover {
-  color: red !important;
+  color: #c74854 !important;
+  background-color: #fafafa;
 }
