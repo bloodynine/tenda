@@ -45,7 +45,7 @@
       <app-tag-input [(selectedTags)]="transaction.tags"></app-tag-input>
     </div>
     <div class="card-footer">
-      <div (click)="delete()" class="card-footer-item is-clickable deleteButton">
+      <div *ngIf="!isNewTransaction" (click)="delete()" class="card-footer-item is-clickable deleteButton">
         Delete
       </div>
       <div (click)="cancel()" class="card-footer-item is-clickable divButton">
