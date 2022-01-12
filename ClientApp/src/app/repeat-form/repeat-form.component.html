@@ -1,33 +1,40 @@
-<div class="card" *ngIf="repeatContract">
+<div *ngIf="repeatContract" class="card">
   <form [formGroup]="form">
     <div class="card-content">
+      <div class="field"><label class="label">Name</label>
+        <div class="control">
+          <input class="input" formControlName="name" name="name" type="text">
+        </div>
+      </div>
       <div class="field">
         <label class="label">Start Date</label>
         <div class="control">
           <app-date-selector [(startDate)]="repeatContract.startDate"></app-date-selector>
         </div>
       </div>
-      <div class="field"><label class="label">Repeat Frequency</label>
-        <div class="select">
-          <select formControlName="repeatType">
-            <option [value]="repeatType"
-                    *ngFor="let repeatType of repeatTypes">{{repeatTypeLabelMapping[repeatType]}}</option>
-          </select>
+      <div class="columns">
+        <div class="column">
+          <app-repeat-type-input [form]="form"></app-repeat-type-input>
         </div>
-      </div>
-      <div class="field">
-        <label class="label">Interval</label>
-        <div class="control">
-          <input type="text" class="input" formControlName="interval">
+        <div class="column">
+          <div class="field">
+            <label class="label">Interval</label>
+            <div class="control">
+              <input class="input" formControlName="interval" type="text">
+            </div>
+          </div>
         </div>
+
       </div>
+
+      <app-tag-input [(selectedTags)]="repeatContract.tags"></app-tag-input>
     </div>
     <div class="card-footer">
-      <div class="card-footer-item is-clickable deleteButton" (click)="deleteContract()">Delete All</div>
-      <div class="card-footer-item is-clickable divButton" (click)="cancel()">
+      <div (click)="deleteContract()" class="card-footer-item is-clickable deleteButton">Delete All</div>
+      <div (click)="cancel()" class="card-footer-item is-clickable divButton">
         Cancel
       </div>
-      <div class="card-footer-item is-clickable divButton" (click)="updateContract()">Save</div>
+      <div (click)="updateContract()" class="card-footer-item is-clickable divButton">Save</div>
     </div>
   </form>
 </div>

@@ -14,6 +14,7 @@ export class TagInputComponent implements OnInit {
   dropDownTags: string[] = [];
   typedInput: string = "";
   showDropdown: boolean = false;
+  activeItemIndex: number = -1;
 
   constructor(
     private transactionService: TransactionService
@@ -27,7 +28,12 @@ export class TagInputComponent implements OnInit {
   }
 
   addTag() {
-   this.addAndEmitTag(this.typedInput);
+    if(this.typedInput != "" && this.activeItemIndex == -1){
+      this.addAndEmitTag(this.typedInput);
+    }
+    if(this.activeItemIndex > -1){
+      this.addAndEmitTag(this.dropDownTags[this.activeItemIndex])
+    }
   }
 
   addTagFromDropDown(tag: string){
@@ -55,7 +61,28 @@ export class TagInputComponent implements OnInit {
     if(this.typedInput != ""){
       this.selectedTags.push(tag)
       this.typedInput = "";
+      this.activeItemIndex = -1;
+      this.showDropdown = false;
     }
     this.selectedTagsChange.emit(this.selectedTags);
+  }
+
+  moveDown() {
+    if(this.dropDownTags.length -1 > this.activeItemIndex){
+      console.log('incr')
+      this.activeItemIndex++;
+      console.log(this.activeItemIndex)
+    }
+  }
+  moveUp() {
+    if(this.activeItemIndex > -1){
+      console.log('deincr')
+      this.activeItemIndex--;
+      console.log(this.activeItemIndex)
+    }
+  }
+  escape() {
+    this.activeItemIndex = -1;
+    this.showDropdown = false;
   }
 }

@@ -17,11 +17,11 @@ export class TransactionFormComponent implements OnInit {
   form: FormGroup = new FormGroup({});
 
   public types:TransactionType[] = [TransactionType.Bill, TransactionType.Income, TransactionType.OneOff];
-  public repeatTypes:RepeatType[] = [RepeatType.None, RepeatType.ByDay, RepeatType.ByWeek, RepeatType.ByMonth]
   public labelMapping = TransactionTypeLabelMapping;
-  public repeatTypeLabelMapping = RepeatTypeLabel;
 
-  constructor(private elRef: ElementRef, private transactionService: TransactionService, private stateService: StateService,
+  constructor(private elRef: ElementRef,
+              private transactionService: TransactionService,
+              private stateService: StateService,
               private repeatService: RepeatService) { }
 
   get isNewTransaction(): boolean {
@@ -72,6 +72,9 @@ export class TransactionFormComponent implements OnInit {
 
   public editRepeatSettings(): void {
     this.repeatService.GetRepeatContract(this.transaction.associatedRepeatId).then(x =>{
+      // We Set the start date of the repeat contract to the current transaction date.
+      // This provides the expected context to the user doing the editing
+      x.startDate = this.transaction.date;
       this.stateService.EditRepeatSetting(x)
       });
   }
@@ -90,5 +93,4 @@ export class TransactionFormComponent implements OnInit {
       this.transaction.amount = this.transaction.amount * -1;
     }
   }
-
 }

@@ -50,7 +50,7 @@ public class FinancialTransaction : Entity
         AssociatedRepeatId = associatedRepeatId;
         Updated = DateTime.Now;
         Created = DateTime.Now;
-        Tags = new List<string>();
+        Tags = contract.Tags.ToList();
     }
 }
 
