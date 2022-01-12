@@ -9,8 +9,8 @@ import { LoginService } from "../Shared/Services/login.service";
 })
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    username: new FormControl('test1', Validators.required),
+    password: new FormControl('WordToYourMom', Validators.required)
   })
 
   constructor(

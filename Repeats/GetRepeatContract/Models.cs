@@ -20,6 +20,7 @@ public class GetRepeatContractResponse
         RepeatType = contract.RepeatType;
         StartDate = contract.StartDate;
         Id = contract.ID;
+        Tags = contract.Tags;
     }
 
     public GetRepeatContractResponse()
@@ -32,6 +33,7 @@ public class GetRepeatContractResponse
     public RepeatType RepeatType { get; set; }
     public DateTime StartDate { get; set; }
     public decimal Amount { get; set; }
-
     public string Id { get; set; }
+
+    public IEnumerable<string> Tags { get; set; }
 }

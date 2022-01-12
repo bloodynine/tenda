@@ -9,4 +9,5 @@ export interface RepeatContract {
   type: TransactionType;
   repeatType: RepeatType;
   startDate: Date;
+  tags: string[];
 }

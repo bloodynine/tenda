@@ -18,6 +18,7 @@ import { DateSelectorComponent } from './date-selector/date-selector.component';
 import { MultiTransactionFormComponent } from './multi-transaction-form/multi-transaction-form.component';
 import { TagInputComponent } from './Shared/tag-input/tag-input.component';
 import { FocusDirective } from "./Shared/Directives/focus.directive";
+import { RepeatTypeInputComponent } from './Shared/repeat-type-input/repeat-type-input.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FocusDirective } from "./Shared/Directives/focus.directive";
     DateSelectorComponent,
     MultiTransactionFormComponent,
     FocusDirective,
-    TagInputComponent
+    TagInputComponent,
+    RepeatTypeInputComponent
   ],
     imports: [
         BrowserModule,
