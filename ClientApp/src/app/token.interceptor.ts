@@ -3,7 +3,7 @@ import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } fro
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BearerToken } from "./Shared/Interfaces/BearerToken";
 import { LoginService } from "./Shared/Services/login.service";
-import { filter, switchMap } from "rxjs/operators";
+import { catchError, filter, switchMap } from "rxjs/operators";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -28,7 +28,6 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   private AddAuthToRequest(request: HttpRequest<any>, bearerToken: string): HttpRequest<any> {
-    console.log(`Adding to AuthRequest ${bearerToken} - ${request.url}`)
     const headers = new HttpHeaders().set('Authorization', `Bearer ${bearerToken}`)
     return request.clone({ headers: headers });
   }
@@ -55,6 +54,12 @@ export class TokenInterceptor implements HttpInterceptor {
           this.loginService.saveTokens(token);
           const bearer = this.GetBearerToken();
           return next.handle(this.AddAuthToRequest(request, bearer!.token))
+        }), catchError(e => {
+          this.isRefreshing = false;
+          this.refreshToken$.next("");
+          this.loginService.SignOut();
+          return next.handle(request.clone({url: ""}))
+
         }))
     } else {
       return this.refreshToken$.pipe(filter(x => x != null),
