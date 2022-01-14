@@ -1,4 +1,5 @@
-using FastEndpoints;
+global using FastEndpoints;
+global using FastEndpoints.Validation;
 using FastEndpoints.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;

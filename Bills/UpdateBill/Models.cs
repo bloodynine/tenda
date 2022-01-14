@@ -5,8 +5,8 @@ namespace Tenda.Bills.UpdateBill;
 
 public class UpdateBillRequest : FinancialTransactionRequestBase
 {
-    public string Id { get; set; }
-    public bool IsResolved { get; set; }
+    public string Id { get; set; } = "";
+    public bool IsResolved { get; set; } = false;
 
     public override FinancialTransaction ToTransaction()
     {
@@ -16,3 +16,13 @@ public class UpdateBillRequest : FinancialTransactionRequestBase
         };
     }
 }
+
+public class UpdateBillRequestValidator : Validator<UpdateBillRequest>
+{
+    public UpdateBillRequestValidator()
+    {
+        Include(new FinancialTransactionRequestBaseValidator());
+        RuleFor(x => x.Id).NotEmpty();
+    }
+}
+
