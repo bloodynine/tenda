@@ -6,6 +6,7 @@ import { environment } from "../../../environments/environment";
 import { LoginResponse } from "../Interfaces/LoginResponse";
 import { BearerToken } from "../Interfaces/BearerToken";
 import { Observable } from "rxjs";
+import { TransactionService } from "../../transaction.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class LoginService {
 
   constructor(private http: HttpClient,
               private cookies: CookieService,
-              private router: Router) { }
+              private router: Router,
+              private transactionService: TransactionService) { }
 
   public login(username: string, password: string): void {
     this.http.post<LoginResponse>(`${this.baseUrl}/users/login`, {username: username, password: password}).subscribe(x => {
@@ -40,6 +42,7 @@ export class LoginService {
   public SignOut(): void {
     localStorage.removeItem('bearerToken');
     this.cookies.deleteAll('/');
+    this.transactionService.UnSubscribeToSignalR();
     this.router.navigateByUrl('login');
   }
 }

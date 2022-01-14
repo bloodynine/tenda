@@ -39,6 +39,10 @@ export class TransactionService {
     });
   }
 
+  public UnSubscribeToSignalR(): void {
+    this.signalRConnection.stop().then(x => {});
+  }
+
   public UpdateTransaction(transaction: Transaction): Promise<Month> {
     return this.http.put<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}`, transaction)
       .toPromise();
