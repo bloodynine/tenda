@@ -25,8 +25,20 @@ public class CreateManyOneOffsRequest : FinancialTransactionRequestBase
 
 public class OneOffStub
 {
-    public string Name { get; set; }
-    public decimal Amount { get; set; }
-    public DateTime Date { get; set; }
-    public List<string> Tags { get; set; }
+    public string Name { get; set; } = "";
+    public decimal Amount { get; set; } = 0;
+    public DateTime Date { get; set; } = DateTime.UnixEpoch;
+    public List<string> Tags { get; set; } = new List<string>();
+}
+
+public class CreateManyOneOffsRequestValidator : Validator<CreateManyOneOffsRequest>
+{
+    public CreateManyOneOffsRequestValidator()
+    {
+        RuleForEach(x => x.OneOffs).ChildRules(y =>
+        {
+            y.RuleFor(x => x.Name).NotEmpty();
+            y.RuleFor(x => x.Date).GreaterThan(DateTime.UnixEpoch);
+        });
+    }
 }
