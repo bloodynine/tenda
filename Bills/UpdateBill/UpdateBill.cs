@@ -9,7 +9,7 @@ namespace Tenda.Bills.UpdateBill;
 
 public class UpdateBill : Endpoint<UpdateBillRequest, Month>
 {
-    public IGetByMonthService GetByMonthService { get; set; }
+    public IGetByMonthService GetByMonthService { get; set; } = null!;
 
     public override void Configure()
     {

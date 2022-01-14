@@ -8,7 +8,7 @@ namespace Tenda.All;
 
 public class GetAllByMonth : Endpoint<GetAllRequest, Month>
 {
-    public IGetByMonthService GetByMonthService { get; set; }
+    public IGetByMonthService GetByMonthService { get; set; } = null!;
 
     public override void Configure()
     {

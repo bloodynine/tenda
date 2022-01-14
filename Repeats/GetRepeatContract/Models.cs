@@ -9,6 +9,14 @@ public class GetRepeatContractRequest : RequestBase
     public string Id { get; set; } = "";
 }
 
+public class GetRepeatContractRequestValidator : Validator<GetRepeatContractRequest>
+{
+    public GetRepeatContractRequestValidator()
+    {
+        RuleFor(x => x.Id).NotEmpty();
+    }
+}
+
 public class GetRepeatContractResponse
 {
     public GetRepeatContractResponse(RepeatContracts contract)
@@ -27,13 +35,13 @@ public class GetRepeatContractResponse
     {
     }
 
-    public string Name { get; set; }
+    public string Name { get; set; } = "";
     public int Interval { get; set; }
     public TransactionType Type { get; set; }
     public RepeatType RepeatType { get; set; }
     public DateTime StartDate { get; set; }
     public decimal Amount { get; set; }
-    public string Id { get; set; }
+    public string Id { get; set; } = "";
 
-    public IEnumerable<string> Tags { get; set; }
+    public IEnumerable<string> Tags { get; set; } = Enumerable.Empty<string>();
 }

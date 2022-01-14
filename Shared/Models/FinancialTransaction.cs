@@ -4,15 +4,15 @@ namespace Tenda.Shared.Models;
 
 public class FinancialTransaction : Entity
 {
-    public DateTime Created { get; set; }
-    public DateTime Updated { get; set; }
+    public DateTime Created { get; set; } = DateTime.Now;
+    public DateTime Updated { get; set; } = DateTime.Now;
     public string Name { get; set; } = "";
     public decimal Amount { get; set; }
     public bool IsResolved { get; set; }
     public TransactionType Type { get; set; }
     public DateTime Date { get; set; }
     public string UserId { get; set; }
-    public string AssociatedRepeatId { get; set; }
+    public string? AssociatedRepeatId { get; set; }
     public bool IsRepeating => !string.IsNullOrEmpty(AssociatedRepeatId);
     public List<string> Tags { get; set; } 
 

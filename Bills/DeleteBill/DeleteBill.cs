@@ -8,7 +8,7 @@ namespace Tenda.Bills.DeleteBill;
 
 public class DeleteBill : Endpoint<DeleteRequest, Month>
 {
-    public IGetByMonthService GetByMonthService { get; set; }
+    public IGetByMonthService GetByMonthService { get; set; } = null!;
 
     public override void Configure()
     {

@@ -10,6 +10,8 @@ public class LoginResponse
 
     public LoginResponse()
     {
+        BearerToken = "";
+        RefreshToken = "";
     }
 
     public string BearerToken { get; set; }

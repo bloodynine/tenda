@@ -10,7 +10,6 @@ namespace Tenda.OneOffs.CreateOneOff;
 
 public class PostOneOff : Endpoint<CreateOneOffRequest, Month>
 {
-    public IHubContext<ResolvedTotal> HubContext { get; set; }
     public IGetByMonthService GetByMonthService { get; set; } = null!;
 
     public override void Configure()
