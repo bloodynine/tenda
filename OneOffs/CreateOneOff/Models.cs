@@ -7,7 +7,7 @@ namespace Tenda.OneOffs.CreateOneOff;
 
 public class CreateOneOffRequest : FinancialTransactionRequestBase
 {
-    public bool? IsResolved { get; set; }
+    public bool? IsResolved { get; set; } = false;
 
     public override FinancialTransaction ToTransaction()
     {
@@ -16,5 +16,13 @@ public class CreateOneOffRequest : FinancialTransactionRequestBase
             Created = DateTime.Now,
             Updated = DateTime.Now
         };
+    }
+}
+
+public class CreateOneOffRequestValidator : Validator<CreateOneOffRequest>
+{
+    public CreateOneOffRequestValidator()
+    {
+        Include(new FinancialTransactionRequestBaseValidator());
     }
 }

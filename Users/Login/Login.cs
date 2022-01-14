@@ -4,7 +4,7 @@ namespace Tenda.Users.Login;
 
 public class Login : Endpoint<LoginRequest, LoginResponse>
 {
-    public ILoginService LoginService { get; set; }
+    public ILoginService LoginService { get; set; } = null!;
 
     public override void Configure()
     {

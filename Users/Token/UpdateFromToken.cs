@@ -4,7 +4,7 @@ namespace Tenda.Users.Token;
 
 public class UpdateFromToken : Endpoint<TokenRequest, LoginResponse>
 {
-    public ILoginService LoginService { get; set; }
+    public ILoginService LoginService { get; set; } = null!;
 
     public override void Configure()
     {

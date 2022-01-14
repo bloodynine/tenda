@@ -8,7 +8,7 @@ namespace Tenda.Incomes.CreateIncome;
 
 public class CreateIncome : Endpoint<CreateIncomeRequest, Month>
 {
-    public IGetByMonthService GetByMonthService { get; set; }
+    public IGetByMonthService GetByMonthService { get; set; } = null!;
 
     public override void Configure()
     {

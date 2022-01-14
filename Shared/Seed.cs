@@ -4,6 +4,6 @@ namespace Tenda.Shared;
 
 public class Seed : Entity
 {
-    public string UserId { get; set; }
-    public decimal Amount { get; set; }
+    public string UserId { get; set; } = "";
+    public decimal Amount { get; set; } = 0;
 }

@@ -18,5 +18,6 @@ public class FinancialTransactionRequestBaseValidator : Validator<FinancialTrans
     public FinancialTransactionRequestBaseValidator()
     {
         RuleFor(x => x.Name).NotEmpty();
+        Include(new RequestBaseValidator());
     }
 }

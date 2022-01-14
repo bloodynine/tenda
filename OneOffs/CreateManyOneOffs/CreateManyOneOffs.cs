@@ -8,7 +8,7 @@ namespace Tenda.OneOffs.CreateManyOneOffs;
 
 public class CreateManyOneOffs : Endpoint<CreateManyOneOffsRequest, Month>
 {
-    public IGetByMonthService GetByMonthService { get; set; }
+    public IGetByMonthService GetByMonthService { get; set; } = null!;
 
     public override void Configure()
     {

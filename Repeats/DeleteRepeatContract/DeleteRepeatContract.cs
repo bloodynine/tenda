@@ -8,7 +8,7 @@ namespace Tenda.Repeats.DeleteRepeatContract;
 
 public class DeleteRepeatContract : Endpoint<DeleteRequest, Month>
 {
-    public IGetByMonthService GetByMonthService { get; set; }
+    public IGetByMonthService GetByMonthService { get; set; } = null!;
 
     public override void Configure()
     {

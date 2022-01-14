@@ -5,7 +5,7 @@ namespace Tenda.OneOffs.CreateManyOneOffs;
 
 public class CreateManyOneOffsRequest : FinancialTransactionRequestBase
 {
-    public List<OneOffStub> OneOffs { get; set; }
+    public List<OneOffStub> OneOffs { get; set; } = new List<OneOffStub>();
 
     public IEnumerable<FinancialTransaction> ToTransactions()
     {
@@ -27,7 +27,7 @@ public class OneOffStub
 {
     public string Name { get; set; } = "";
     public decimal Amount { get; set; } = 0;
-    public DateTime Date { get; set; } = DateTime.UnixEpoch;
+    public DateTime Date { get; set; } = new ();
     public List<string> Tags { get; set; } = new List<string>();
 }
 
@@ -35,10 +35,11 @@ public class CreateManyOneOffsRequestValidator : Validator<CreateManyOneOffsRequ
 {
     public CreateManyOneOffsRequestValidator()
     {
+        RuleFor(x => x.OneOffs.Count).GreaterThan(0);
         RuleForEach(x => x.OneOffs).ChildRules(y =>
         {
             y.RuleFor(x => x.Name).NotEmpty();
-            y.RuleFor(x => x.Date).GreaterThan(DateTime.UnixEpoch);
+            y.RuleFor(x => x.Date).GreaterThan(new DateTime());
         });
     }
 }
