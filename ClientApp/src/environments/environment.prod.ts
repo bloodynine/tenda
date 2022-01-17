@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://tenda.kerk.xyz/api'
+  apiUrl: 'https://tenda2.kerk.xyz/api'
 };
