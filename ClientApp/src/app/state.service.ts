@@ -43,7 +43,6 @@ export class StateService {
   }
 
   public UpdateMonth(month: Month): void {
-    console.log('update month')
     this.month.next(month);
   }
 
