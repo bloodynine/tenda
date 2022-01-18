@@ -14,6 +14,7 @@ public class CreateIncome : Endpoint<CreateIncomeRequest, Month>
     {
         Post("api/incomes");
         Claims("UserId", "SeedId");
+        PostProcessors(new TotalPostProcessor<CreateIncomeRequest, Month>());
     }
 
     public override async Task HandleAsync(CreateIncomeRequest req, CancellationToken ct)
