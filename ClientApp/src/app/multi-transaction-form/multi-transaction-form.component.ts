@@ -31,6 +31,12 @@ export class MultiTransactionFormComponent implements OnInit {
   }
 
   save() {
+    this.transactions.forEach(x => {
+      if (x.amount > 0){
+        x.amount = -1 * x.amount;
+      }
+    })
+
     this.transactionService.CreateBulkTransactions(this.transactions).then(x => this.stateService.UpdateMonth(x));
     this.stateService.ExitAllModals();
   }

@@ -7,21 +7,21 @@
             {{day.date | date}}
           </div>
         </div>
-        <div class="column">
+        <div id="incomes" class="column">
           <app-transaction *ngFor="let transaction of day.incomes" [transaction]="transaction"></app-transaction>
         </div>
-        <div class="column">
+        <div id="bills" class="column">
           <div *ngFor="let transaction of day.bills">
             <app-transaction [transaction]="transaction"></app-transaction>
           </div>
         </div>
-        <div class="column">
+        <div id="oneOffs" class="column">
           <app-transaction *ngFor="let transaction of day.oneOffs" [transaction]="transaction"></app-transaction>
         </div>
       </div>
     </div>
     <div class="card-footer">
-      <div class="card-footer-item">{{day.runningTotal | currency}}</div>
+      <div id="dayTotal" class="card-footer-item">{{day.runningTotal | currency}}</div>
       <div (click)="createTransaction(3)" class="card-footer-item divButton is-clickable">Add Income</div>
       <div (click)="createTransaction(2)" class="card-footer-item divButton is-clickable">Add Bill</div>
       <div (click)="createTransaction(1)" class="card-footer-item divButton is-clickable">Add Transaction</div>
