@@ -1,0 +1,10 @@
+{
+  "$schema": "https://on.cypress.io/cypress.schema.json",
+  "chromeWebSecurity": false,
+  "baseUrl": "https://localhost:7139",
+  "env": {
+    "e2eUser": "e2e",
+    "e2ePass": "e33eetw0ee33ee"  
+  }
+}
+

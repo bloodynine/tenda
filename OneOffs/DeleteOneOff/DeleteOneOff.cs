@@ -14,6 +14,7 @@ public class DeleteOneOff : Endpoint<DeleteRequest, Month>
     {
         Delete("api/OneOffs/{Id}");
         Claims("UserId", "SeedId");
+       PostProcessors(new TotalPostProcessor<DeleteRequest, Month>());
     }
 
     public override async Task HandleAsync(DeleteRequest req, CancellationToken ct)

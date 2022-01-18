@@ -12,6 +12,7 @@ public class GetByMonthService : IGetByMonthService
         var transactions = await DB.Find<FinancialTransaction>()
             .Match(x => x.Date >= startDate)
             .Match(x => x.Date <= endDate)
+            .Match(x => x.UserId == userId)
             .ExecuteAsync(ct);
         var seed = await DB.Find<Seed>().Match(x => x.UserId == userId).ExecuteFirstAsync(ct);
         return new Month(startDate, endDate, seed!.Amount, new TransactionCollection(transactions));
