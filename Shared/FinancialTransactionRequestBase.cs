@@ -6,7 +6,7 @@ namespace Tenda.Shared;
 public abstract class FinancialTransactionRequestBase : RequestBase
 {
     public string Name { get; set; } = "";
-    public decimal Amount { get; set; } = 0;
+    public decimal? Amount { get; set; }
     public DateTime Date { get; set; } = new();
 
     public List<string> Tags { get; set; } = new();
@@ -18,6 +18,7 @@ public class FinancialTransactionRequestBaseValidator : Validator<FinancialTrans
     public FinancialTransactionRequestBaseValidator()
     {
         RuleFor(x => x.Name).NotEmpty();
+        RuleFor(x => x.Amount).NotNull();
         Include(new RequestBaseValidator());
     }
 }

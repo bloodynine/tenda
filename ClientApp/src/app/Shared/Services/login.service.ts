@@ -7,6 +7,7 @@ import { LoginResponse } from "../Interfaces/LoginResponse";
 import { BearerToken } from "../Interfaces/BearerToken";
 import { Observable } from "rxjs";
 import { TransactionService } from "../../transaction.service";
+import { HandleHttpError } from "./handle-error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,11 @@ export class LoginService {
               private transactionService: TransactionService) { }
 
   public login(username: string, password: string): void {
-    this.http.post<LoginResponse>(`${this.baseUrl}/users/login`, {username: username, password: password}).subscribe(x => {
+    this.http.post<LoginResponse>(`${this.baseUrl}/users/login`, {username: username, password: password})
+      .pipe(
+        HandleHttpError("Incorrect Username or Password")
+      )
+      .subscribe(x => {
       this.saveTokens(x);
       const today = new Date();
       this.router.navigateByUrl(`year/${today.getFullYear()}/month/${today.getMonth() + 1}`);
@@ -30,7 +35,7 @@ export class LoginService {
 
   public refreshToken(): Observable<LoginResponse> {
     const refreshToken = this.cookies.get('refreshToken')
-    return this.http.post<LoginResponse>(`${this.baseUrl}/users/token`, {token: refreshToken});
+    return this.http.post<LoginResponse>(`${this.baseUrl}/users/token`, {token: refreshToken}).pipe(HandleHttpError("Session has expired"));
   }
 
   public saveTokens(tokens: LoginResponse): void {

@@ -1,0 +1,27 @@
+#notificationBar {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  width: 300px;
+  z-index: 99;
+  opacity: .95;
+  animation-name: slideIn;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: .40s;
+}
+@keyframes slideIn {
+  0% {
+    top: -112px;
+  }
+  70% {
+    top: 2em;
+  }
+  90% {
+    top: .5em;
+  }
+
+  100% {
+    top: 1em;
+  }
+}

@@ -22,7 +22,7 @@ public class RepeatContracts : Entity
         Interval = request.Interval;
         RepeatType = request.Type;
         Name = transaction.Name;
-        Amount = transaction.Amount;
+        Amount = transaction.Amount.GetValueOrDefault();
         UserId = transaction.UserId;
         Type = type;
         Tags = transaction.Tags;

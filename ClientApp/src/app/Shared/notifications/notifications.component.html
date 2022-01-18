@@ -1,0 +1,4 @@
+<div id="notificationBar" class="notification" [ngClass]="notificationClass" *ngIf="showNotification">
+  <button (click)="hideNotification()" class="delete"></button>
+  {{message}}
+</div>

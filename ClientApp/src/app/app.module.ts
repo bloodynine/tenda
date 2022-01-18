@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +19,10 @@ import { MultiTransactionFormComponent } from './multi-transaction-form/multi-tr
 import { TagInputComponent } from './Shared/tag-input/tag-input.component';
 import { FocusDirective } from "./Shared/Directives/focus.directive";
 import { RepeatTypeInputComponent } from './Shared/repeat-type-input/repeat-type-input.component';
+import { NotificationsComponent } from './Shared/notifications/notifications.component';
+import { INJECTOR } from "@angular/core";
+
+export let InjectorInstance: Injector;
 
 @NgModule({
   declarations: [
@@ -33,7 +37,8 @@ import { RepeatTypeInputComponent } from './Shared/repeat-type-input/repeat-type
     MultiTransactionFormComponent,
     FocusDirective,
     TagInputComponent,
-    RepeatTypeInputComponent
+    RepeatTypeInputComponent,
+    NotificationsComponent,
   ],
     imports: [
         BrowserModule,
@@ -46,4 +51,8 @@ import { RepeatTypeInputComponent } from './Shared/repeat-type-input/repeat-type
   providers: [ CookieService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector: Injector) {
+    InjectorInstance = this.injector;
+  }
+}

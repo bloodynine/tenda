@@ -3,6 +3,7 @@ import { Month } from "./Shared/Interfaces/Month";
 import { environment } from "../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { HandleHttpError } from "./Shared/Services/handle-error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,6 @@ export class MonthService {
 
   public GetMonth(year: number, month: number): Observable<Month>{
     console.log('get month')
-    return this.http.get<Month>(`${this.baseUrl}/month/${month}/year/${year}`);
+    return this.http.get<Month>(`${this.baseUrl}/month/${month}/year/${year}`).pipe(HandleHttpError());
   }
 }

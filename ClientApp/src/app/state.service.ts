@@ -38,6 +38,20 @@ export class StateService {
     this.multiTransactionDate.next(date);
   }
 
+  public AddErrorMsg(message: string): void {
+    const state = this.currentState.getValue();
+    state.notificationMsg = message;
+    state.notificationClass = "is-danger";
+    this.currentState.next(state);
+  }
+
+  public ClearNotifications(): void {
+    const state = this.currentState.getValue();
+    state.notificationMsg = null;
+    state.notificationClass="is-primary";
+    this.currentState.next(state);
+  }
+
   public NullRepeatSetting(): void {
     this.editingRepeatSettings.next(undefined);
   }
