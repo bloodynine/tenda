@@ -13,7 +13,7 @@ public class TotalService: ITotalService
             .ExecuteAsync(ct);
 
         decimal total = 0;
-        if (totalDocs.Count < 1) total = totalDocs.Sum();
+        if (totalDocs.Count > 0) total = totalDocs.Sum();
         return await DB.UpdateAndGet<Seed>()
             .MatchID(seedId)
             .Modify(x => x.Amount, total)
