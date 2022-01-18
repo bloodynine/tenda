@@ -34,7 +34,15 @@ describe('Login', () => {
         expect(bearerToken).to.be.null;
       });
 
+  });
+
+  it('should display an error for invalid username/password', () => {
+    cy.get('[formControlName=username]').type('test1');
+    cy.contains('button', 'Login').click();
+
+    cy.get('#notificationBar').should('contain.text', 'Incorrect Username or Password');
+    cy.get('#notificationBar').find('button').click();
+
+    cy.get('#notificationBar').should('not.exist');
   })
-
-
 })
