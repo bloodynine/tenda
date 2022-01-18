@@ -66,6 +66,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseDefaultExceptionHandler();
 app.UseFastEndpoints();
 app.UseSwagger();
 app.UseSwaggerUI();

@@ -39,6 +39,7 @@ public class CreateManyOneOffsRequestValidator : Validator<CreateManyOneOffsRequ
         RuleForEach(x => x.OneOffs).ChildRules(y =>
         {
             y.RuleFor(x => x.Name).NotEmpty();
+            y.RuleFor(x => x.Amount).NotEqual(0);
             y.RuleFor(x => x.Date).GreaterThan(new DateTime());
         });
     }

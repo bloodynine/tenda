@@ -31,7 +31,7 @@ public class FinancialTransaction : Entity
     public FinancialTransaction(FinancialTransactionRequestBase request, bool isResolved, TransactionType type)
     {
         Name = request.Name;
-        Amount = request.Amount;
+        Amount = request.Amount.GetValueOrDefault();
         IsResolved = isResolved;
         Date = request.Date;
         UserId = request.UserId;

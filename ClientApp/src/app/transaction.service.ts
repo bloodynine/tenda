@@ -1,11 +1,15 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {BehaviorSubject, ReplaySubject, Subject} from "rxjs";
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from "rxjs";
 import {Month} from "./Shared/Interfaces/Month";
 import {BearerToken} from "./Shared/Interfaces/BearerToken";
 import {HubConnectionBuilder, IHttpConnectionOptions, LogLevel} from "@microsoft/signalr";
 import {Transaction, TransactionType} from "./Shared/Interfaces/Transaction";
+import { catchError } from "rxjs/operators";
+import { StateService } from "./state.service";
+import { TendaError, ValidationError } from "./Shared/Interfaces/ValidationError";
+import { HandleHttpError } from "./Shared/Services/handle-error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +32,8 @@ export class TransactionService {
     .configureLogging(LogLevel.Error)
     .withUrl(`${this.baseUrl}/resolvedTotal`, this.options)
     .build();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private stateService: StateService) { }
 
   public SubscribeToSignalR(): void {
     this.signalRConnection.start().then(x => {
@@ -45,21 +50,28 @@ export class TransactionService {
 
   public UpdateTransaction(transaction: Transaction): Promise<Month> {
     return this.http.put<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}`, transaction)
+      .pipe(HandleHttpError())
       .toPromise();
   }
 
   public CreateNewTransaction(transaction: Transaction): Promise<Month> {
-    return this.http.post<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}`, transaction).toPromise();
+    return this.http.post<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}`, transaction)
+      .pipe(HandleHttpError())
+      .toPromise();
   }
 
   public DeleteTransaction(transaction: Transaction): Promise<Month> {
     const params = new HttpParams().set('ViewDate', transaction.date.toString());
-    return this.http.delete<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}/`, {params:params}).toPromise();
+    return this.http.delete<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}/`, {params:params})
+      .pipe(HandleHttpError())
+      .toPromise();
   }
 
   public CreateBulkTransactions(transactions: Transaction[]): Promise<Month>{
     const body = {oneOffs: transactions};
-    return this.http.post<Month>(`${this.baseUrl}/oneOffs/bulk`, body).toPromise();
+    return this.http.post<Month>(`${this.baseUrl}/oneOffs/bulk`, body)
+      .pipe(HandleHttpError())
+      .toPromise();
   }
 
   public GetTags(): Promise<string[]> {
