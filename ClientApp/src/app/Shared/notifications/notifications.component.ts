@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from "../../state.service";
+import {BehaviorSubject} from "rxjs";
+import {delay, take} from "rxjs/operators";
 
 @Component({
   selector: 'app-notifications',
@@ -10,6 +12,7 @@ export class NotificationsComponent implements OnInit {
   showNotification: boolean = false;
   notificationClass: string = "is-primary"
   message: string = "";
+  waitMe: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(
     private stateService: StateService
   ) { }
@@ -20,6 +23,7 @@ export class NotificationsComponent implements OnInit {
         this.showNotification = true;
         this.notificationClass = x.notificationClass;
         this.message = x.notificationMsg;
+        this.waitMe.pipe(delay(8000), take(1)).subscribe(x => this.stateService.ClearNotifications())
       } else{
         this.showNotification = false;
       }

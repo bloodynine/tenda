@@ -8,20 +8,25 @@
   animation-name: slideIn;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: .40s;
+  animation-duration: 8s;
 }
 @keyframes slideIn {
   0% {
     top: -112px;
   }
-  70% {
+  3% {
     top: 2em;
   }
-  90% {
+  5% {
     top: .5em;
   }
-
-  100% {
+  6% {
     top: 1em;
+  }
+  90% {
+    opacity: .95;
+  }
+  100% {
+    opacity: 0;
   }
 }
