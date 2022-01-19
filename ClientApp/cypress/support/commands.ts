@@ -9,6 +9,7 @@ Cypress.Commands.add('apiLogin', (user) => {
       const tokens = response.body;
       const bearerToken = {token: tokens.bearerToken, expiresAt: tokens.bearerExpiresAt};
       localStorage.setItem('bearerToken', JSON.stringify(bearerToken) );
+      cy.setCookie('refreshToken', tokens.refreshToken, {sameSite: "strict"})
     }
   )
 });

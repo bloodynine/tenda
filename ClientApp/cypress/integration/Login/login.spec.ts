@@ -45,4 +45,12 @@ describe('Login', () => {
 
     cy.get('#notificationBar').should('not.exist');
   })
+
+  it('should redirect away from the login page if user already has a refresh token', () => {
+    cy.apiLogin({})
+
+    cy.visit('/');
+    cy.url().should('include', '/year');
+    cy.get('.navbar-item').contains('Tenda')
+  })
 })
