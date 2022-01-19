@@ -5,7 +5,6 @@
   <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
     <div class="card-content">
       <div formArrayName="list">
-
       <div class="box" *ngFor="let control of formArray.controls; let i = index">
         <div [formGroupName]="i">
           <div *ngIf="i > 0" (click)="removeTransaction(1)" class="icon is-pulled-right is-clickable pb-1">
@@ -31,7 +30,7 @@
       </div>
       </div>
     <div>
-      <button (click)="addAnother()" class="button">Add Another</button>
+      <button (click)="addAnother()" class="button mt-1">Add Another</button>
     </div>
   </div>
   <div class="card-footer">
