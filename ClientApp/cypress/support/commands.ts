@@ -46,3 +46,7 @@ Cypress.Commands.add('dayTotal', (dateString: string) => {
       .replace(',', '').trim()
     )
 })
+
+Cypress.Commands.add('openTransactionForm', (dateString: string, formType: string) => {
+  cy.getDay(dateString).find('.divButton').contains(`Add ${formType}`).click()
+} )

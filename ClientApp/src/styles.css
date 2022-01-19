@@ -6,7 +6,22 @@
   background-color: #fafafa;
 }
 
+.divButton {
+  cursor: pointer;
+}
+
 .deleteButton:hover {
   color: #c74854 !important;
   background-color: #fafafa;
+}
+
+.disabledDivButton {
+  opacity: .5;
+  cursor: not-allowed !important;
+}
+
+.disabledDivButton:hover  {
+  background-color: white !important;
+  cursor: default;
+  color: darkgrey;
 }
