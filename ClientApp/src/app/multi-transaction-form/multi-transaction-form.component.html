@@ -2,24 +2,33 @@
   <div class="card-header">
     <div class="card-header-title">Add New Transactions</div>
   </div>
-  <div class="card-content">
-      <div class="box" *ngFor="let transaction of transactions; let i = index">
-        <div (click)="removeTransaction(i)" class="icon is-pulled-right is-clickable pb-1">
-          <i-feather name="X"></i-feather>
-        </div>
-        <div class="field">
-          <label class="label">Name</label>
-          <div class="control">
-            <input appFocus type="text" class="input" [(ngModel)]="transaction.name">
+  <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+    <div class="card-content">
+      <div formArrayName="list">
+
+      <div class="box" *ngFor="let control of formArray.controls; let i = index">
+        <div [formGroupName]="i">
+          <div *ngIf="i > 0" (click)="removeTransaction(1)" class="icon is-pulled-right is-clickable pb-1">
+            <i-feather name="X"></i-feather>
           </div>
-        </div>
-        <div class="field">
-          <label class="label">Amount</label>
-          <div class="control">
-            <input type="text" class="input" [(ngModel)]="transaction.amount">
+          <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+              <input [class.is-danger]="doesFieldHaveError(i, 'transactionName')" appFocus type="text" class="input" formControlName="transactionName">
+            </div>
+            <p *ngIf="doesFieldHaveError(i, 'transactionName', 'required')" class="help is-danger">Name field is required</p>
           </div>
+          <div class="field">
+            <label class="label">Amount</label>
+            <div class="control">
+              <input [class.is-danger]="doesFieldHaveError(i, 'amount')" type="text" class="input" formControlName="amount">
+            </div>
+            <p *ngIf="doesFieldHaveError(i, 'amount', 'required')" class="help is-danger">Amount field is required</p>
+            <p *ngIf="doesFieldHaveError(i, 'amount', 'pattern')" class="help is-danger">Amount field must be a number</p>
+          </div>
+          <app-tag-input [(selectedTags)]="transactionTags[i]"></app-tag-input>
         </div>
-        <app-tag-input [(selectedTags)]="transaction.tags"></app-tag-input>
+      </div>
       </div>
     <div>
       <button (click)="addAnother()" class="button">Add Another</button>
@@ -27,6 +36,7 @@
   </div>
   <div class="card-footer">
     <div (click)="cancel()" class="card-footer-item is-clickable divButton">Cancel</div>
-    <div (click)="save()" class="card-footer-item is-clickable divButton">Save</div>
+    <div (click)="save()" [class.disabledDivButton]="this.form.invalid" class="card-footer-item divButton">Save</div>
   </div>
+  </form>
 </div>

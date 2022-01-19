@@ -51,7 +51,6 @@ export class TagInputComponent implements OnInit {
     }
     const unSelectedTags = this.allTags.filter(x => !this.selectedTags.includes(x))
     this.dropDownTags = unSelectedTags.filter(x => x.includes(this.typedInput)).slice(0, 7);
-    console.log(this.dropDownTags)
   }
 
   private addAndEmitTag(tag: string){
@@ -69,16 +68,12 @@ export class TagInputComponent implements OnInit {
 
   moveDown() {
     if(this.dropDownTags.length -1 > this.activeItemIndex){
-      console.log('incr')
       this.activeItemIndex++;
-      console.log(this.activeItemIndex)
     }
   }
   moveUp() {
     if(this.activeItemIndex > -1){
-      console.log('deincr')
       this.activeItemIndex--;
-      console.log(this.activeItemIndex)
     }
   }
   escape() {
