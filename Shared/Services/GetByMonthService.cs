@@ -14,8 +14,16 @@ public class GetByMonthService : IGetByMonthService
             .Match(x => x.Date <= endDate)
             .Match(x => x.UserId == userId)
             .ExecuteAsync(ct);
-        var seed = await DB.Find<Seed>().Match(x => x.UserId == userId).ExecuteFirstAsync(ct);
-        return new Month(startDate, endDate, seed!.Amount, new TransactionCollection(transactions));
+
+        var previousTransactions = await DB.Find<FinancialTransaction, Decimal>()
+            .Match(x => x.UserId == userId)
+            .Match(x => x.Date < startDate)
+            .Project(x => x.Amount)
+            .ExecuteAsync(ct);
+
+        decimal total = 0;
+        if (previousTransactions.Count > 0) total = previousTransactions.Sum();
+        return new Month(startDate, endDate, total, new TransactionCollection(transactions));
     }
 
     public async Task<Month> GetMonth(DateTime date, string userId, CancellationToken ct)
