@@ -1,5 +1,5 @@
 #notificationBar {
-  position: absolute;
+  position: fixed;
   right: 1em;
   top: 1em;
   width: 300px;
