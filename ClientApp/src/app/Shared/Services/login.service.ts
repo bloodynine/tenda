@@ -35,7 +35,7 @@ export class LoginService {
 
   public refreshToken(): Observable<LoginResponse> {
     const refreshToken = this.cookies.get('refreshToken')
-    return this.http.post<LoginResponse>(`${this.baseUrl}/users/token`, {token: refreshToken}).pipe(HandleHttpError("Session has expired"));
+    return this.http.post<LoginResponse>(`${this.baseUrl}/users/token`, {token: refreshToken});
   }
 
   public saveTokens(tokens: LoginResponse): void {
