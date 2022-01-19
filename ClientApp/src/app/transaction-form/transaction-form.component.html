@@ -9,8 +9,9 @@
       <div class="field">
         <label class="label">Name</label>
         <div class="control">
-          <input class="input" formControlName="transactionName" type="text">
+          <input class="input" [class.is-danger]="doesFieldHaveError('transactionName')" formControlName="transactionName" type="text">
         </div>
+        <p *ngIf="doesFieldHaveError('transactionName', 'required')" class="help is-danger">Name field is required</p>
       </div>
       <div class="field">
         <label class="label">Date</label>
@@ -21,8 +22,10 @@
       <div class="field">
         <label class="label">Amount</label>
         <div class="control">
-          <input class="input" formControlName="amount" type="text">
+          <input class="input" [class.is-danger]="doesFieldHaveError('amount')" formControlName="amount" type="text">
         </div>
+        <p *ngIf="doesFieldHaveError('amount', 'required')" class="help is-danger">Amount field is required</p>
+        <p *ngIf="doesFieldHaveError('amount', 'pattern')" class="help is-danger">Amount must be a number</p>
       </div>
       <div *ngIf="showModifyRepeatButton" class="field">
         <button (click)="editRepeatSettings()" class="button">Edit Repeat Settings</button>
@@ -38,6 +41,7 @@
               <div class="control">
                 <input class="input" formControlName="interval" type="text">
               </div>
+              <p *ngIf="doesFieldHaveError('interval', 'pattern')" class="help is-danger">Interval must be a number when not empty</p>
             </div>
           </div>
         </div>
@@ -51,7 +55,7 @@
       <div (click)="cancel()" class="card-footer-item is-clickable divButton">
         Cancel
       </div>
-      <div (click)="save()" class="card-footer-item is-clickable divButton">
+      <div (click)="save()" class="card-footer-item  divButton" [class.disabledDivButton]="isFormInvalid()">
         Save
       </div>
     </div>

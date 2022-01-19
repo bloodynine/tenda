@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {Transaction, TransactionType, TransactionTypeLabelMapping} from "../Shared/Interfaces/Transaction";
-import {FormControl, FormGroup} from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import * as bulmaCalendar from "bulma-calendar";
 import {TransactionService} from "../transaction.service";
 import {RepeatType, RepeatTypeLabel} from "../Shared/Interfaces/RepeatSettings";
@@ -22,7 +22,8 @@ export class TransactionFormComponent implements OnInit {
   constructor(private elRef: ElementRef,
               private transactionService: TransactionService,
               private stateService: StateService,
-              private repeatService: RepeatService) { }
+              private repeatService: RepeatService,
+              private fb: FormBuilder) { }
 
   get isNewTransaction(): boolean {
     return !this.transaction.id;
@@ -35,15 +36,28 @@ export class TransactionFormComponent implements OnInit {
     return !this.isNewTransaction && this.transaction.isRepeating;
   }
 
+  isFormInvalid(): boolean {
+    return this.form.status == 'INVALID'
+  }
+
+  doesFieldHaveError(fieldName: string, error?: string): boolean {
+    const pristine = this.form.get(fieldName)?.pristine;
+    if(!error){
+      return !pristine && (this.form.get(fieldName)?.invalid ?? false);
+    }
+    return !pristine && (this.form.get(fieldName)?.hasError(error) ?? false);
+  }
+
   ngOnInit(): void {
+    const numRegex = /^-?\d*[.,]?\d{0,2}$/;
     this.stateService.editingTransaction.subscribe(x => {
       this.transaction = x;
       this.form = new FormGroup({
-        transactionName: new FormControl(x.name),
-        amount: new FormControl(x.amount),
-        date: new FormControl(x.date),
+        transactionName: new FormControl(x.name, [Validators.required]),
+        amount: new FormControl(x.amount, [Validators.required, Validators.pattern(numRegex)]),
+        date: new FormControl(x.date, [Validators.required]),
         repeatFrequency: new FormControl(''),
-        interval: new FormControl('')
+        interval: new FormControl('', [Validators.pattern(numRegex)])
       })
     })
   }
@@ -59,6 +73,9 @@ export class TransactionFormComponent implements OnInit {
   }
 
   save() {
+    if(this.isFormInvalid()){
+      return;
+    }
     this.patchInValues();
     if(this.isNewTransaction){
       this.transactionService.CreateNewTransaction(this.transaction)
