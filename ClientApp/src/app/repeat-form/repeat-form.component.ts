@@ -30,7 +30,8 @@ export class RepeatFormComponent implements OnInit {
         name: new FormControl(x.name),
         interval: new FormControl(x.interval),
         repeatFrequency: new FormControl(x.repeatType),
-        startDate: new FormControl(x.startDate)
+        startDate: new FormControl(x.startDate),
+        amount: new FormControl(x.amount)
       });
     });
   }
@@ -41,6 +42,7 @@ export class RepeatFormComponent implements OnInit {
       this.repeatContract.interval = this.form.get('interval')?.value;
       this.repeatContract.startDate = new Date(this.form.get('startDate')?.value);
       this.repeatContract.name = this.form.get('name')?.value;
+      this.repeatContract.amount = this.form.get('amount')?.value;
       this.repeatService.UpdateRepeatContract(this.repeatContract.id, this.repeatContract)
         .then(x => {
           this.stateService.ExitAllModals();

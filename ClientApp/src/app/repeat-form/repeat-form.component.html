@@ -12,6 +12,12 @@
           <app-date-selector [(startDate)]="repeatContract.startDate"></app-date-selector>
         </div>
       </div>
+      <div class="field">
+        <label class="label">Amount</label>
+        <div class="control">
+          <input inputmode="decimal" class="input" formControlName="amount" name="amount">
+        </div>
+      </div>
       <div class="columns">
         <div class="column">
           <app-repeat-type-input [form]="form"></app-repeat-type-input>
