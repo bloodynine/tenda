@@ -50,3 +50,7 @@ Cypress.Commands.add('dayTotal', (dateString: string) => {
 Cypress.Commands.add('openTransactionForm', (dateString: string, formType: string) => {
   cy.getDay(dateString).find('.divButton').contains(`Add ${formType}`).click()
 } )
+
+Cypress.Commands.add('getTextField', (label:string) => {
+  return cy.get('label').contains(label).siblings('.control').find('.input');
+})

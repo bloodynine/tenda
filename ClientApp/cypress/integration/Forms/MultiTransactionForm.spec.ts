@@ -59,4 +59,35 @@ describe('Multi Transaction Form', () => {
     cy.get('.help.is-danger').should('contain', 'Name field is required')
     saveIsDisabled();
   })
+
+  it('should be invalid with no amount', ()=> {
+    const name1 = (Math.random() + 1).toString(36).substring(7);
+    cy.openTransactionForm(date, 'Transaction');
+    cy.getTextField('Name').type(name1);
+    cy.getTextField('Amount').type('1');
+    cy.focused().clear();
+
+    cy.get('.help.is-danger').should('contain', 'Amount field is required')
+    saveIsDisabled();
+  })
+
+  it('should be invalid with invalid numbers in amount', ()=> {
+    const testAmounts = ['d', '1.111', '1d2']
+    cy.openTransactionForm(date, 'Transaction');
+    testAmounts.forEach(x => {
+      cy.getTextField('Amount').type(x);
+
+      saveIsDisabled();
+      cy.get('.help.is-danger').contains('Amount must be a number');
+      cy.focused().clear();
+    })
+  })
+
+  it('should cancel', ()=> {
+    cy.openTransactionForm(date, 'Transaction');
+    cy.get('.divButton').contains('Cancel').click();
+
+    cy.getDay(date).find('#bills')
+  })
 })
+

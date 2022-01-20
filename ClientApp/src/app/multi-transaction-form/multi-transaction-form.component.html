@@ -23,7 +23,7 @@
               <input [class.is-danger]="doesFieldHaveError(i, 'amount')" type="text" class="input" formControlName="amount">
             </div>
             <p *ngIf="doesFieldHaveError(i, 'amount', 'required')" class="help is-danger">Amount field is required</p>
-            <p *ngIf="doesFieldHaveError(i, 'amount', 'pattern')" class="help is-danger">Amount field must be a number</p>
+            <p *ngIf="doesFieldHaveError(i, 'amount', 'pattern')" class="help is-danger">Amount must be a number</p>
           </div>
           <app-tag-input [(selectedTags)]="transactionTags[i]"></app-tag-input>
         </div>
