@@ -16,6 +16,7 @@ declare global {
       deleteTransaction(transactionName: string): void;
       dayTotal(dateString: string): Chainable<number>;
       openTransactionForm(dateString: string, formType: string): Chainable<JQuery>;
+      getTextField(labelName: string): Chainable<JQuery>;
     }
   }
 }
