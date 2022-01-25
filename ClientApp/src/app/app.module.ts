@@ -21,6 +21,7 @@ import { FocusDirective } from "./Shared/Directives/focus.directive";
 import { RepeatTypeInputComponent } from './Shared/repeat-type-input/repeat-type-input.component';
 import { NotificationsComponent } from './Shared/notifications/notifications.component';
 import { INJECTOR } from "@angular/core";
+import { TransactionSearchComponent } from './transaction-search/transaction-search.component';
 
 export let InjectorInstance: Injector;
 
@@ -39,6 +40,7 @@ export let InjectorInstance: Injector;
     TagInputComponent,
     RepeatTypeInputComponent,
     NotificationsComponent,
+    TransactionSearchComponent,
   ],
     imports: [
         BrowserModule,

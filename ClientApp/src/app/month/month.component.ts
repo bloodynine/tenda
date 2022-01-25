@@ -10,6 +10,7 @@ import { BehaviorSubject } from "rxjs";
 import { CurrentState, ModelWindow } from "../Shared/Interfaces/CurrentState";
 import { MonthService } from "../month.service";
 import { LoginService } from "../Shared/Services/login.service";
+import { Day } from "../Shared/Interfaces/Day";
 
 @Component({
   selector: 'app-month',
@@ -24,6 +25,7 @@ export class MonthComponent implements OnInit {
   editingRepeatContract: RepeatContract  | null = null;
   scrollDate: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
   currentState: CurrentState = {} as CurrentState;
+  monthlyTransactions: Transaction[] = [];
   public modalWindow = ModelWindow;
 
   selectedDate: Date = new Date();
@@ -45,7 +47,11 @@ export class MonthComponent implements OnInit {
     this.stateService.currentState.subscribe(x => this.currentState = x);
     this.stateService.month.subscribe(x => {
       this.month = x;
-      // this.total = x.resolvedTotal;
+      if(x.days){
+        x.days.forEach(x => {
+          this.addDaysTransactionToMonthlyList(x);
+        });
+      }
     });
     this.transactionService.SubscribeToSignalR();
     this.transactionService.total.subscribe(x => {
@@ -94,5 +100,23 @@ export class MonthComponent implements OnInit {
 
   signOut() {
     this.loginSerivce.SignOut();
+  }
+
+  private addDaysTransactionToMonthlyList(day: Day){
+    day.incomes.forEach(x => this.monthlyTransactions.push(x));
+    day.bills.forEach(x => this.monthlyTransactions.push(x));
+    day.oneOffs.forEach(x => this.monthlyTransactions.push(x));
+  }
+
+  openSearch() {
+    this.stateService.OpenQuickSearch();
+  }
+  scroll(id: string){
+    (<HTMLInputElement>document.getElementById(id)).scrollIntoView({behavior: "smooth"})
+    this.openSearch();
+  }
+
+  closeSearch() {
+    this.stateService.CloseQuickSearch();
   }
 }
