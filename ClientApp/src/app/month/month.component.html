@@ -1,3 +1,8 @@
+<div (document:keyup.q)="openSearch()" (document:keydown.esc)="closeSearch()">
+  <ng-container *ngIf="currentState.displayQuickSearch">
+    <app-transaction-search [transactions]="monthlyTransactions" (id)="scroll($event)"></app-transaction-search>
+  </ng-container>
+</div>
 <nav class="navbar">
   <div class="navbar-brand">
     <div class="navbar-item">Tenda</div>
@@ -18,7 +23,6 @@
     </div>
     <div class="navbar-end navbar-item"><h1 class="title is-5">Total: {{total | currency}}</h1></div>
   </div>
-
 </nav>
 <div *ngIf="month">
   <section class="section">

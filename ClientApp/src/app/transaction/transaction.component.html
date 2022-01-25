@@ -1,6 +1,6 @@
 <div *ngIf="transaction" class="card mb-1" [ngClass]="classType" xmlns:divj="http://www.w3.org/1999/html">
   <div class="card-content">
-    <div class="columns">
+    <div [id]="transaction.name" class="columns">
       <div class="column is-full">
         <a (click)="editTransaction()">{{transaction.name}} </a><span *ngIf="transaction.isRepeating" class="icon is-pulled-right"><i-feather name="repeat"></i-feather></span>
       </div>

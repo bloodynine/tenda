@@ -9,7 +9,7 @@ import { Transaction } from "./Shared/Interfaces/Transaction";
   providedIn: 'root'
 })
 export class StateService {
-  public currentState: BehaviorSubject<CurrentState> = new BehaviorSubject<CurrentState>({} as CurrentState);
+  public currentState: BehaviorSubject<CurrentState> = new BehaviorSubject<CurrentState>({modalWindow: ModelWindow.None} as CurrentState);
   public editingRepeatSettings: Subject<RepeatContract> = new ReplaySubject();
   public month: BehaviorSubject<Month> = new BehaviorSubject<Month>({} as Month);
   public editingTransaction: Subject<Transaction> = new ReplaySubject();
@@ -70,6 +70,21 @@ export class StateService {
     console.log(date)
     const state = this.currentState.getValue();
     state.currentViewDate = date;
+    this.currentState.next(state);
+  }
+
+  public OpenQuickSearch(): void {
+    const state = this.currentState.getValue();
+    console.log(state)
+    if(state.modalWindow == ModelWindow.None){
+      state.displayQuickSearch = true;
+      this.currentState.next(state);
+    }
+  }
+
+  public CloseQuickSearch(): void {
+    const state = this.currentState.getValue();
+    state.displayQuickSearch = false;
     this.currentState.next(state);
   }
 }

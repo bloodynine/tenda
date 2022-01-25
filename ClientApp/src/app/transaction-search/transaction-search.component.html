@@ -1,0 +1,31 @@
+
+<div id="searchBar">
+  <div class="card">
+    <div class="card-header-title">
+      Quick Search
+    </div>
+    <div class="card-content">
+      <div class="control">
+        <div class="field">
+          <input
+            (input)="filterList()"
+            (keydown.enter)="emitId()"
+            (keydown.arrowDown)="moveDown()"
+            (keydown.arrowUp)="moveUp()"
+            [(ngModel)]="typedInput"
+            appFocus class="input" type="text">
+        </div>
+      </div>
+      <div role="menu" class="dropdown is-active" id="dropdown-menu" >
+        <div class="dropdown-menu">
+          <div class="dropdown-content">
+            <a *ngFor="let item of selectionItems; let i = index;" [class.is-active]="i === activeItemIndex" class="dropdown-item" (click)="selectTransaction(item)">
+              {{item}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
