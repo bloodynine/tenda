@@ -50,7 +50,7 @@ export class TagInputComponent implements OnInit {
       this.showDropdown = true;
     }
     const unSelectedTags = this.allTags.filter(x => !this.selectedTags.includes(x))
-    this.dropDownTags = unSelectedTags.filter(x => x.includes(this.typedInput)).slice(0, 7);
+    this.dropDownTags = unSelectedTags.filter(x => x.toLowerCase().includes(this.typedInput.toLowerCase())).slice(0, 7);
   }
 
   private addAndEmitTag(tag: string){
