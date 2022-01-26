@@ -69,3 +69,36 @@ describe('Single Transaction Form', () => {
   });
 })
 
+describe.only('Single Transaction Form Tag Tests', () => {
+  const date = 'Dec 1, 2022';
+  beforeEach(() => {
+    cy.apiLogin({});
+    cy.goToMonth({year: 2022, month: 12})
+  });
+
+  it('should update the list of tags when saved', () => {
+    cy.openTransactionForm(date, 'Income');
+    cy.getTextField('Name').type('Name1');
+    cy.getTextField('Amount').type('1');
+    cy.getTextField('Tags').type('Tag1{enter}')
+    cy.getTextField('Tags').type('Tag2{enter}')
+    cy.getTextField('Tags').type('Three{enter}')
+    cy.contains('.divButton', 'Save').click();
+
+    cy.goToMonth({year: 2022, month: 12}) // Re-naving to the page to fix detached dom issue with cypress
+    cy.openTransactionForm(date, 'income')
+
+    cy.getTextField('Tags').type('T');
+    cy.get('.dropdown-item').should('contain', 'Tag1')
+      .and('contain', 'Tag2')
+      .and('contain', 'Three')
+
+    cy.focused().clear();
+    cy.getTextField('Tags').type('th');
+    cy.get('.dropdown-item').should('contain', 'Three');
+
+    cy.get('.modal-close').click();
+    cy.deleteTransaction('Name1');
+  })
+})
+
