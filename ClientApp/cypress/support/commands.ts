@@ -20,7 +20,7 @@ Cypress.Commands.add('goToMonth', (dateObj) => {
 
 Cypress.Commands.add('getDay', (dateStr) =>
 {
-  return cy.get('div').contains(dateStr).parents('.card');
+  return cy.get(`[data-cy='${dateStr}']`)
 })
 
 Cypress.Commands.add('dataCy', (value) => {
@@ -48,7 +48,18 @@ Cypress.Commands.add('dayTotal', (dateString: string) => {
 })
 
 Cypress.Commands.add('openTransactionForm', (dateString: string, formType: string) => {
-  cy.getDay(dateString).find('.divButton').contains(`Add ${formType}`).click()
+  let cntrlName = '';
+  if(formType.toLowerCase() === 'income'){
+    cntrlName = '[data-cy=addIncome]';
+  }
+  if(formType.toLowerCase() === 'bill'){
+    cntrlName = '[data-cy=addBill]';
+  }
+  if(formType.toLowerCase() === 'transaction'){
+    cntrlName = '[data-cy=addTransaction]';
+  }
+  cy.getDay(dateString).find(cntrlName).should('exist')
+  cy.getDay(dateString).find(cntrlName).click();
 } )
 
 Cypress.Commands.add('getTextField', (label:string) => {
