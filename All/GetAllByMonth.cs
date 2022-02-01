@@ -1,7 +1,4 @@
-﻿using FastEndpoints;
-using Microsoft.AspNetCore.SignalR;
-using Tenda.Shared.Hubs;
-using Tenda.Shared.Models;
+﻿using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
 namespace Tenda.All;

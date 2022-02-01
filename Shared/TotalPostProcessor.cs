@@ -1,8 +1,9 @@
-﻿using FastEndpoints;
-using FastEndpoints.Validation.Results;
+﻿using FastEndpoints.Validation.Results;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Caching.Memory;
+using Tenda.OneOffs.CreateManyOneOffs;
+using Tenda.Shared.Extensions;
 using Tenda.Shared.Hubs;
-using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
 namespace Tenda.Shared;
@@ -14,10 +15,28 @@ public class TotalPostProcessor<TRequest, TResponse> : IPostProcessor<TRequest, 
     {
         var totalService = ctx.RequestServices.GetRequiredService<ITotalService>();
         var hubContext = ctx.RequestServices.GetRequiredService<IHubContext<ResolvedTotal>>();
+        var cacheService = ctx.RequestServices.GetRequiredService<IMemoryCache>();
         if (req is FinancialTransactionRequestBase @base)
         {
+            var result = cacheService.TryGetValue(@base.UserId.ToTagKey(), out List<string> cachedTags);
+            var existingTags = result ? cachedTags : new List<string>();
+            var newTags = GetTagsFromRequest(req);
+            existingTags.AddRange(newTags);
+            cacheService.Set(@base.UserId.ToTagKey(), existingTags.ToList(), TimeSpan.FromMinutes(10));
             var seed = await totalService.CalculateTotal(@base.UserId, @base.SeedId, ct);
             await hubContext.Clients.User(@base.UserId).SendAsync("ResolvedTotal", seed, ct);
         }
+    }
+
+    private IEnumerable<string> GetTagsFromRequest(TRequest request)
+    {
+        if (request is not FinancialTransactionRequestBase @financialTransactionRequestBase)
+            return Enumerable.Empty<string>();
+        if (request is CreateManyOneOffsRequest @manyOneOffsRequest)
+        {
+            return @manyOneOffsRequest.OneOffs.SelectMany(x => x.Tags);
+        }
+
+        return @financialTransactionRequestBase.Tags;
     }
 }

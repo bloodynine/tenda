@@ -21,7 +21,7 @@ describe('Single Transaction Form', () => {
     saveNotDisabled();
 
     cy.get('.divButton').contains('Save').click();
-
+    cy.goToMonth({year: 2022, month: 12})
     cy.getDay(date).find('#incomes').children().contains('Name1');
     cy.deleteTransaction('Name1')
   });

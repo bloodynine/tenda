@@ -16,6 +16,7 @@
     <PackageReference Include="FastEndpoints.Swagger" Version="2.9.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.21" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
     <PackageReference Include="MongoDB.Entities" Version="21.0.0-alpha3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
