@@ -13,10 +13,11 @@
             (keydown.arrowDown)="moveDown()"
             (keydown.arrowUp)="moveUp()"
             [(ngModel)]="typedInput"
-            appFocus class="input" type="text">
+            appFocus class="input" type="text"
+          name="quickSearch">
         </div>
       </div>
-      <div role="menu" class="dropdown is-active" id="dropdown-menu" >
+      <div *ngIf="showDropdown" role="menu" class="dropdown is-active" id="dropdown-menu" >
         <div class="dropdown-menu">
           <div class="dropdown-content">
             <a *ngFor="let item of selectionItems; let i = index;" [class.is-active]="i === activeItemIndex" class="dropdown-item" (click)="selectTransaction(item)">

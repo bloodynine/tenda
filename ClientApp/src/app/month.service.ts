@@ -16,7 +16,6 @@ export class MonthService {
   ) { }
 
   public GetMonth(year: number, month: number): Observable<Month>{
-    console.log('get month')
     return this.http.get<Month>(`${this.baseUrl}/month/${month}/year/${year}`).pipe(HandleHttpError());
   }
 }

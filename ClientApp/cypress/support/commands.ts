@@ -31,6 +31,7 @@ Cypress.Commands.add('transactionFill', (transactionName: string, amount: number
   cy.get('label').contains('Name').siblings('.control').find('.input').type(transactionName);
   cy.get('label').contains('Amount').siblings('.control').find('.input').type(`${amount}`);
   cy.contains('.divButton', 'Save').click();
+  cy.get('a').should('contain', transactionName);
 })
 
 Cypress.Commands.add('deleteTransaction', (transactionName: string) => {

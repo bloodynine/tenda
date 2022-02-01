@@ -67,7 +67,6 @@ export class StateService {
   }
 
   public UpdateViewDate(date: Date): void {
-    console.log(date)
     const state = this.currentState.getValue();
     state.currentViewDate = date;
     this.currentState.next(state);
@@ -75,7 +74,6 @@ export class StateService {
 
   public OpenQuickSearch(): void {
     const state = this.currentState.getValue();
-    console.log(state)
     if(state.modalWindow == ModelWindow.None){
       state.displayQuickSearch = true;
       this.currentState.next(state);

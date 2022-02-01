@@ -8,7 +8,7 @@
   "files": [
     "src/main.ts",
     "src/polyfills.ts",
-    "src/app/Shared/Seed.ts"
+    "node_modules/date-fns/typings.d.ts"
   ],
   "include": [
     "src/**/*.d.ts"

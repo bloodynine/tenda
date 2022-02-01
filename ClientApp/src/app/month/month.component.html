@@ -1,6 +1,6 @@
 <div (document:keyup.q)="openSearch()" (document:keydown.esc)="closeSearch()">
   <ng-container *ngIf="currentState.displayQuickSearch">
-    <app-transaction-search [transactions]="monthlyTransactions" (id)="scroll($event)"></app-transaction-search>
+    <app-transaction-search [transactions]="monthlyTransactions" [dates]="month?.days" (id)="scroll($event)"></app-transaction-search>
   </ng-container>
 </div>
 <nav class="navbar">

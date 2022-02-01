@@ -60,7 +60,6 @@ export class RepeatFormComponent implements OnInit {
   }
 
   deleteContract(): void {
-    console.log('wtv')
     if(this.repeatContract){
       this.repeatService.DeleteRepeatContract(this.repeatContract.id).then(x => {
         this.stateService.ExitAllModals();
