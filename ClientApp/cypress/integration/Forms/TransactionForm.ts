@@ -69,7 +69,7 @@ describe('Single Transaction Form', () => {
   });
 })
 
-describe.only('Single Transaction Form Tag Tests', () => {
+describe('Single Transaction Form Tag Tests', () => {
   const date = 'Dec 1, 2022';
   beforeEach(() => {
     cy.apiLogin({});

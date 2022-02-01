@@ -11,11 +11,14 @@ import { StateService } from "../state.service";
 })
 export class DayComponent implements OnInit {
   @Input() day : Day | undefined;
+  localDate: string = '';
   constructor(
     private transactionService: TransactionService,
     private stateService: StateService) { }
 
   ngOnInit(): void {
+    const options = {month: 'short', day: "numeric"} as Intl.DateTimeFormatOptions;
+    this.localDate = new Date(this.day?.date ?? '').toLocaleDateString('en-US', options) ?? '';
   }
 
   createTransaction(type: TransactionType): void {
