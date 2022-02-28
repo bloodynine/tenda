@@ -3,7 +3,7 @@
     <div class="card-content">
       <div class="field"><label class="label">Name</label>
         <div class="control">
-          <input [class.is-danger]="doesFieldHaveError('transactionName')" class="input" formControlName="name" name="name" type="text">
+          <input [class.is-danger]="doesFieldHaveError('transactionName')" class="input" formControlName="transactionName" name="name" type="text">
         </div>
         <p *ngIf="doesFieldHaveError('transactionName', 'required')" class="help is-danger">Name field is required</p>
       </div>

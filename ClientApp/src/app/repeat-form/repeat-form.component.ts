@@ -50,6 +50,7 @@ export class RepeatFormComponent implements OnInit {
       this.repeatContract.interval = this.form.get('interval')?.value;
       this.repeatContract.startDate = new Date(this.form.get('startDate')?.value);
       this.repeatContract.name = this.form.get('transactionName')?.value;
+      console.log(this.repeatContract)
       this.repeatContract.amount = this.form.get('amount')?.value;
       this.repeatService.UpdateRepeatContract(this.repeatContract.id, this.repeatContract)
         .then(x => {
