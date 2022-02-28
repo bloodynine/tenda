@@ -21,9 +21,6 @@ import { Day } from "../Shared/Interfaces/Day";
 export class MonthComponent implements OnInit {
   month: Month | undefined;
   total: number = 0;
-  malleableTransaction: Transaction | null = null;
-  editingRepeatContract: RepeatContract  | null = null;
-  scrollDate: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
   currentState: CurrentState = {} as CurrentState;
   monthlyTransactions: Transaction[] = [];
   public modalWindow = ModelWindow;
@@ -107,15 +104,11 @@ export class MonthComponent implements OnInit {
     day.oneOffs.forEach(x => this.monthlyTransactions.push(x));
   }
 
-  openSearch() {
-    this.stateService.OpenQuickSearch();
-  }
   scroll(id: string){
-    (<HTMLInputElement>document.getElementById(id)).scrollIntoView({behavior: "smooth"})
-    this.openSearch();
-  }
-
-  closeSearch() {
-    this.stateService.CloseQuickSearch();
+    let el = (<HTMLInputElement>document.getElementById(id));
+    let elPosition = el.getBoundingClientRect().top;
+    const offSet = 63;
+    const position = elPosition + window.pageYOffset - offSet;
+    window.scrollTo({top: position, behavior: "smooth"})
   }
 }

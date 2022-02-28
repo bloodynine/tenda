@@ -71,18 +71,4 @@ export class StateService {
     state.currentViewDate = date;
     this.currentState.next(state);
   }
-
-  public OpenQuickSearch(): void {
-    const state = this.currentState.getValue();
-    if(state.modalWindow == ModelWindow.None){
-      state.displayQuickSearch = true;
-      this.currentState.next(state);
-    }
-  }
-
-  public CloseQuickSearch(): void {
-    const state = this.currentState.getValue();
-    state.displayQuickSearch = false;
-    this.currentState.next(state);
-  }
 }
