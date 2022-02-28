@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Day } from '../Shared/Interfaces/Day';
 import { Transaction } from "../Shared/Interfaces/Transaction";
 import { StateService } from "../state.service";
@@ -8,7 +8,7 @@ import { StateService } from "../state.service";
   templateUrl: './transaction-search.component.html',
   styleUrls: ['./transaction-search.component.css']
 })
-export class TransactionSearchComponent implements OnInit {
+export class TransactionSearchComponent implements OnChanges {
   @Input() transactions: Transaction[] = [];
   @Input() dates: Day[] | undefined = [];
   @Output() id: EventEmitter<string> = new EventEmitter<string>();
@@ -19,13 +19,12 @@ export class TransactionSearchComponent implements OnInit {
   activeItemIndex: number = -1;
 
   constructor(
-    private stateService: StateService
   ) { }
 
   get showDropdown(): boolean {
     return this.typedInput != '';
   }
-  ngOnInit(): void {
+  ngOnChanges(): void {
     const options = { month: 'short', day: "numeric" } as Intl.DateTimeFormatOptions;
     this.allItems = [...new Set(this.transactions.map(x => x.name))].concat(this.dates?.map(x => new Date(x.date).toLocaleDateString("en-US", options)) ?? []);
   }
@@ -40,7 +39,7 @@ export class TransactionSearchComponent implements OnInit {
    if(selectedId !== "") {
      this.id.emit(selectedId)
      this.selectionItems = [...new Set(this.transactions.map(x => x.name))];
-     this.stateService.CloseQuickSearch();
+     this.typedInput = '';
    }
   }
 
