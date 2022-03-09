@@ -1,12 +1,9 @@
-<div (document:keyup.q)="openSearch()" (document:keydown.esc)="closeSearch()">
-  <ng-container *ngIf="currentState.displayQuickSearch">
-    <app-transaction-search [transactions]="monthlyTransactions" [dates]="month?.days" (id)="scroll($event)"></app-transaction-search>
-  </ng-container>
-</div>
-<nav class="navbar">
+<nav class="navbar is-fixed-top has-shadow" *ngIf="monthlyTransactions.length > 1">
   <div class="navbar-brand">
     <div class="navbar-item">Tenda</div>
-
+    <div class="navbar-item">
+      <app-transaction-search [transactions]="monthlyTransactions" [dates]="month?.days" (id)="scroll($event)"></app-transaction-search>
+    </div>
     <a (click)="toggleMenu()" [class.is-active]="isMenuActive" aria-expanded="false" aria-label="menu" class="navbar-burger"
        role="button">
       <span aria-hidden="true"></span>

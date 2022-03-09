@@ -16,45 +16,15 @@
     <PackageReference Include="FastEndpoints.Swagger" Version="2.9.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.21" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
     <PackageReference Include="MongoDB.Entities" Version="21.0.0-alpha3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Content Remove="$(SpaRoot)**" />
-    <Content Include="ClientApp\cypress\tsconfig.json" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="out\out\web.config" />
-    <_ContentIncludedByDefault Remove="out\web.config" />
-    <_ContentIncludedByDefault Remove="out\appsettings.Development.json" />
-    <_ContentIncludedByDefault Remove="out\appsettings.json" />
-    <_ContentIncludedByDefault Remove="out\ClientApp\angular.json" />
-    <_ContentIncludedByDefault Remove="out\ClientApp\e2e\tsconfig.json" />
-    <_ContentIncludedByDefault Remove="out\ClientApp\package-lock.json" />
-    <_ContentIncludedByDefault Remove="out\ClientApp\package.json" />
-    <_ContentIncludedByDefault Remove="out\ClientApp\tsconfig.app.json" />
-    <_ContentIncludedByDefault Remove="out\ClientApp\tsconfig.json" />
-    <_ContentIncludedByDefault Remove="out\ClientApp\tsconfig.spec.json" />
-    <_ContentIncludedByDefault Remove="out\ClientApp\tslint.json" />
-    <_ContentIncludedByDefault Remove="out\out\appsettings.Development.json" />
-    <_ContentIncludedByDefault Remove="out\out\appsettings.json" />
-    <_ContentIncludedByDefault Remove="out\out\ClientApp\angular.json" />
-    <_ContentIncludedByDefault Remove="out\out\ClientApp\e2e\tsconfig.json" />
-    <_ContentIncludedByDefault Remove="out\out\ClientApp\package-lock.json" />
-    <_ContentIncludedByDefault Remove="out\out\ClientApp\package.json" />
-    <_ContentIncludedByDefault Remove="out\out\ClientApp\tsconfig.app.json" />
-    <_ContentIncludedByDefault Remove="out\out\ClientApp\tsconfig.json" />
-    <_ContentIncludedByDefault Remove="out\out\ClientApp\tsconfig.spec.json" />
-    <_ContentIncludedByDefault Remove="out\out\ClientApp\tslint.json" />
-    <_ContentIncludedByDefault Remove="out\out\Tenda.deps.json" />
-    <_ContentIncludedByDefault Remove="out\out\Tenda.runtimeconfig.json" />
-    <_ContentIncludedByDefault Remove="out\Tenda.deps.json" />
-    <_ContentIncludedByDefault Remove="out\Tenda.runtimeconfig.json" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -3,7 +3,6 @@ export interface CurrentState {
   currentViewDate: Date,
   notificationMsg: string | null,
   notificationClass: string,
-  displayQuickSearch: boolean;
 }
 
 export enum ModelWindow {
