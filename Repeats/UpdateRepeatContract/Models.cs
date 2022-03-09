@@ -15,6 +15,7 @@ public class UpdateRepeatContractRequest
     public DateTime CurrentViewDate { get; set; } = new();
     public IEnumerable<string> Tags { get; set; } = Enumerable.Empty<string>();
     [FromClaim("UserId")] public string UserId { get; set; } = "";
+    public DateTime? EndDate { get; set; }
 }
 
 public class UpdateRepeatContractRequestValidator : Validator<UpdateRepeatContractRequest>

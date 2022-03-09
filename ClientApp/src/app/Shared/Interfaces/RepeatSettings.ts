@@ -3,7 +3,8 @@
 export interface RepeatSettings {
   startDate: Date;
   interval: number;
-  type: RepeatType | null
+  type: RepeatType | null;
+  endDate: Date | null;
 }
 
 export enum RepeatType {

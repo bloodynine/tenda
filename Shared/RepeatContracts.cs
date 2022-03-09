@@ -6,7 +6,7 @@ namespace Tenda.Shared;
 
 public class RepeatContracts : Entity
 {
-    private static DateTime EndDate => DateTime.Parse("2050-01-01");
+    private static DateTime _endDate => DateTime.Parse("2050-01-01");
     public string UserId { get; set; }
     public TransactionType Type { get; set; }
     public RepeatType RepeatType { get; set; }
@@ -15,10 +15,12 @@ public class RepeatContracts : Entity
     public string Name { get; set; }
     public decimal Amount { get; set; }
     public IEnumerable<string> Tags { get; set; }
+    public DateTime EndDate { get; set; }
 
     public RepeatContracts(RepeatRequest request, FinancialTransactionRequestBase transaction, TransactionType type)
     {
         StartDate = request.StartDate;
+        EndDate = request.EndDate ?? _endDate;
         Interval = request.Interval;
         RepeatType = request.Type;
         Name = transaction.Name;
@@ -31,6 +33,7 @@ public class RepeatContracts : Entity
     public RepeatContracts(UpdateRepeatContractRequest request)
     {
         StartDate = request.StartDate;
+        EndDate = request.EndDate ?? _endDate;
         Interval = request.Interval;
         RepeatType = request.RepeatType;
         Name = request.Name;

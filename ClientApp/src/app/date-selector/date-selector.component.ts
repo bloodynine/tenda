@@ -8,7 +8,7 @@ import * as bulmaCalendar from "bulma-calendar";
 })
 export class DateSelectorComponent implements OnInit {
   calRef: any;
-  @Input() startDate: Date = new Date();
+  @Input() startDate: Date | undefined = undefined;
   @Output() startDateChange: EventEmitter<Date> = new EventEmitter<Date>();
 
   constructor(
@@ -20,7 +20,7 @@ export class DateSelectorComponent implements OnInit {
 
   ngAfterContentInit(): void {
     this.calRef = this.elRef.nativeElement.querySelector('input[type="date"]');
-    bulmaCalendar.attach(this.calRef, {startDate: new Date(this.startDate)});
+    bulmaCalendar.attach(this.calRef, {startDate: this.startDate != undefined ? new Date(this.startDate) : undefined});
     this.calRef.bulmaCalendar.on('save', (x: any)=> {
       this.startDateChange.emit(new Date(x.data.value()))
     });

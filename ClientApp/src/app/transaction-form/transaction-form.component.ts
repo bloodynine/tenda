@@ -15,6 +15,7 @@ import {RepeatService} from "../repeat.service";
 export class TransactionFormComponent implements OnInit {
   transaction: Transaction = {} as Transaction;
   form: FormGroup = new FormGroup({});
+  endDate: Date | undefined;
 
   public types:TransactionType[] = [TransactionType.Bill, TransactionType.Income, TransactionType.OneOff];
   public labelMapping = TransactionTypeLabelMapping;
@@ -34,6 +35,10 @@ export class TransactionFormComponent implements OnInit {
 
   get showModifyRepeatButton(): boolean{
     return !this.isNewTransaction && this.transaction.isRepeating;
+  }
+
+  get showRepeatSettings(): boolean{
+    return this.form.get('repeatFrequency')?.value != "";
   }
 
   isFormInvalid(): boolean {
@@ -57,7 +62,7 @@ export class TransactionFormComponent implements OnInit {
         amount: new FormControl(x.amount, [Validators.required, Validators.pattern(numRegex)]),
         date: new FormControl(x.date, [Validators.required]),
         repeatFrequency: new FormControl(''),
-        interval: new FormControl('', [Validators.pattern(numRegex)])
+        interval: new FormControl('', [Validators.pattern(numRegex)]),
       })
     })
   }
@@ -103,7 +108,9 @@ export class TransactionFormComponent implements OnInit {
       this.transaction.repeatSettings = {
         type: Number.parseInt(this.form.get('repeatFrequency')?.value),
         interval: this.form.get('interval')?.value,
-      startDate: new Date(this.form.get('date')?.value)}
+        startDate: new Date(this.form.get('date')?.value),
+        endDate: this.endDate != undefined ? this.endDate : null,
+      }
     }
 
     if(this.transaction.amount > 0 && this.transaction.type != TransactionType.Income){
