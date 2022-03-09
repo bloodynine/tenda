@@ -1,5 +1,5 @@
 <div *ngIf="transaction" class="card">
-  <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+  <form (keydown.enter)="$event.preventDefault()" [formGroup]="form">
     <div *ngIf="isNewTransaction" class="card-header">
       <div class="card-header-title">
         Add New {{labelMapping[transaction.type]}}
@@ -9,7 +9,8 @@
       <div class="field">
         <label class="label">Name</label>
         <div class="control">
-          <input class="input" [class.is-danger]="doesFieldHaveError('transactionName')" formControlName="transactionName" type="text">
+          <input [class.is-danger]="doesFieldHaveError('transactionName')" class="input"
+                 formControlName="transactionName" type="text">
         </div>
         <p *ngIf="doesFieldHaveError('transactionName', 'required')" class="help is-danger">Name field is required</p>
       </div>
@@ -22,7 +23,7 @@
       <div class="field">
         <label class="label">Amount</label>
         <div class="control">
-          <input class="input" [class.is-danger]="doesFieldHaveError('amount')" formControlName="amount" type="text">
+          <input [class.is-danger]="doesFieldHaveError('amount')" class="input" formControlName="amount" type="text">
         </div>
         <p *ngIf="doesFieldHaveError('amount', 'required')" class="help is-danger">Amount field is required</p>
         <p *ngIf="doesFieldHaveError('amount', 'pattern')" class="help is-danger">Amount must be a number</p>
@@ -31,17 +32,27 @@
         <button (click)="editRepeatSettings()" class="button">Edit Repeat Settings</button>
       </div>
       <div *ngIf="showRepeat">
-        <div class="columns">
-          <div class="column">
+        <div>
           <app-repeat-type-input [form]="form"></app-repeat-type-input>
-          </div>
+        </div>
+        <div *ngIf="showRepeatSettings" class="columns">
           <div class="column">
             <div class="field">
               <label class="label">Interval</label>
               <div class="control">
-                <input class="input" [class.is-danger]="doesFieldHaveError('interval')" formControlName="interval" type="text">
+                <input [class.is-danger]="doesFieldHaveError('interval')" class="input" formControlName="interval"
+                       type="text">
               </div>
-              <p *ngIf="doesFieldHaveError('interval', 'pattern')" class="help is-danger">Interval must be a number when not empty</p>
+              <p *ngIf="doesFieldHaveError('interval', 'pattern')" class="help is-danger">Interval must be a number
+                when not empty</p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">End Date</label>
+              <div class="control">
+                <app-date-selector [(startDate)]="endDate"></app-date-selector>
+              </div>
             </div>
           </div>
         </div>
@@ -49,13 +60,13 @@
       <app-tag-input [(selectedTags)]="transaction.tags"></app-tag-input>
     </div>
     <div class="card-footer">
-      <div *ngIf="!isNewTransaction" (click)="delete()" class="card-footer-item is-clickable deleteButton">
+      <div (click)="delete()" *ngIf="!isNewTransaction" class="card-footer-item is-clickable deleteButton">
         Delete
       </div>
       <div (click)="cancel()" class="card-footer-item is-clickable divButton">
         Cancel
       </div>
-      <div (click)="save()" class="card-footer-item  divButton" [class.disabledDivButton]="isFormInvalid()">
+      <div (click)="save()" [class.disabledDivButton]="isFormInvalid()" class="card-footer-item  divButton">
         Save
       </div>
     </div>

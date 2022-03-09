@@ -1,9 +1,10 @@
 <div *ngIf="repeatContract" class="card">
   <form [formGroup]="form">
     <div class="card-content">
-      <div class="field"><label class="label">Name</label>
+      <div class="field"><label class="label">Repeating Name</label>
         <div class="control">
-          <input [class.is-danger]="doesFieldHaveError('transactionName')" class="input" formControlName="transactionName" name="name" type="text">
+          <input [class.is-danger]="doesFieldHaveError('transactionName')" class="input"
+                 formControlName="transactionName" name="name" type="text">
         </div>
         <p *ngIf="doesFieldHaveError('transactionName', 'required')" class="help is-danger">Name field is required</p>
       </div>
@@ -16,15 +17,16 @@
       <div class="field">
         <label class="label">Amount</label>
         <div class="control">
-          <input [class.is-danger]="doesFieldHaveError('amount')" inputmode="decimal" class="input" formControlName="amount" name="amount">
+          <input [class.is-danger]="doesFieldHaveError('amount')" class="input" formControlName="amount"
+                 inputmode="decimal" name="amount">
         </div>
         <p *ngIf="doesFieldHaveError('amount', 'required')" class="help is-danger">Amount field is required</p>
         <p *ngIf="doesFieldHaveError('amount', 'pattern')" class="help is-danger">Amount must be a number</p>
       </div>
+      <div>
+        <app-repeat-type-input [form]="form"></app-repeat-type-input>
+      </div>
       <div class="columns">
-        <div class="column">
-          <app-repeat-type-input [form]="form"></app-repeat-type-input>
-        </div>
         <div class="column">
           <div class="field">
             <label class="label">Interval</label>
@@ -33,7 +35,14 @@
             </div>
           </div>
         </div>
-
+        <div class="column">
+          <div class="field">
+            <label class="label">End Date</label>
+            <div class="control">
+              <app-date-selector [(startDate)]="endDate"></app-date-selector>
+            </div>
+          </div>
+        </div>
       </div>
 
       <app-tag-input [(selectedTags)]="repeatContract.tags"></app-tag-input>
@@ -43,7 +52,8 @@
       <div (click)="cancel()" class="card-footer-item is-clickable divButton">
         Cancel
       </div>
-      <div (click)="updateContract()" [class.disabledDivButton]="form.invalid" class="card-footer-item divButton">Save</div>
+      <div (click)="updateContract()" [class.disabledDivButton]="form.invalid" class="card-footer-item divButton">Save
+      </div>
     </div>
   </form>
 </div>
