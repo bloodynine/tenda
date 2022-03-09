@@ -5,14 +5,14 @@
         <a (click)="editTransaction()">{{transaction.name}} </a><span *ngIf="transaction.isRepeating" class="icon is-pulled-right"><i-feather name="repeat"></i-feather></span>
       </div>
     </div>
-    <div class="columns">
+    <div class="columns is-mobile">
       <div class="column">
         <span (click)="toggleResolved()" class="icon is-clickable">
           <i-feather *ngIf="!transaction.isResolved" name="square"></i-feather>
           <i-feather *ngIf="transaction.isResolved" name="check-square"></i-feather>
         </span>
       </div>
-      <div class="column" style="overflow: hidden;">
+      <div class="column">
         <div class="is-pulled-right">{{transaction.amount | currency}}</div>
       </div>
     </div>
