@@ -5,7 +5,7 @@
         (input)="filterList()"
         (keydown.arrowDown)="moveDown()"
         (keydown.arrowUp)="moveUp()"
-        (keydown.enter)="emitId()"
+        (keydown.enter)="selectTypedInput()"
         [(ngModel)]="typedInput"
         class="input is-rounded has-icons-right"
         name="quickSearch"

@@ -29,7 +29,7 @@ export class TransactionSearchComponent implements OnChanges {
     this.allItems = [...new Set(this.transactions.map(x => x.name))].concat(this.dates?.map(x => new Date(x.date).toLocaleDateString("en-US", options)) ?? []);
   }
 
-  emitId() {
+  selectTypedInput() {
     let selectedId = "";
     if(this.activeItemIndex > -1 && this.activeItemIndex <= this.selectionItems.length){
       selectedId = this.selectionItems[this.activeItemIndex];
@@ -37,14 +37,15 @@ export class TransactionSearchComponent implements OnChanges {
       selectedId = this.selectionItems.filter(x => x.toLowerCase().includes(this.typedInput.toLowerCase()))[0];
     }
    if(selectedId !== "") {
-     this.id.emit(selectedId)
-     this.selectionItems = [...new Set(this.transactions.map(x => x.name))];
-     this.typedInput = '';
+     this.selectTransaction(selectedId)
    }
   }
 
   selectTransaction(name: string) {
     this.id.emit(name);
+    this.selectionItems = [...new Set(this.transactions.map(x => x.name))];
+    this.typedInput = '';
+    this.activeItemIndex = -1;
   }
 
   filterList() {
