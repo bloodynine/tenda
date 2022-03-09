@@ -14,6 +14,7 @@ export class RepeatFormComponent implements OnInit {
 
   repeatContract: RepeatContract | undefined = undefined;
   form: FormGroup = new FormGroup({});
+  endDate: Date | undefined;
 
   constructor(
     private repeatService: RepeatService,
@@ -52,6 +53,7 @@ export class RepeatFormComponent implements OnInit {
       this.repeatContract.name = this.form.get('transactionName')?.value;
       console.log(this.repeatContract)
       this.repeatContract.amount = this.form.get('amount')?.value;
+      this.repeatContract.endDate = this.endDate != undefined ? this.endDate : null;
       this.repeatService.UpdateRepeatContract(this.repeatContract.id, this.repeatContract)
         .then(x => {
           this.stateService.ExitAllModals();
