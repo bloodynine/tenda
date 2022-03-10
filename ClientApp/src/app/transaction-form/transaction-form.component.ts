@@ -37,10 +37,6 @@ export class TransactionFormComponent implements OnInit {
     return !this.isNewTransaction && this.transaction.isRepeating;
   }
 
-  get showRepeatSettings(): boolean{
-    return this.form.get('repeatFrequency')?.value != "";
-  }
-
   isFormInvalid(): boolean {
     return this.form.status == 'INVALID'
   }
@@ -57,12 +53,15 @@ export class TransactionFormComponent implements OnInit {
     const numRegex = /^-?\d*[.,]?\d{0,2}$/;
     this.stateService.editingTransaction.subscribe(x => {
       this.transaction = x;
-      this.form = new FormGroup({
+      this.form = this.fb.group({
         transactionName: new FormControl(x.name, [Validators.required]),
         amount: new FormControl(x.amount, [Validators.required, Validators.pattern(numRegex)]),
-        date: new FormControl(x.date, [Validators.required]),
-        repeatFrequency: new FormControl(''),
-        interval: new FormControl('', [Validators.pattern(numRegex)]),
+        date: new FormControl(new Date(x.date), [Validators.required]),
+        repeatSettings: this.fb.group({
+          repeatFrequency: new FormControl(''),
+          endDate: new FormControl(''),
+          interval: new FormControl('', Validators.pattern(numRegex))
+        })
       })
     })
   }
@@ -102,14 +101,16 @@ export class TransactionFormComponent implements OnInit {
   }
 
   private patchInValues(): void {
+    const repeatSettings = this.form.get('repeatSettings') as FormGroup
     this.transaction.name = this.form.get('transactionName')?.value;
     this.transaction.amount = this.form.get('amount')?.value;
-    if(this.form.get('repeatFrequency') && this.form.get('repeatFrequency')?.value != ''){
+    this.transaction.date = new Date(this.form.get('date')?.value);
+    if(repeatSettings.get('repeatFrequency')?.value){
       this.transaction.repeatSettings = {
-        type: Number.parseInt(this.form.get('repeatFrequency')?.value),
-        interval: this.form.get('interval')?.value,
+        type: Number.parseInt(repeatSettings.get('repeatFrequency')?.value),
+        interval: repeatSettings.get('interval')?.value,
         startDate: new Date(this.form.get('date')?.value),
-        endDate: this.endDate != undefined ? this.endDate : null,
+        endDate: new Date(repeatSettings.get('endDate')?.value),
       }
     }
 

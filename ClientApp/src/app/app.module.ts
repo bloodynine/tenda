@@ -1,27 +1,26 @@
-import { Injector, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
-import {CookieService} from "ngx-cookie-service";
-import { LoginComponent } from './login/login.component';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MonthComponent } from './month/month.component';
-import {TokenInterceptor} from "./token.interceptor";
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { DateSelectorComponent } from './Shared/date-selector/date-selector.component';
 import { DayComponent } from './day/day.component';
-import { TransactionComponent } from './transaction/transaction.component';
-import {IconsModule} from "./icons/icons.module";
-import { TransactionFormComponent } from './transaction-form/transaction-form.component';
-import { RepeatFormComponent } from './repeat-form/repeat-form.component';
-import { DateSelectorComponent } from './date-selector/date-selector.component';
-import { MultiTransactionFormComponent } from './multi-transaction-form/multi-transaction-form.component';
-import { TagInputComponent } from './Shared/tag-input/tag-input.component';
 import { FocusDirective } from "./Shared/Directives/focus.directive";
-import { RepeatTypeInputComponent } from './Shared/repeat-type-input/repeat-type-input.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Injector, NgModule } from '@angular/core';
+import { LoginComponent } from './login/login.component';
+import { MonthComponent } from './month/month.component';
+import { MultiTransactionFormComponent } from './multi-transaction-form/multi-transaction-form.component';
 import { NotificationsComponent } from './Shared/notifications/notifications.component';
-import { INJECTOR } from "@angular/core";
+import { RepeatFormComponent } from './repeat-form/repeat-form.component';
+import { RepeatSettingsComponent } from './Shared/repeat-settings/repeat-settings.component';
+import { RepeatTypeInputComponent } from './Shared/repeat-type-input/repeat-type-input.component';
+import { TagInputComponent } from './Shared/tag-input/tag-input.component';
+import { TransactionComponent } from './transaction/transaction.component';
+import { TransactionFormComponent } from './transaction-form/transaction-form.component';
 import { TransactionSearchComponent } from './transaction-search/transaction-search.component';
+import { CookieService } from "ngx-cookie-service";
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import { IconsModule } from "./Shared/icons/icons.module";
+import { TokenInterceptor } from "./token.interceptor";
 
 export let InjectorInstance: Injector;
 
@@ -41,6 +40,7 @@ export let InjectorInstance: Injector;
     RepeatTypeInputComponent,
     NotificationsComponent,
     TransactionSearchComponent,
+    RepeatSettingsComponent,
   ],
     imports: [
         BrowserModule,

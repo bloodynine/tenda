@@ -17,7 +17,7 @@
       <div class="field">
         <label class="label">Date</label>
         <div class="control">
-          <app-date-selector [(startDate)]="transaction.date"></app-date-selector>
+          <app-date-selector formControlName="date"></app-date-selector>
         </div>
       </div>
       <div class="field">
@@ -32,30 +32,7 @@
         <button (click)="editRepeatSettings()" class="button">Edit Repeat Settings</button>
       </div>
       <div *ngIf="showRepeat">
-        <div>
-          <app-repeat-type-input [form]="form"></app-repeat-type-input>
-        </div>
-        <div *ngIf="showRepeatSettings" class="columns">
-          <div class="column">
-            <div class="field">
-              <label class="label">Interval</label>
-              <div class="control">
-                <input [class.is-danger]="doesFieldHaveError('interval')" class="input" formControlName="interval"
-                       type="text">
-              </div>
-              <p *ngIf="doesFieldHaveError('interval', 'pattern')" class="help is-danger">Interval must be a number
-                when not empty</p>
-            </div>
-          </div>
-          <div class="column">
-            <div class="field">
-              <label class="label">End Date</label>
-              <div class="control">
-                <app-date-selector [(startDate)]="endDate"></app-date-selector>
-              </div>
-            </div>
-          </div>
-        </div>
+        <app-repeat-settings formGroupName="repeatSettings"></app-repeat-settings>
       </div>
       <app-tag-input [(selectedTags)]="transaction.tags"></app-tag-input>
     </div>

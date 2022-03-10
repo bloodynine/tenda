@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateSelectorComponent } from './date-selector.component';
+import { RepeatSettingsComponent } from './repeat-settings.component';
 
-describe('DateSelectorComponent', () => {
-  let component: DateSelectorComponent;
-  let fixture: ComponentFixture<DateSelectorComponent>;
+describe('RepeatSettingsComponent', () => {
+  let component: RepeatSettingsComponent;
+  let fixture: ComponentFixture<RepeatSettingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DateSelectorComponent ]
+      declarations: [ RepeatSettingsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DateSelectorComponent);
+    fixture = TestBed.createComponent(RepeatSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

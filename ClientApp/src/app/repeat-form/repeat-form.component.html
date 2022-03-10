@@ -11,7 +11,7 @@
       <div class="field">
         <label class="label">Start Date</label>
         <div class="control">
-          <app-date-selector [(startDate)]="repeatContract.startDate"></app-date-selector>
+          <app-date-selector formControlName="startDate"></app-date-selector>
         </div>
       </div>
       <div class="field">
@@ -23,27 +23,7 @@
         <p *ngIf="doesFieldHaveError('amount', 'required')" class="help is-danger">Amount field is required</p>
         <p *ngIf="doesFieldHaveError('amount', 'pattern')" class="help is-danger">Amount must be a number</p>
       </div>
-      <div>
-        <app-repeat-type-input [form]="form"></app-repeat-type-input>
-      </div>
-      <div class="columns">
-        <div class="column">
-          <div class="field">
-            <label class="label">Interval</label>
-            <div class="control">
-              <input class="input" formControlName="interval" type="text">
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <div class="field">
-            <label class="label">End Date</label>
-            <div class="control">
-              <app-date-selector [(startDate)]="endDate"></app-date-selector>
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-repeat-settings formGroupName="repeatSettings"></app-repeat-settings>
 
       <app-tag-input [(selectedTags)]="repeatContract.tags"></app-tag-input>
     </div>
