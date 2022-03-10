@@ -1,9 +1,8 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { RepeatService } from "../repeat.service";
+import { RepeatService } from "../Shared/Services/repeat.service";
 import { RepeatContract } from "../Shared/Interfaces/RepeatContract";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { RepeatType, RepeatTypeLabel } from "../Shared/Interfaces/RepeatSettings";
-import { StateService } from "../state.service";
+import { StateService } from "../Shared/Services/state.service";
 
 @Component({
   selector: 'app-repeat-form',
@@ -24,7 +23,7 @@ export class RepeatFormComponent implements OnInit {
 
   doesFieldHaveError(fieldName: string, error?: string): boolean {
     const pristine = this.form.get(fieldName)?.pristine;
-    if(!error){
+    if (!error) {
       return !pristine && (this.form.get(fieldName)?.invalid ?? false);
     }
     return !pristine && (this.form.get(fieldName)?.hasError(error) ?? false);
@@ -66,7 +65,7 @@ export class RepeatFormComponent implements OnInit {
   }
 
   deleteContract(): void {
-    if(this.repeatContract){
+    if (this.repeatContract) {
       this.repeatService.DeleteRepeatContract(this.repeatContract.id).then(x => {
         this.stateService.ExitAllModals();
         this.stateService.UpdateMonth(x);

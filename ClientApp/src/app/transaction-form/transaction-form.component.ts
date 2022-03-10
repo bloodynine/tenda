@@ -1,11 +1,9 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
-import {Transaction, TransactionType, TransactionTypeLabelMapping} from "../Shared/Interfaces/Transaction";
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { Transaction, TransactionType, TransactionTypeLabelMapping } from "../Shared/Interfaces/Transaction";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import * as bulmaCalendar from "bulma-calendar";
-import {TransactionService} from "../transaction.service";
-import {RepeatType, RepeatTypeLabel} from "../Shared/Interfaces/RepeatSettings";
-import {StateService} from "../state.service";
-import {RepeatService} from "../repeat.service";
+import { TransactionService } from "../Shared/Services/transaction.service";
+import { StateService } from "../Shared/Services/state.service";
+import { RepeatService } from "../Shared/Services/repeat.service";
 
 @Component({
   selector: 'app-transaction-form',
@@ -17,23 +15,25 @@ export class TransactionFormComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   endDate: Date | undefined;
 
-  public types:TransactionType[] = [TransactionType.Bill, TransactionType.Income, TransactionType.OneOff];
+  public types: TransactionType[] = [TransactionType.Bill, TransactionType.Income, TransactionType.OneOff];
   public labelMapping = TransactionTypeLabelMapping;
 
   constructor(private elRef: ElementRef,
               private transactionService: TransactionService,
               private stateService: StateService,
               private repeatService: RepeatService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder) {
+  }
 
   get isNewTransaction(): boolean {
     return !this.transaction.id;
   }
+
   get showRepeat(): boolean {
-    return this.isNewTransaction && this.form.get('type')?.value!= TransactionType.OneOff;
+    return this.isNewTransaction && this.form.get('type')?.value != TransactionType.OneOff;
   }
 
-  get showModifyRepeatButton(): boolean{
+  get showModifyRepeatButton(): boolean {
     return !this.isNewTransaction && this.transaction.isRepeating;
   }
 
@@ -43,7 +43,7 @@ export class TransactionFormComponent implements OnInit {
 
   doesFieldHaveError(fieldName: string, error?: string): boolean {
     const pristine = this.form.get(fieldName)?.pristine;
-    if(!error){
+    if (!error) {
       return !pristine && (this.form.get(fieldName)?.invalid ?? false);
     }
     return !pristine && (this.form.get(fieldName)?.hasError(error) ?? false);
@@ -77,14 +77,14 @@ export class TransactionFormComponent implements OnInit {
   }
 
   save() {
-    if(this.isFormInvalid()){
+    if (this.isFormInvalid()) {
       return;
     }
     this.patchInValues();
-    if(this.isNewTransaction){
+    if (this.isNewTransaction) {
       this.transactionService.CreateNewTransaction(this.transaction)
         .then(x => this.stateService.UpdateMonth(x));
-    }else{
+    } else {
       this.transactionService.UpdateTransaction(this.transaction).then(x => this.stateService.UpdateMonth(x)
       );
     }
@@ -92,12 +92,12 @@ export class TransactionFormComponent implements OnInit {
   }
 
   public editRepeatSettings(): void {
-    this.repeatService.GetRepeatContract(this.transaction.associatedRepeatId).then(x =>{
+    this.repeatService.GetRepeatContract(this.transaction.associatedRepeatId).then(x => {
       // We Set the start date of the repeat contract to the current transaction date.
       // This provides the expected context to the user doing the editing
       x.startDate = this.transaction.date;
       this.stateService.EditRepeatSetting(x)
-      });
+    });
   }
 
   private patchInValues(): void {
@@ -105,7 +105,7 @@ export class TransactionFormComponent implements OnInit {
     this.transaction.name = this.form.get('transactionName')?.value;
     this.transaction.amount = this.form.get('amount')?.value;
     this.transaction.date = new Date(this.form.get('date')?.value);
-    if(repeatSettings.get('repeatFrequency')?.value){
+    if (repeatSettings.get('repeatFrequency')?.value) {
       this.transaction.repeatSettings = {
         type: Number.parseInt(repeatSettings.get('repeatFrequency')?.value),
         interval: repeatSettings.get('interval')?.value,
@@ -114,7 +114,7 @@ export class TransactionFormComponent implements OnInit {
       }
     }
 
-    if(this.transaction.amount > 0 && this.transaction.type != TransactionType.Income){
+    if (this.transaction.amount > 0 && this.transaction.type != TransactionType.Income) {
       this.transaction.amount = this.transaction.amount * -1;
     }
   }

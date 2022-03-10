@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Transaction } from "../Shared/Interfaces/Transaction";
-import { StateService } from "../state.service";
-import { TransactionService } from "../transaction.service";
+import { StateService } from "../Shared/Services/state.service";
+import { TransactionService } from "../Shared/Services/transaction.service";
 import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({

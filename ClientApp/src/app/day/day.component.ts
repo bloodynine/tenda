@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Day } from "../Shared/Interfaces/Day";
-import { TransactionService } from "../transaction.service";
+import { TransactionService } from "../Shared/Services/transaction.service";
 import { Transaction, TransactionType } from "../Shared/Interfaces/Transaction";
-import { StateService } from "../state.service";
+import { StateService } from "../Shared/Services/state.service";
 
 @Component({
   selector: 'app-day',

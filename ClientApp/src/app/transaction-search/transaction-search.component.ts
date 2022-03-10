@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Day } from '../Shared/Interfaces/Day';
 import { Transaction } from "../Shared/Interfaces/Transaction";
-import { StateService } from "../state.service";
 
 @Component({
   selector: 'app-transaction-search',

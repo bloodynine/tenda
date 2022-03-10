@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TransactionService } from "../../transaction.service";
+import { TransactionService } from "../Services/transaction.service";
 
 @Component({
   selector: 'app-tag-input',
@@ -18,25 +18,26 @@ export class TagInputComponent implements OnInit {
 
   constructor(
     private transactionService: TransactionService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    if(!this.selectedTags){
+    if (!this.selectedTags) {
       this.selectedTags = [];
     }
     this.transactionService.GetTags().then(x => this.allTags = x);
   }
 
   addTag() {
-    if(this.typedInput != "" && this.activeItemIndex == -1){
+    if (this.typedInput != "" && this.activeItemIndex == -1) {
       this.addAndEmitTag(this.typedInput);
     }
-    if(this.activeItemIndex > -1){
+    if (this.activeItemIndex > -1) {
       this.addAndEmitTag(this.dropDownTags[this.activeItemIndex])
     }
   }
 
-  addTagFromDropDown(tag: string){
+  addTagFromDropDown(tag: string) {
     this.addAndEmitTag(tag);
     this.showDropdown = false;
   }
@@ -46,38 +47,40 @@ export class TagInputComponent implements OnInit {
   }
 
   filterList() {
-    if(this.typedInput && this.typedInput != ""){
+    if (this.typedInput && this.typedInput != "") {
       this.showDropdown = true;
     }
     const unSelectedTags = this.allTags.filter(x => !this.selectedTags.includes(x))
     this.dropDownTags = unSelectedTags.filter(x => x.toLowerCase().includes(this.typedInput.toLowerCase())).slice(0, 7);
   }
 
-  private addAndEmitTag(tag: string){
-    if(!this.selectedTags){
+  moveDown() {
+    if (this.dropDownTags.length - 1 > this.activeItemIndex) {
+      this.activeItemIndex++;
+    }
+  }
+
+  moveUp() {
+    if (this.activeItemIndex > -1) {
+      this.activeItemIndex--;
+    }
+  }
+
+  escape() {
+    this.activeItemIndex = -1;
+    this.showDropdown = false;
+  }
+
+  private addAndEmitTag(tag: string) {
+    if (!this.selectedTags) {
       this.selectedTags = [];
     }
-    if(this.typedInput != ""){
+    if (this.typedInput != "") {
       this.selectedTags.push(tag)
       this.typedInput = "";
       this.activeItemIndex = -1;
       this.showDropdown = false;
     }
     this.selectedTagsChange.emit(this.selectedTags);
-  }
-
-  moveDown() {
-    if(this.dropDownTags.length -1 > this.activeItemIndex){
-      this.activeItemIndex++;
-    }
-  }
-  moveUp() {
-    if(this.activeItemIndex > -1){
-      this.activeItemIndex--;
-    }
-  }
-  escape() {
-    this.activeItemIndex = -1;
-    this.showDropdown = false;
   }
 }

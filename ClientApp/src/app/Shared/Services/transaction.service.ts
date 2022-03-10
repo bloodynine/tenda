@@ -1,15 +1,13 @@
-import {Injectable} from '@angular/core';
-import {environment} from "../environments/environment";
-import {HttpClient, HttpParams} from "@angular/common/http";
-import { BehaviorSubject, Observable, ReplaySubject, Subject } from "rxjs";
-import {Month} from "./Shared/Interfaces/Month";
-import {BearerToken} from "./Shared/Interfaces/BearerToken";
-import {HubConnectionBuilder, IHttpConnectionOptions, LogLevel} from "@microsoft/signalr";
-import {Transaction, TransactionType} from "./Shared/Interfaces/Transaction";
-import { catchError } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { environment } from "../../../environments/environment";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { BehaviorSubject, ReplaySubject, Subject } from "rxjs";
+import { Month } from "../Interfaces/Month";
+import { BearerToken } from "../Interfaces/BearerToken";
+import { HubConnectionBuilder, IHttpConnectionOptions, LogLevel } from "@microsoft/signalr";
+import { Transaction, TransactionType } from "../Interfaces/Transaction";
 import { StateService } from "./state.service";
-import { TendaError, ValidationError } from "./Shared/Interfaces/ValidationError";
-import { HandleHttpError } from "./Shared/Services/handle-error.service";
+import { HandleHttpError } from "./handle-error.service";
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +30,31 @@ export class TransactionService {
     .configureLogging(LogLevel.Error)
     .withUrl(`${this.baseUrl}/resolvedTotal`, this.options)
     .build();
+
   constructor(private http: HttpClient,
-              private stateService: StateService) { }
+              private stateService: StateService) {
+  }
+
+  private static GetTransactionUri(transaction: Transaction): string {
+    switch (TransactionType[transaction.type]) {
+      case 'Income':
+        return "/incomes"
+      case 'Bill':
+        return "/bills"
+      default:
+        return "/oneOffs"
+    }
+  }
+
+  private static GetBearerToken(): string | undefined {
+    const tokenString = localStorage.getItem('bearerToken');
+    if (tokenString) {
+      let bearerToken: BearerToken;
+      bearerToken = JSON.parse(tokenString);
+      return bearerToken.token;
+    }
+    return undefined;
+  }
 
   public SubscribeToSignalR(): void {
     this.signalRConnection.start().then(x => {
@@ -45,7 +66,8 @@ export class TransactionService {
   }
 
   public UnSubscribeToSignalR(): void {
-    this.signalRConnection.stop().then(x => {});
+    this.signalRConnection.stop().then(x => {
+    });
   }
 
   public UpdateTransaction(transaction: Transaction): Promise<Month> {
@@ -62,13 +84,13 @@ export class TransactionService {
 
   public DeleteTransaction(transaction: Transaction): Promise<Month> {
     const params = new HttpParams().set('ViewDate', transaction.date.toString());
-    return this.http.delete<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}/`, {params:params})
+    return this.http.delete<Month>(`${this.baseUrl}${TransactionService.GetTransactionUri(transaction)}/${transaction.id}/`, { params: params })
       .pipe(HandleHttpError())
       .toPromise();
   }
 
-  public CreateBulkTransactions(transactions: Transaction[]): Promise<Month>{
-    const body = {oneOffs: transactions};
+  public CreateBulkTransactions(transactions: Transaction[]): Promise<Month> {
+    const body = { oneOffs: transactions };
     return this.http.post<Month>(`${this.baseUrl}/oneOffs/bulk`, body)
       .pipe(HandleHttpError())
       .toPromise();
@@ -76,26 +98,6 @@ export class TransactionService {
 
   public GetTags(): Promise<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/tags`).toPromise();
-  }
-
-  private static GetTransactionUri(transaction: Transaction): string {
-    switch (TransactionType[transaction.type]) {
-      case 'Income':
-        return "/incomes"
-      case 'Bill':
-        return "/bills"
-      default:
-        return "/oneOffs"
-    }
-  }
-  private static GetBearerToken(): string | undefined {
-    const tokenString = localStorage.getItem('bearerToken');
-    if (tokenString) {
-      let bearerToken: BearerToken;
-      bearerToken = JSON.parse(tokenString);
-      return bearerToken.token;
-    }
-    return undefined;
   }
 
 

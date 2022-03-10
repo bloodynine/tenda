@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { BearerToken } from "./Shared/Interfaces/BearerToken";
 import { LoginService } from "./Shared/Services/login.service";
 import { catchError, filter, switchMap } from "rxjs/operators";
-import { StateService } from "./state.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, ReplaySubject, Subject } from "rxjs";
-import { RepeatContract } from "./Shared/Interfaces/RepeatContract";
-import { Month } from "./Shared/Interfaces/Month";
-import { CurrentState, ModelWindow } from "./Shared/Interfaces/CurrentState";
-import { Transaction } from "./Shared/Interfaces/Transaction";
+import { RepeatContract } from "../Interfaces/RepeatContract";
+import { Month } from "../Interfaces/Month";
+import { CurrentState, ModelWindow } from "../Interfaces/CurrentState";
+import { Transaction } from "../Interfaces/Transaction";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
-  public currentState: BehaviorSubject<CurrentState> = new BehaviorSubject<CurrentState>({modalWindow: ModelWindow.None} as CurrentState);
+  public currentState: BehaviorSubject<CurrentState> = new BehaviorSubject<CurrentState>({ modalWindow: ModelWindow.None } as CurrentState);
   public editingRepeatSettings: Subject<RepeatContract> = new ReplaySubject();
   public month: BehaviorSubject<Month> = new BehaviorSubject<Month>({} as Month);
   public editingTransaction: Subject<Transaction> = new ReplaySubject();
   public multiTransactionDate: Subject<Date> = new ReplaySubject();
 
-  constructor() { }
+  constructor() {
+  }
 
-  public EditRepeatSetting(setting: RepeatContract): void{
+  public EditRepeatSetting(setting: RepeatContract): void {
     const state = this.currentState.getValue();
     state.modalWindow = ModelWindow.RepeatSettings;
     this.currentState.next(state);
@@ -48,7 +49,7 @@ export class StateService {
   public ClearNotifications(): void {
     const state = this.currentState.getValue();
     state.notificationMsg = null;
-    state.notificationClass="is-primary";
+    state.notificationClass = "is-primary";
     this.currentState.next(state);
   }
 
