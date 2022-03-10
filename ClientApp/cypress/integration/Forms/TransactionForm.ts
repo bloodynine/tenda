@@ -59,6 +59,7 @@ describe('Single Transaction Form', () => {
   it('should be invalid when interval is not null and not a number', () => {
     cy.openTransactionForm(date, 'Income');
     const testAmounts = ['d', '1.111', '1d2']
+    cy.get('select').select('Daily')
     testAmounts.forEach(x => {
       cy.get('label').contains('Interval').siblings('.control').find('.input').type(x);
 

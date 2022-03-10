@@ -29,8 +29,9 @@ describe('Multi Transaction Form', () => {
     saveNotDisabled();
 
     cy.get('.divButton').contains('Save').click();
-    cy.getDay(date).find('#oneOffs').children().should('contain', name1)
-      cy.getDay(date).find('#oneOffs').children().should('contain', name2)
+    cy.wait(200);
+    cy.getDay(date).contains(name1);
+    cy.getDay(date).contains(name2);
 
     cy.deleteTransaction(name1);
     cy.deleteTransaction(name2);

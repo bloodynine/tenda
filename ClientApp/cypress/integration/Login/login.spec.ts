@@ -51,6 +51,5 @@ describe('Login', () => {
 
     cy.visit('/');
     cy.url().should('include', '/year');
-    cy.get('.navbar-item').contains('Tenda')
   })
 })
