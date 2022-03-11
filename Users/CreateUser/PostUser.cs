@@ -15,7 +15,8 @@ public class PostUser : Endpoint<CreateUserRequest, CreateUserResponse>
     public override async Task HandleAsync(CreateUserRequest req, CancellationToken ct)
     {
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(req.Password);
-        var user = new User() { Name = req.Name, Password = hashedPassword, UserName = req.Username };
+        var userCount = await DB.CountAsync<User>(cancellation: ct);
+        var user = new User() { Name = req.Name, Password = hashedPassword, UserName = req.Username, IsAdmin = userCount < 1 };
         await user.SaveAsync(cancellation: ct);
         var seed = new Seed() { UserId = user.ID, Amount = 0};
         await seed.SaveAsync(cancellation: ct);

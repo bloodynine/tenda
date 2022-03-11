@@ -1,31 +1,42 @@
 <div class="columns" style="padding-top: 30vh">
   <div class="column is-one-third"></div>
   <div class="column is-one-third">
-    <div class="card">
+    <div *ngIf="settings" class="card">
       <header class="card-header">
         <p class="card-header-title">
           Welcome
         </p>
       </header>
       <div class="card-content">
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <form (ngSubmit)="login()" [formGroup]="loginForm">
           <div class="field">
             <label class="label">
               User Name
             </label>
             <div class="control">
-              <input type="text" class="input" formControlName="username">
+              <input class="input" formControlName="username" type="text">
             </div>
           </div>
           <div class="field">
             <label class="label">Password</label>
             <div class="control">
-              <input type="password" class="input" formControlName="password">
+              <input class="input" formControlName="password" type="password">
             </div>
           </div>
-          <div class="field">
-            <div class="control">
-              <button class="button is-link">Login</button>
+          <div class="columns is-mobile">
+            <div class="column">
+              <div class="field">
+                <div class="control">
+                  <button class="button is-link">Login</button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div *ngIf="settings?.allowSignUps || settings?.isFirstTime" class="field is-pulled-right">
+                <div class="control">
+                  <button class="button is-link">Sign Up</button>
+                </div>
+              </div>
             </div>
           </div>
         </form>

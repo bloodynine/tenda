@@ -3,6 +3,9 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { LoginService } from "../Shared/Services/login.service";
 import { CookieService } from "ngx-cookie-service";
 import { Router } from "@angular/router";
+import { StartupService } from "../Shared/Services/startup.service";
+import { ServerSettings } from "../Shared/Interfaces/ServerSettings";
+import { first, takeUntil } from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -15,10 +18,13 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   })
 
+  settings: ServerSettings | undefined;
+
   constructor(
     private loginService: LoginService,
     private cookies: CookieService,
-    private router: Router
+    private router: Router,
+    private startupService: StartupService
   ) {
   }
 
@@ -27,6 +33,7 @@ export class LoginComponent implements OnInit {
       const today = new Date();
       this.router.navigateByUrl(`year/${today.getFullYear()}/month/${today.getMonth() + 1}`);
     }
+    this.startupService.settings.pipe(first()).subscribe(x => this.settings = x);
   }
 
   login(): void {

@@ -21,6 +21,7 @@ import { CookieService } from "ngx-cookie-service";
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import { IconsModule } from "./Shared/icons/icons.module";
 import { TokenInterceptor } from "./token.interceptor";
+import { AppConfigModule } from "./app-config/app-config.module";
 
 export let InjectorInstance: Injector;
 
@@ -48,7 +49,8 @@ export let InjectorInstance: Injector;
         AppRoutingModule,
         ReactiveFormsModule,
         IconsModule,
-        FormsModule
+        FormsModule,
+        AppConfigModule
     ],
   providers: [ CookieService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

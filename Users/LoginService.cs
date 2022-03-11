@@ -51,11 +51,13 @@ public class LoginService : ILoginService
 
     private async Task<LoginResponse> GetLoginResponse(User user, Seed seed, CancellationToken ct)
     {
+        var claims = new List<(string,string)>(){ ("Username", user.UserName), ("UserId", user.ID), ("SeedId", seed.ID), ("Name", user.ID) };
+        if(user.IsAdmin) claims.Add(("IsAdmin", "true"));
+
         var token = JWTBearer.CreateToken(
             _settings.Key,
             DateTime.Now.AddDays(1),
-            claims: new[]
-                { ("Username", user.UserName), ("UserId", user.ID), ("SeedId", seed.ID), ("Name", user.ID) }
+            claims:  claims.ToArray()
         );
         var tokenData = new byte[64];
         RandomNumberGenerator.Fill(tokenData);
