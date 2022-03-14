@@ -7,7 +7,7 @@ public class GetServerSettings : EndpointWithoutRequest<ServerSettingsResponse>
 {
     public override void Configure()
     {
-        Get("api/settings/server");
+        Get("/api/settings/server");
         AllowAnonymous();
     }
 

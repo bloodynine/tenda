@@ -6,8 +6,8 @@ public class UpdateServerSettings: Endpoint<UpdateServerSettingsRequest, UpdateS
 {
     public override void Configure()
     {
-        Put("api/settings/server/{id}");
-        Claims("UserId", "IsAdmin");
+        Put("/api/settings/server/{id}");
+        ClaimsAll("UserId", "IsAdmin");
     }
 
     public override async Task HandleAsync(UpdateServerSettingsRequest req, CancellationToken ct)

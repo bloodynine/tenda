@@ -12,7 +12,7 @@ public class GetAllTags : Endpoint<GetTagsRequest, List<string>>
 
     public override void Configure()
     {
-        Get("api/tags");
+        Get("/api/tags");
         Claims("UserId");
     }
 

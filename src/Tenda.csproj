@@ -20,7 +20,11 @@
     <PackageReference Include="MongoDB.Entities" Version="21.0.0-alpha3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="IntegrationTests" />
+  </ItemGroup>
+  
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <None Remove="$(SpaRoot)**" />

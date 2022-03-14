@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using MongoDB.Entities;
+using Tenda;
 using Tenda.Shared.Hubs;
 using Tenda.Shared.Models;
 using Tenda.Shared.Services;
@@ -53,9 +54,11 @@ if (!app.Environment.IsDevelopment()) app.UseSpaStaticFiles();
 
 Task.Run(async () =>
 {
+    var databaseOverride = app.Configuration.GetValue<string?>("DatabaseNameOverride");
+
     var settings = app.Configuration.GetSection("Database").Get<DatabaseSettings>();
     await DB.InitAsync(
-        settings.DatabaseName,
+        databaseOverride ?? settings.DatabaseName,
         settings.Host, settings.Port);
 }).GetAwaiter().GetResult();
 
