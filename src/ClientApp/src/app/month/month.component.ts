@@ -74,16 +74,19 @@ export class MonthComponent implements OnInit {
   goToPreviousMonth() {
     this.selectedDate = new Date(this.selectedDate.setMonth(this.selectedDate.getMonth() - 1))
     this.navigateToDay();
+    this.isMenuActive = false;
   }
 
   goToNextMonth() {
     this.selectedDate = new Date(this.selectedDate.setMonth(this.selectedDate.getMonth() + 1))
     this.navigateToDay();
+    this.isMenuActive = false;
   }
 
   goToToday() {
     this.selectedDate = new Date();
     this.navigateToDay();
+    this.isMenuActive = false;
   }
 
   navigateToDay() {
