@@ -452,3 +452,8 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+.angular/*
+.angular
+src/ClientApp/dist
+src/ClientApp/dist/*
