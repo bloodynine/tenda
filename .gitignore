@@ -455,3 +455,5 @@ $RECYCLE.BIN/
 
 .angular/*
 .angular
+src/ClientApp/dist
+src/ClientApp/dist/*
