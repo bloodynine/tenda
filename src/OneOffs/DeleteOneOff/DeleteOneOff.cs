@@ -1,6 +1,7 @@
 ﻿using FastEndpoints;
 using MongoDB.Entities;
 using Tenda.Shared;
+using Tenda.Shared.Errors;
 using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
@@ -12,16 +13,20 @@ public class DeleteOneOff : Endpoint<DeleteRequest, Month>
 
     public override void Configure()
     {
-        Delete("api/OneOffs/{Id}");
+        Delete("/api/OneOffs/{Id}");
         Claims("UserId", "SeedId");
-       PostProcessors(new TotalPostProcessor<DeleteRequest, Month>());
+        PostProcessors(new TotalPostProcessor<DeleteRequest, Month>());
     }
 
     public override async Task HandleAsync(DeleteRequest req, CancellationToken ct)
     {
         // ReSharper disable once MethodSupportsCancellation
-        await DB.DeleteAsync<FinancialTransaction>(req.Id);
-        // var date = req.ViewDate ?? DateTime.Now;
+        var result = await DB.DeleteAsync<FinancialTransaction>(req.Id);
+        if (result.DeletedCount == 0)
+        {
+            await this.HandleApiErrorsAsync(new NotFoundException($"{req.Id} Not Found"), ct);
+            return;
+        }
         await SendAsync(await GetByMonthService.GetMonth(req.ViewDate, req.UserId, ct), cancellation: ct);
     }
 }

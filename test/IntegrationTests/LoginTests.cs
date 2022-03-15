@@ -31,18 +31,18 @@ public class LoginTests
     }
 
     [Test]
-    public void LoginTestBadRequest()
+    public void Login_ForbiddenTest()
     {
-        var (response, result) = GuestClient.POSTAsync<
+        var response = GuestClient.POSTAsync<
                     Tenda.Users.Login.Login,
-                    Tenda.Users.Login.LoginRequest,
-                    Tenda.Users.LoginResponse>(new()
+                    Tenda.Users.Login.LoginRequest
+                    >(new()
                 {
                     Username = "nope",
                     Password = "NoWay"
                 })
                 .GetAwaiter()
                 .GetResult();
-        response!.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        response!.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
 }

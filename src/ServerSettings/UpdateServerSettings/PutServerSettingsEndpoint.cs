@@ -2,7 +2,7 @@
 
 namespace Tenda.ServerSettings.UpdateServerSettings;
 
-public class UpdateServerSettings: Endpoint<UpdateServerSettingsRequest, UpdateServerSettingsResponse>
+public class PutServerSettingsEndpoint: Endpoint<UpdateServerSettingsRequest, UpdateServerSettingsResponse>
 {
     public override void Configure()
     {

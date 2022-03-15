@@ -52,6 +52,9 @@ public class FinancialTransaction : Entity
         Created = DateTime.Now;
         Tags = contract.Tags.ToList();
     }
+
+    public FinancialTransaction()
+    {}
 }
 
 public enum TransactionType

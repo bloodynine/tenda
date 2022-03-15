@@ -1,0 +1,23 @@
+<div class="card" *ngIf="settings">
+    <div class="card-header">
+        <div class="card-header-title">Admin Settings</div>
+    </div>
+    <div class="card-content">
+        <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                    <input type="checkbox" (click)="toggleSignUps()" [checked]="settings.allowSignUps">
+                    Allow Sign ups
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+       <div (click)="cancel()" class="card-footer-item is-clickable divButton">
+            Cancel
+        </div>
+        <div (click)="save()"  class="card-footer-item  divButton">
+            Save
+        </div>
+    </div>
+</div>

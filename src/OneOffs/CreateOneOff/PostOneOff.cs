@@ -14,7 +14,7 @@ public class PostOneOff : Endpoint<CreateOneOffRequest, Month>
 
     public override void Configure()
     {
-        Post("api/oneOffs");
+        Post("/api/oneOffs");
         Claims("UserId");
         PostProcessors(new TotalPostProcessor<CreateOneOffRequest, Month>());
     }

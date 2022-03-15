@@ -12,7 +12,7 @@ public class DeleteRepeatContract : Endpoint<DeleteRequest, Month>
 
     public override void Configure()
     {
-       Delete("api/repeats/{Id}");
+       Delete("/api/repeats/{Id}");
        Claims("UserId", "SeedId");
     }
 

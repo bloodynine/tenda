@@ -5,7 +5,10 @@ using FluentAssertions;
 using NUnit.Framework;
 using Tenda.ServerSettings.GetServerSettings;
 using Tenda.ServerSettings.UpdateServerSettings;
+using Tenda.Shared.Errors;
+using Tenda.Users;
 using Tenda.Users.CreateUser;
+using Tenda.Users.GetUser;
 using static IntegrationTests.Setup;
 
 namespace IntegrationTests;
@@ -16,6 +19,26 @@ public class UserTests
     public void Setup()
     {
         UpdateAllowedSignups(true);
+    }
+
+    [Test]
+    public void Users_GetLoggedInUser_200OK()
+    {
+        var (response, result) = UserClient.GETAsync<GetUserEndpoint, GetUserRequest, GetUserResponse>(
+            new()).GetAwaiter().GetResult();
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        result.UserName.Should().Be("intUser");
+        result.IsAdmin.Should().BeFalse();
+    }
+
+    [Test]
+    public void Users_GetLoggedInUser_Unauthorized()
+    {
+        var response = GuestClient.GETAsync<GetUserEndpoint, GetUserRequest>(
+            new()).GetAwaiter().GetResult();
+
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
     [Test]
@@ -60,7 +83,7 @@ public class UserTests
         var (_, settingsResponse) = AdminClient
             .GETAsync<GetServerSettings, ServerSettingsResponse>().GetAwaiter().GetResult();
 
-        AdminClient.PUTAsync<UpdateServerSettings, UpdateServerSettingsRequest>(
+        AdminClient.PUTAsync<PutServerSettingsEndpoint, UpdateServerSettingsRequest>(
             new UpdateServerSettingsRequest
             {
                 Id = settingsResponse!.ID,

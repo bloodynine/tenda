@@ -17,7 +17,7 @@ public class ServerSettingsTests
             .GETAsync<GetServerSettings, ServerSettingsResponse>().GetAwaiter().GetResult();
 
         AdminClient
-            .PUTAsync<UpdateServerSettings, UpdateServerSettingsRequest>(
+            .PUTAsync<PutServerSettingsEndpoint, UpdateServerSettingsRequest>(
                 new UpdateServerSettingsRequest
                 {
                     Id = settingsResponse!.ID,
@@ -46,7 +46,7 @@ public class ServerSettingsTests
             .GETAsync<GetServerSettings, ServerSettingsResponse>().GetAwaiter().GetResult();
 
         var (response, result) = AdminClient
-            .PUTAsync<UpdateServerSettings,
+            .PUTAsync<PutServerSettingsEndpoint,
                 UpdateServerSettingsRequest,
                 UpdateServerSettingsResponse>(
                 new UpdateServerSettingsRequest
@@ -59,13 +59,13 @@ public class ServerSettingsTests
     }
 
     [Test]
-    public void ServerSettings_Post_Forbidden()
+    public void ServerSettings_Put_Forbidden()
     {
         var (_, settingsResponse) = AdminClient
             .GETAsync<GetServerSettings, ServerSettingsResponse>().GetAwaiter().GetResult();
 
         var response = UserClient
-            .PUTAsync<UpdateServerSettings, UpdateServerSettingsRequest>(
+            .PUTAsync<PutServerSettingsEndpoint, UpdateServerSettingsRequest>(
                 new UpdateServerSettingsRequest
                 {
                     Id = settingsResponse!.ID,

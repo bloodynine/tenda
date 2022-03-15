@@ -13,7 +13,7 @@ public class PutOneOff : Endpoint<UpdateOneOffRequest, Month>
     public override void Configure()
     {
         Verbs(Http.PUT);
-        Routes("api/OneOffs/{Id}");
+        Routes("/api/OneOffs/{Id}");
         Claims("UserId");
         PostProcessors(new TotalPostProcessor<UpdateOneOffRequest, Month>());
     }

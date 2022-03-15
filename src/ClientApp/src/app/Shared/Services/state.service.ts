@@ -38,6 +38,12 @@ export class StateService {
     this.currentState.next(state);
     this.multiTransactionDate.next(date);
   }
+  
+  public EditAdminSettings(): void {
+    const state = this.currentState.getValue();
+    state.modalWindow = ModelWindow.Admin;
+    this.currentState.next(state);
+  }
 
   public AddErrorMsg(message: string): void {
     const state = this.currentState.getValue();

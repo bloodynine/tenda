@@ -21,6 +21,7 @@ export class MonthComponent implements OnInit {
   total: number = 0;
   currentState: CurrentState = {} as CurrentState;
   monthlyTransactions: Transaction[] = [];
+  isAdmin = false;
   public modalWindow = ModelWindow;
 
   selectedDate: Date = new Date();
@@ -39,6 +40,7 @@ export class MonthComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loginSerivce.GetUser().then(x => this.isAdmin = x.isAdmin);
     this.stateService.currentState.subscribe(x => this.currentState = x);
     this.stateService.month.subscribe(x => {
       this.month = x;
@@ -107,6 +109,10 @@ export class MonthComponent implements OnInit {
     const offSet = 63;
     const position = elPosition + window.pageYOffset - offSet;
     window.scrollTo({ top: position, behavior: "smooth" })
+  }
+  
+  openAdminPanel() {
+    this.stateService.EditAdminSettings();
   }
 
   private addDaysTransactionToMonthlyList(day: Day) {

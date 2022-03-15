@@ -1,4 +1,4 @@
-﻿using FastEndpoints;
+﻿using Tenda.Shared.Errors;
 
 namespace Tenda.Users.Login;
 
@@ -14,6 +14,19 @@ public class Login : Endpoint<LoginRequest, LoginResponse>
 
     public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
     {
-        await SendAsync(await LoginService.Login(req.Username, req.Password, ct), cancellation: ct);
+        LoginResponse response;
+        try
+        {
+            response = await LoginService.Login(req.Username, req.Password, ct);
+        }
+        catch (Exception e) when (ApiErrors.Filter(e))
+        {
+            await this.HandleApiErrorsAsync(e, ct);
+            return;
+        }
+
+
+        await SendAsync(response, cancellation: ct);
     }
 }
+

@@ -12,7 +12,7 @@ public class CreateManyOneOffs : Endpoint<CreateManyOneOffsRequest, Month>
 
     public override void Configure()
     {
-        Post("api/oneOffs/bulk");
+        Post("/api/oneOffs/bulk");
         Claims("UserId", "SeedId");
         PostProcessors(new TotalPostProcessor<CreateManyOneOffsRequest, Month>());
     }

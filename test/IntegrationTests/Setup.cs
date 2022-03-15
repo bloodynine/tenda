@@ -19,8 +19,7 @@ public static class Setup
         .WithWebHostBuilder(x => { x.UseSetting("DatabaseNameOverride", "IntTests"); }).CreateClient();
 
     public static HttpClient UserClient { get; } = Factory
-        .WithWebHostBuilder(x => x.Configure(y => { x.UseSetting("DatabaseNameOverride", "IntTests"); }))
-        .CreateClient();
+        .WithWebHostBuilder(x => { x.UseSetting("DatabaseNameOverride", "IntTests"); }).CreateClient();
 
     static Setup()
     {

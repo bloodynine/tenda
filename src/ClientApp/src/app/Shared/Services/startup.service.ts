@@ -21,4 +21,8 @@ export class StartupService {
       this.settings.next(x)
     });
   }
+  
+  public saveSettings(settings: ServerSettings): void {
+    this.http.put<ServerSettings>(`${this.baseUrl}/settings/server/${settings.id}`, settings).toPromise().then(x => this.settings.next(x));
+  }
 }

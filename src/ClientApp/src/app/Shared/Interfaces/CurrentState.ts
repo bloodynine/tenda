@@ -9,5 +9,6 @@ export enum ModelWindow {
   None,
   Transaction,
   RepeatSettings,
-  MultiTransaction
+  MultiTransaction,
+  Admin,
 }

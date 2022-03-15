@@ -3,6 +3,7 @@ using FastEndpoints.Security;
 using Microsoft.Extensions.Options;
 using MongoDB.Entities;
 using Tenda.Shared;
+using Tenda.Shared.Errors;
 using Tenda.Shared.Models;
 
 namespace Tenda.Users;
@@ -22,18 +23,18 @@ public class LoginService : ILoginService
         var seed = await GetSeedValue(user.ID, ct);
         if (BCrypt.Net.BCrypt.Verify(password, user!.Password)) return await GetLoginResponse(user, seed, ct);
 
-        throw new ApplicationException("Not Authorized");
+        throw new ForbiddenException("Invalid password");
     }
 
     public async Task<LoginResponse> RefreshToken(string refreshToken, CancellationToken ct)
     {
         var tokenItem = await DB.Find<RefreshToken>()
             .Match(x => x.Token == refreshToken).ExecuteFirstAsync(ct);
-        if (tokenItem is null || tokenItem.ExpiresAt < DateTime.Now) throw new ApplicationException("Token Expired");
+        if (tokenItem is null || tokenItem.ExpiresAt < DateTime.Now) throw new ForbiddenException("Token Expired");
         if (!tokenItem.IsValid) await InvalidateTokenFamily(tokenItem, ct);
 
         var user = await DB.Find<User>().Match(x => x.ID == tokenItem.UserId).ExecuteFirstAsync(ct)
-                   ?? throw new ApplicationException("User not found");
+                   ?? throw new ForbiddenException("User not found");
         var seed = await GetSeedValue(user.ID, ct);
         return await GetLoginResponse(user, seed, ct);
     }
@@ -77,7 +78,7 @@ public class LoginService : ILoginService
     {
         var user = await DB.Find<User>()
             .Match(x => x.UserName == username).ExecuteFirstAsync(ct);
-        if (user is null) throw new ApplicationException("User Not found");
+        if (user is null) throw new ForbiddenException("User Not found");
         return user;
     }
 

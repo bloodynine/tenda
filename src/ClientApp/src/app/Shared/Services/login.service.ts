@@ -8,6 +8,7 @@ import { BearerToken } from "../Interfaces/BearerToken";
 import { Observable } from "rxjs";
 import { TransactionService } from "./transaction.service";
 import { HandleHttpError } from "./handle-error.service";
+import { User } from "../Interfaces/User";
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +55,9 @@ export class LoginService {
     this.cookies.deleteAll('/');
     this.transactionService.UnSubscribeToSignalR();
     this.router.navigateByUrl('login');
+  }
+  
+  public GetUser(): Promise<User> {
+    return this.http.get<User>(`${this.baseUrl}/users`).toPromise();
   }
 }

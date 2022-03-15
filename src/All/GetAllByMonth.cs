@@ -10,7 +10,7 @@ public class GetAllByMonth : Endpoint<GetAllRequest, Month>
     public override void Configure()
     {
         Verbs(Http.GET);
-        Routes("api/month/{Month}/year/{Year}");
+        Routes("/api/month/{Month}/year/{Year}");
         Claims("UserId");
     }
 

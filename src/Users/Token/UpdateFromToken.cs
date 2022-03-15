@@ -8,7 +8,7 @@ public class UpdateFromToken : Endpoint<TokenRequest, LoginResponse>
 
     public override void Configure()
     {
-        Post("api/users/token");
+        Post("/api/users/token");
         AllowAnonymous();
     }
 

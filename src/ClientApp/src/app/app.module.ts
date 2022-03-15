@@ -22,6 +22,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/
 import { IconsModule } from "./Shared/icons/icons.module";
 import { TokenInterceptor } from "./token.interceptor";
 import { AppConfigModule } from "./app-config/app-config.module";
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 export let InjectorInstance: Injector;
 
@@ -42,6 +43,7 @@ export let InjectorInstance: Injector;
     NotificationsComponent,
     TransactionSearchComponent,
     RepeatSettingsComponent,
+    AdminPanelComponent,
   ],
     imports: [
         BrowserModule,

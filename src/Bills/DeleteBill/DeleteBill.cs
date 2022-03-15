@@ -12,7 +12,7 @@ public class DeleteBill : Endpoint<DeleteRequest, Month>
 
     public override void Configure()
     {
-       Delete("api/bills/{Id}");
+       Delete("/api/bills/{Id}");
        Claims("UserId", "SeedId");
        PostProcessors(new TotalPostProcessor<DeleteRequest, Month>());
     }

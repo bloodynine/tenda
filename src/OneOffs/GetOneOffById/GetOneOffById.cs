@@ -8,7 +8,7 @@ public class GetOneOffById : Endpoint<OneOffByIdRequest, OneOffResponse>
 {
     public override void Configure()
     {
-        Get("api/OneOffs/{Id}");
+        Get("/api/OneOffs/{Id}");
         Claims("UserId");
     }
 
