@@ -6,7 +6,7 @@ using Tenda.Shared.Models;
 
 namespace Tenda.All;
 
-public class GetAllTags : Endpoint<GetTagsRequest, List<string>>
+public class GetTagsEndpoint : Endpoint<GetTagsRequest, List<string>>
 {
     public IMemoryCache Cache { get; set; } = null!;
 

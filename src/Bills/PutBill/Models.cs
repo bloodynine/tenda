@@ -1,9 +1,10 @@
 ﻿using Tenda.Shared;
+using Tenda.Shared.BaseModels;
 using Tenda.Shared.Models;
 
-namespace Tenda.Bills.UpdateBill;
+namespace Tenda.Bills.PutBill;
 
-public class UpdateBillRequest : FinancialTransactionRequestBase
+public class PutBillRequest : FinancialTransactionRequestBase
 {
     public string Id { get; set; } = "";
     public bool IsResolved { get; set; } = false;
@@ -17,9 +18,9 @@ public class UpdateBillRequest : FinancialTransactionRequestBase
     }
 }
 
-public class UpdateBillRequestValidator : Validator<UpdateBillRequest>
+public class PutBillRequestValidator : Validator<PutBillRequest>
 {
-    public UpdateBillRequestValidator()
+    public PutBillRequestValidator()
     {
         Include(new FinancialTransactionRequestBaseValidator());
         RuleFor(x => x.Id).NotEmpty();

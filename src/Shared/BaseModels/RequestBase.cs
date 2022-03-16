@@ -6,10 +6,12 @@ namespace Tenda.Shared.BaseModels;
 
 public abstract class RequestBase
 {
-    [FromClaim("UserId")] [JsonIgnore] 
+    [FromClaim("UserId")]
+    [JsonIgnore]
     public string UserId { get; set; } = "";
 
-    [JsonIgnore] [FromClaim("SeedId")] 
+    [JsonIgnore]
+    [FromClaim("SeedId")]
     public string SeedId { get; set; } = "";
 }
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using MongoDB.Entities;
 using NUnit.Framework;
 using Tenda.All;
+using Tenda.All.Models;
 using Tenda.OneOffs.PostOneOff;
 using Tenda.Shared;
 using Tenda.Shared.Models;

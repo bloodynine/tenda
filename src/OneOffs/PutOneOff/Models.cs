@@ -1,4 +1,5 @@
 ﻿using Tenda.Shared;
+using Tenda.Shared.BaseModels;
 using Tenda.Shared.Models;
 
 namespace Tenda.OneOffs.UpdateOneOff;

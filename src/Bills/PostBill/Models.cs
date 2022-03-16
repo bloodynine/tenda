@@ -1,9 +1,10 @@
 ﻿using Tenda.Shared;
+using Tenda.Shared.BaseModels;
 using Tenda.Shared.Models;
 
-namespace Tenda.Bills.CreateBill;
+namespace Tenda.Bills.PostBill;
 
-public class CreateBillRequest : FinancialTransactionRequestBase
+public class PostBillRequest : FinancialTransactionRequestBase
 {
     public RepeatRequest? RepeatSettings { get; init; }
 
@@ -13,9 +14,9 @@ public class CreateBillRequest : FinancialTransactionRequestBase
     }
 }
 
-public class CreateBillRequestValidator : Validator<CreateBillRequest>
+public class PostBillRequestValidator : Validator<PostBillRequest>
 {
-    public CreateBillRequestValidator()
+    public PostBillRequestValidator()
     {
         Include(new FinancialTransactionRequestBaseValidator());
     }

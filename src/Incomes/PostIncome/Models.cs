@@ -1,9 +1,10 @@
 ﻿using Tenda.Shared;
+using Tenda.Shared.BaseModels;
 using Tenda.Shared.Models;
 
-namespace Tenda.Incomes.CreateIncome;
+namespace Tenda.Incomes.PostIncome;
 
-public class CreateIncomeRequest : FinancialTransactionRequestBase
+public class PostIncomeRequest : FinancialTransactionRequestBase
 {
     public RepeatRequest? RepeatSettings { get; set; } = null;
 
@@ -13,9 +14,9 @@ public class CreateIncomeRequest : FinancialTransactionRequestBase
     }
 }
 
-public class CreateIncomeRequestValidator : Validator<CreateIncomeRequest>
+public class PostIncomeRequestValidator : Validator<PostIncomeRequest>
 {
-    public CreateIncomeRequestValidator()
+    public PostIncomeRequestValidator()
     {
         Include(new FinancialTransactionRequestBaseValidator());
     }

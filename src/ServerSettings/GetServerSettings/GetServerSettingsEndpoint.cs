@@ -1,9 +1,11 @@
 ﻿using MongoDB.Entities;
+using Tenda.Shared;
+using Tenda.Shared.Models;
 using Tenda.Users;
 
 namespace Tenda.ServerSettings.GetServerSettings;
 
-public class GetServerSettings : EndpointWithoutRequest<ServerSettingsResponse>
+public class GetServerSettingsEndpoint : EndpointWithoutRequest<GetServerSettingsResponse>
 {
     public override void Configure()
     {
@@ -21,6 +23,6 @@ public class GetServerSettings : EndpointWithoutRequest<ServerSettingsResponse>
         }
 
         var users = await DB.CountAsync<User>(cancellation: ct);
-        await SendAsync(new ServerSettingsResponse(settings, users == 0), cancellation: ct);
+        await SendAsync(new GetServerSettingsResponse(settings, users == 0), cancellation: ct);
     }
 }

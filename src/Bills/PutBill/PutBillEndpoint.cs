@@ -1,13 +1,11 @@
-﻿using FastEndpoints;
-using MongoDB.Entities;
-using Tenda.Bills.CreateBill;
+﻿using MongoDB.Entities;
 using Tenda.Shared;
 using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
-namespace Tenda.Bills.UpdateBill;
+namespace Tenda.Bills.PutBill;
 
-public class UpdateBill : Endpoint<UpdateBillRequest, Month>
+public class PutBillEndpoint : Endpoint<PutBillRequest, Month>
 {
     public IGetByMonthService GetByMonthService { get; set; } = null!;
 
@@ -15,10 +13,10 @@ public class UpdateBill : Endpoint<UpdateBillRequest, Month>
     {
         Put("api/bills/{Id}");
         Claims("UserId", "SeedId");
-        PostProcessors(new TotalPostProcessor<UpdateBillRequest, Month>());
+        PostProcessors(new TotalPostProcessor<PutBillRequest, Month>());
     }
 
-    public override async Task HandleAsync(UpdateBillRequest req, CancellationToken ct)
+    public override async Task HandleAsync(PutBillRequest req, CancellationToken ct)
     {
         var transaction = req.ToTransaction();
         var updatedBill = await DB.UpdateAndGet<FinancialTransaction>()
@@ -29,7 +27,7 @@ public class UpdateBill : Endpoint<UpdateBillRequest, Month>
 
         if (updatedBill is null)
         {
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(ct);
             return;
         }
 

@@ -1,9 +1,10 @@
 ﻿using Tenda.Shared;
+using Tenda.Shared.BaseModels;
 using Tenda.Shared.Models;
 
-namespace Tenda.Incomes.UpdateIncome;
+namespace Tenda.Incomes.PutIncome;
 
-public class UpdateIncomeRequest : FinancialTransactionRequestBase
+public class PutIncomeRequest : FinancialTransactionRequestBase
 {
     public string Id { get; set; } = "";
     public bool IsResolved { get; set; } = false;
@@ -14,9 +15,9 @@ public class UpdateIncomeRequest : FinancialTransactionRequestBase
     }
 }
 
-public class UpdateIncomeRequestValidator : Validator<UpdateIncomeRequest>
+public class PutIncomeRequestValidator : Validator<PutIncomeRequest>
 {
-    public UpdateIncomeRequestValidator()
+    public PutIncomeRequestValidator()
     {
         RuleFor(x => x.Id).NotEmpty();
         Include(new FinancialTransactionRequestBaseValidator());

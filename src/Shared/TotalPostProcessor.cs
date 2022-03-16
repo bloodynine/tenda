@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Tenda.OneOffs.PostOneOffs;
+using Tenda.Shared.BaseModels;
 using Tenda.Shared.Extensions;
 using Tenda.Shared.Hubs;
 using Tenda.Shared.Services;

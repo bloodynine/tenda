@@ -1,5 +1,6 @@
 ﻿using MongoDB.Entities;
 using Tenda.Shared;
+using Tenda.Shared.Models;
 using Tenda.Users;
 
 namespace SeedScripts;

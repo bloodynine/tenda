@@ -1,4 +1,5 @@
-﻿using Tenda.Shared.Models;
+﻿using Tenda.All.Models;
+using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
 namespace Tenda.All;

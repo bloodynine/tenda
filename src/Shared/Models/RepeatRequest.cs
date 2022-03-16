@@ -1,4 +1,4 @@
-﻿namespace Tenda.Shared;
+﻿namespace Tenda.Shared.Models;
 
 public record RepeatRequest
 {

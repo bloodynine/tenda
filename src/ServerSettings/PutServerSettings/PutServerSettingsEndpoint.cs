@@ -1,8 +1,10 @@
 ﻿using MongoDB.Entities;
+using Tenda.Shared;
+using Tenda.Shared.Models;
 
-namespace Tenda.ServerSettings.UpdateServerSettings;
+namespace Tenda.ServerSettings.PutServerSettings;
 
-public class PutServerSettingsEndpoint: Endpoint<UpdateServerSettingsRequest, UpdateServerSettingsResponse>
+public class PutServerSettingsEndpoint: Endpoint<PutServerSettingsRequest, PutServerSettingsResponse>
 {
     public override void Configure()
     {
@@ -10,7 +12,7 @@ public class PutServerSettingsEndpoint: Endpoint<UpdateServerSettingsRequest, Up
         ClaimsAll("UserId", "IsAdmin");
     }
 
-    public override async Task HandleAsync(UpdateServerSettingsRequest req, CancellationToken ct)
+    public override async Task HandleAsync(PutServerSettingsRequest req, CancellationToken ct)
     {
         var doc = new ServerSettingsDoc() { AllowSignUps = req.AllowSignUps, ID = req.Id };
         await DB.Update<ServerSettingsDoc>().MatchID(req.Id).ModifyWith(doc).ExecuteAsync(ct);

@@ -1,6 +1,6 @@
 ﻿using MongoDB.Entities;
 
-namespace Tenda.Shared;
+namespace Tenda.Shared.Models;
 
 public class Seed : Entity
 {

@@ -1,12 +1,12 @@
-﻿using FastEndpoints;
-using MongoDB.Entities;
+﻿using MongoDB.Entities;
+using Tenda.Incomes.PostIncome;
 using Tenda.Shared;
 using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
 namespace Tenda.Incomes.CreateIncome;
 
-public class CreateIncome : Endpoint<CreateIncomeRequest, Month>
+public class PostIncomeEndpoint : Endpoint<PostIncomeRequest, Month>
 {
     public IGetByMonthService GetByMonthService { get; set; } = null!;
 
@@ -14,10 +14,10 @@ public class CreateIncome : Endpoint<CreateIncomeRequest, Month>
     {
         Post("api/incomes");
         Claims("UserId", "SeedId");
-        PostProcessors(new TotalPostProcessor<CreateIncomeRequest, Month>());
+        PostProcessors(new TotalPostProcessor<PostIncomeRequest, Month>());
     }
 
-    public override async Task HandleAsync(CreateIncomeRequest req, CancellationToken ct)
+    public override async Task HandleAsync(PostIncomeRequest req, CancellationToken ct)
     {
         var transaction = req.ToTransaction();
 

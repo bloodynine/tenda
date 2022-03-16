@@ -1,12 +1,11 @@
-﻿using FastEndpoints;
-using MongoDB.Entities;
+﻿using MongoDB.Entities;
 using Tenda.Shared;
 using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
-namespace Tenda.Bills.CreateBill;
+namespace Tenda.Bills.PostBill;
 
-public class PostBills : Endpoint<CreateBillRequest, Month>
+public class PostBillEndpoint : Endpoint<PostBillRequest, Month>
 {
     public IGetByMonthService GetByMonthService { get; set; } = null!;
 
@@ -15,10 +14,10 @@ public class PostBills : Endpoint<CreateBillRequest, Month>
         Verbs(Http.POST);
         Routes("/api/bills");
         Claims("UserId", "SeedId");
-        PostProcessors(new TotalPostProcessor<CreateBillRequest, Month>());
+        PostProcessors(new TotalPostProcessor<PostBillRequest, Month>());
     }
 
-    public override async Task HandleAsync(CreateBillRequest req, CancellationToken ct)
+    public override async Task HandleAsync(PostBillRequest req, CancellationToken ct)
     {
         var transaction = req.ToTransaction();
 

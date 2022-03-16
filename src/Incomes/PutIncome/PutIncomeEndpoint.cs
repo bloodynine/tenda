@@ -1,12 +1,11 @@
-﻿using FastEndpoints;
-using MongoDB.Entities;
+﻿using MongoDB.Entities;
 using Tenda.Shared;
 using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
-namespace Tenda.Incomes.UpdateIncome;
+namespace Tenda.Incomes.PutIncome;
 
-public class UpdateIncome : Endpoint<UpdateIncomeRequest, Month>
+public class PutIncomeEndpoint : Endpoint<PutIncomeRequest, Month>
 {
     public IGetByMonthService GetByMonthService { get; set; } = null!;
 
@@ -14,10 +13,10 @@ public class UpdateIncome : Endpoint<UpdateIncomeRequest, Month>
     {
         Put("api/incomes/{Id}");
         Claims("UserId", "SeedId");
-        PostProcessors(new TotalPostProcessor<UpdateIncomeRequest, Month>());
+        PostProcessors(new TotalPostProcessor<PutIncomeRequest, Month>());
     }
 
-    public override async Task HandleAsync(UpdateIncomeRequest req, CancellationToken ct)
+    public override async Task HandleAsync(PutIncomeRequest req, CancellationToken ct)
     {
         var transaction = await DB.UpdateAndGet<FinancialTransaction>()
             .MatchID(req.Id)

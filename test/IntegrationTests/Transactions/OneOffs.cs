@@ -6,6 +6,7 @@ using FastEndpoints;
 using FluentAssertions;
 using NUnit.Framework;
 using Tenda.All;
+using Tenda.All.Models;
 using Tenda.OneOffs;
 using Tenda.OneOffs.GetOneOff;
 using Tenda.OneOffs.PostOneOff;

@@ -1,8 +1,8 @@
 ﻿using MongoDB.Entities;
 using Tenda.Repeats.UpdateRepeatContract;
-using Tenda.Shared.Models;
+using Tenda.Shared.BaseModels;
 
-namespace Tenda.Shared;
+namespace Tenda.Shared.Models;
 
 public class RepeatContracts : Entity
 {

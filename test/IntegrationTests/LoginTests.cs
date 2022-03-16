@@ -17,7 +17,7 @@ public class LoginTests
     public void LoginTest()
     {
         var (response, result) = GuestClient.POSTAsync<
-                    Tenda.Users.Login.Login,
+                    Tenda.Users.Login.LoginEndpoint,
                     Tenda.Users.Login.LoginRequest,
                     Tenda.Users.LoginResponse>(new()
                 {
@@ -34,7 +34,7 @@ public class LoginTests
     public void Login_ForbiddenTest()
     {
         var response = GuestClient.POSTAsync<
-                    Tenda.Users.Login.Login,
+                    Tenda.Users.Login.LoginEndpoint,
                     Tenda.Users.Login.LoginRequest
                     >(new()
                 {

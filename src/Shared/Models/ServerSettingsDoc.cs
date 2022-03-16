@@ -1,6 +1,6 @@
 ﻿using MongoDB.Entities;
 
-namespace Tenda.ServerSettings;
+namespace Tenda.Shared.Models;
 
 public class ServerSettingsDoc : Entity
 {

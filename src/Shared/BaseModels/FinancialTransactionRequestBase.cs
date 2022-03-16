@@ -1,7 +1,6 @@
-﻿using Tenda.Shared.BaseModels;
-using Tenda.Shared.Models;
+﻿using Tenda.Shared.Models;
 
-namespace Tenda.Shared;
+namespace Tenda.Shared.BaseModels;
 
 public abstract class FinancialTransactionRequestBase : RequestBase
 {

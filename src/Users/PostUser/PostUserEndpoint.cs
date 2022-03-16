@@ -2,10 +2,12 @@
 using MongoDB.Entities;
 using Tenda.ServerSettings;
 using Tenda.Shared;
+using Tenda.Shared.Models;
+using Tenda.Users.PostUser;
 
 namespace Tenda.Users.CreateUser;
 
-public class PostUser : Endpoint<CreateUserRequest, CreateUserResponse>
+public class PostUserEndpoint : Endpoint<PostUserRequest, PostUserResponse>
 {
     public override void Configure()
     {
@@ -13,7 +15,7 @@ public class PostUser : Endpoint<CreateUserRequest, CreateUserResponse>
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(CreateUserRequest req, CancellationToken ct)
+    public override async Task HandleAsync(PostUserRequest req, CancellationToken ct)
     {
         var settings = await DB.Find<ServerSettingsDoc>().ExecuteFirstAsync(ct);
         if (!settings.AllowSignUps)
@@ -28,6 +30,6 @@ public class PostUser : Endpoint<CreateUserRequest, CreateUserResponse>
         await user.SaveAsync(cancellation: ct);
         var seed = new Seed() { UserId = user.ID, Amount = 0};
         await seed.SaveAsync(cancellation: ct);
-        await SendAsync(new CreateUserResponse() { Id = user.ID, Username = user.UserName }, cancellation: ct);
+        await SendAsync(new PostUserResponse() { Id = user.ID, Username = user.UserName }, cancellation: ct);
     }
 }

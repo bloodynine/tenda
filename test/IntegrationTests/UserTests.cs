@@ -4,9 +4,10 @@ using FastEndpoints;
 using FluentAssertions;
 using NUnit.Framework;
 using Tenda.ServerSettings.GetServerSettings;
-using Tenda.ServerSettings.UpdateServerSettings;
+using Tenda.ServerSettings.PutServerSettings;
 using Tenda.Users.CreateUser;
 using Tenda.Users.GetUser;
+using Tenda.Users.PostUser;
 using static IntegrationTests.Setup;
 
 namespace IntegrationTests;
@@ -43,8 +44,8 @@ public class UserTests
     public void Users_Post_Success()
     {
         var username = Guid.NewGuid().ToString();
-        var (response, result) = GuestClient.POSTAsync<PostUser, CreateUserRequest, CreateUserResponse>(
-            new CreateUserRequest
+        var (response, result) = GuestClient.POSTAsync<PostUserEndpoint, PostUserRequest, PostUserResponse>(
+            new PostUserRequest
             {
                 Username = username,
                 Password = Guid.NewGuid().ToString(),
@@ -61,8 +62,8 @@ public class UserTests
     public void Users_Post_ShouldFailOnNotAllowSignups()
     {
         UpdateAllowedSignups(false);
-        var response = GuestClient.POSTAsync<PostUser, CreateUserRequest>(
-            new CreateUserRequest
+        var response = GuestClient.POSTAsync<PostUserEndpoint, PostUserRequest>(
+            new PostUserRequest
             {
                 Username = Guid.NewGuid().ToString(),
                 Password = Guid.NewGuid().ToString(),
@@ -79,10 +80,10 @@ public class UserTests
     private void UpdateAllowedSignups(bool allowSignups)
     {
         var (_, settingsResponse) = AdminClient
-            .GETAsync<GetServerSettings, ServerSettingsResponse>().GetAwaiter().GetResult();
+            .GETAsync<GetServerSettingsEndpoint, GetServerSettingsResponse>().GetAwaiter().GetResult();
 
-        AdminClient.PUTAsync<PutServerSettingsEndpoint, UpdateServerSettingsRequest>(
-            new UpdateServerSettingsRequest
+        AdminClient.PUTAsync<PutServerSettingsEndpoint, PutServerSettingsRequest>(
+            new PutServerSettingsRequest
             {
                 Id = settingsResponse!.ID,
                 AllowSignUps = allowSignups

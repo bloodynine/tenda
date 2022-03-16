@@ -23,7 +23,7 @@ public class DeleteIncome : Endpoint<DeleteRequest, Month>
             .ExecuteFirstAsync(ct);
         if (transaction is null)
         {
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(ct);
             return;
         }
 

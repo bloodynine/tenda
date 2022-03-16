@@ -3,7 +3,7 @@ using FastEndpoints;
 using FluentAssertions;
 using NUnit.Framework;
 using Tenda.ServerSettings.GetServerSettings;
-using Tenda.ServerSettings.UpdateServerSettings;
+using Tenda.ServerSettings.PutServerSettings;
 using static IntegrationTests.Setup;
 
 namespace IntegrationTests;
@@ -14,11 +14,11 @@ public class ServerSettingsTests
     public void Setup()
     {
         var (_, settingsResponse) = AdminClient
-            .GETAsync<GetServerSettings, ServerSettingsResponse>().GetAwaiter().GetResult();
+            .GETAsync<GetServerSettingsEndpoint, GetServerSettingsResponse>().GetAwaiter().GetResult();
 
         AdminClient
-            .PUTAsync<PutServerSettingsEndpoint, UpdateServerSettingsRequest>(
-                new UpdateServerSettingsRequest
+            .PUTAsync<PutServerSettingsEndpoint, PutServerSettingsRequest>(
+                new PutServerSettingsRequest
                 {
                     Id = settingsResponse!.ID,
                     AllowSignUps = true
@@ -29,7 +29,7 @@ public class ServerSettingsTests
     public void ServerSettings_Get_200()
     {
         var (response, result) = AdminClient
-            .GETAsync<GetServerSettings, ServerSettingsResponse>()
+            .GETAsync<GetServerSettingsEndpoint, GetServerSettingsResponse>()
             .GetAwaiter().GetResult();
 
         response!.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -43,13 +43,13 @@ public class ServerSettingsTests
     public void ServerSettings_Put_Ok()
     {
         var (_, settingsResponse) = AdminClient
-            .GETAsync<GetServerSettings, ServerSettingsResponse>().GetAwaiter().GetResult();
+            .GETAsync<GetServerSettingsEndpoint, GetServerSettingsResponse>().GetAwaiter().GetResult();
 
         var (response, result) = AdminClient
             .PUTAsync<PutServerSettingsEndpoint,
-                UpdateServerSettingsRequest,
-                UpdateServerSettingsResponse>(
-                new UpdateServerSettingsRequest
+                PutServerSettingsRequest,
+                PutServerSettingsResponse>(
+                new PutServerSettingsRequest
                 {
                     Id = settingsResponse!.ID,
                     AllowSignUps = true
@@ -62,11 +62,11 @@ public class ServerSettingsTests
     public void ServerSettings_Put_Forbidden()
     {
         var (_, settingsResponse) = AdminClient
-            .GETAsync<GetServerSettings, ServerSettingsResponse>().GetAwaiter().GetResult();
+            .GETAsync<GetServerSettingsEndpoint, GetServerSettingsResponse>().GetAwaiter().GetResult();
 
         var response = UserClient
-            .PUTAsync<PutServerSettingsEndpoint, UpdateServerSettingsRequest>(
-                new UpdateServerSettingsRequest
+            .PUTAsync<PutServerSettingsEndpoint, PutServerSettingsRequest>(
+                new PutServerSettingsRequest
                 {
                     Id = settingsResponse!.ID,
                     AllowSignUps = false

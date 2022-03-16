@@ -1,6 +1,4 @@
-﻿using FastEndpoints;
-
-namespace Tenda.All;
+﻿namespace Tenda.All.Models;
 
 public class GetMonthRequest
 {
@@ -11,9 +9,9 @@ public class GetMonthRequest
     public string UserId { get; set; } = "";
 }
 
-public class GetAllRequestValidator : Validator<GetMonthRequest>
+public class GetMonthRequestValidator : Validator<GetMonthRequest>
 {
-    public GetAllRequestValidator()
+    public GetMonthRequestValidator()
     {
         RuleFor(x => x.Year).GreaterThan(0);
         RuleFor(x => x.Month).GreaterThan(0);

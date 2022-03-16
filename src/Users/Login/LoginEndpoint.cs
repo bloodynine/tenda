@@ -2,7 +2,7 @@
 
 namespace Tenda.Users.Login;
 
-public class Login : Endpoint<LoginRequest, LoginResponse>
+public class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 {
     public ILoginService LoginService { get; set; } = null!;
 

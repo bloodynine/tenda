@@ -28,7 +28,7 @@ public static class Setup
     static Setup()
     {
         var (_, result) = GuestClient.POSTAsync<
-                Login,
+                LoginEndpoint,
                 LoginRequest,
                 LoginResponse>(new LoginRequest
             {
@@ -38,7 +38,7 @@ public static class Setup
             .GetAwaiter()
             .GetResult();
         var (_, userResult) = GuestClient.POSTAsync<
-                Login,
+                LoginEndpoint,
                 LoginRequest,
                 LoginResponse>(new LoginRequest
             {

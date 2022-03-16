@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tenda.Shared.BaseModels;
 
-namespace Tenda.Shared;
+namespace Tenda.Shared.Models;
 
 public class DeleteRequest : RequestBase
 {
