@@ -5,8 +5,6 @@ using FluentAssertions;
 using NUnit.Framework;
 using Tenda.ServerSettings.GetServerSettings;
 using Tenda.ServerSettings.UpdateServerSettings;
-using Tenda.Shared.Errors;
-using Tenda.Users;
 using Tenda.Users.CreateUser;
 using Tenda.Users.GetUser;
 using static IntegrationTests.Setup;
@@ -25,7 +23,7 @@ public class UserTests
     public void Users_GetLoggedInUser_200OK()
     {
         var (response, result) = UserClient.GETAsync<GetUserEndpoint, GetUserRequest, GetUserResponse>(
-            new()).GetAwaiter().GetResult();
+            new GetUserRequest()).GetAwaiter().GetResult();
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         result.UserName.Should().Be("intUser");
@@ -36,7 +34,7 @@ public class UserTests
     public void Users_GetLoggedInUser_Unauthorized()
     {
         var response = GuestClient.GETAsync<GetUserEndpoint, GetUserRequest>(
-            new()).GetAwaiter().GetResult();
+            new GetUserRequest()).GetAwaiter().GetResult();
 
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }

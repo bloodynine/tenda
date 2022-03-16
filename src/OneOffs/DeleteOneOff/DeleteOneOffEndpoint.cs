@@ -1,5 +1,4 @@
-﻿using FastEndpoints;
-using MongoDB.Entities;
+﻿using MongoDB.Entities;
 using Tenda.Shared;
 using Tenda.Shared.Errors;
 using Tenda.Shared.Models;
@@ -7,7 +6,7 @@ using Tenda.Shared.Services;
 
 namespace Tenda.OneOffs.DeleteOneOff;
 
-public class DeleteOneOff : Endpoint<DeleteRequest, Month>
+public class DeleteOneOffEndpoint : Endpoint<DeleteRequest, Month>
 {
     public IGetByMonthService GetByMonthService { get; set; } = null!;
 
@@ -27,6 +26,7 @@ public class DeleteOneOff : Endpoint<DeleteRequest, Month>
             await this.HandleApiErrorsAsync(new NotFoundException($"{req.Id} Not Found"), ct);
             return;
         }
+
         await SendAsync(await GetByMonthService.GetMonth(req.ViewDate, req.UserId, ct), cancellation: ct);
     }
 }

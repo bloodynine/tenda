@@ -1,7 +1,7 @@
 ﻿using FastEndpoints.Validation.Results;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
-using Tenda.OneOffs.CreateManyOneOffs;
+using Tenda.OneOffs.PostOneOffs;
 using Tenda.Shared.Extensions;
 using Tenda.Shared.Hubs;
 using Tenda.Shared.Services;
@@ -24,6 +24,7 @@ public class TotalPostProcessor<TRequest, TResponse> : IPostProcessor<TRequest, 
             existingTags.AddRange(newTags);
             cacheService.Set(@base.UserId.ToTagKey(), existingTags.ToList(), TimeSpan.FromMinutes(10));
             var seed = await totalService.CalculateTotal(@base.UserId, @base.SeedId, ct);
+            var boo = hubContext.Clients.User(@base.UserId);
             await hubContext.Clients.User(@base.UserId).SendAsync("ResolvedTotal", seed, ct);
         }
     }
@@ -32,7 +33,7 @@ public class TotalPostProcessor<TRequest, TResponse> : IPostProcessor<TRequest, 
     {
         if (request is not FinancialTransactionRequestBase @financialTransactionRequestBase)
             return Enumerable.Empty<string>();
-        if (request is CreateManyOneOffsRequest @manyOneOffsRequest)
+        if (request is PostOneOffsRequest @manyOneOffsRequest)
         {
             return @manyOneOffsRequest.OneOffs.SelectMany(x => x.Tags);
         }

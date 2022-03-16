@@ -1,12 +1,11 @@
-﻿using FastEndpoints;
-using MongoDB.Entities;
+﻿using MongoDB.Entities;
 using Tenda.Shared;
 using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
-namespace Tenda.OneOffs.CreateManyOneOffs;
+namespace Tenda.OneOffs.PostOneOffs;
 
-public class CreateManyOneOffs : Endpoint<CreateManyOneOffsRequest, Month>
+public class PostOneOffsEndpoint : Endpoint<PostOneOffsRequest, Month>
 {
     public IGetByMonthService GetByMonthService { get; set; } = null!;
 
@@ -14,10 +13,10 @@ public class CreateManyOneOffs : Endpoint<CreateManyOneOffsRequest, Month>
     {
         Post("/api/oneOffs/bulk");
         Claims("UserId", "SeedId");
-        PostProcessors(new TotalPostProcessor<CreateManyOneOffsRequest, Month>());
+        PostProcessors(new TotalPostProcessor<PostOneOffsRequest, Month>());
     }
 
-    public override async Task HandleAsync(CreateManyOneOffsRequest req, CancellationToken ct)
+    public override async Task HandleAsync(PostOneOffsRequest req, CancellationToken ct)
     {
         await req.ToTransactions().SaveAsync(cancellation: ct);
         await SendAsync(await GetByMonthService.GetMonth(req.OneOffs.First().Date, req.UserId, ct), cancellation: ct);

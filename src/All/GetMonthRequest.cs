@@ -2,7 +2,7 @@
 
 namespace Tenda.All;
 
-public class GetAllRequest
+public class GetMonthRequest
 {
     public int Year { get; set; } = 0;
     public int Month { get; set; } = 0;
@@ -11,7 +11,7 @@ public class GetAllRequest
     public string UserId { get; set; } = "";
 }
 
-public class GetAllRequestValidator : Validator<GetAllRequest>
+public class GetAllRequestValidator : Validator<GetMonthRequest>
 {
     public GetAllRequestValidator()
     {

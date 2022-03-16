@@ -3,7 +3,7 @@ using Tenda.Shared.Services;
 
 namespace Tenda.All;
 
-public class GetAllByMonth : Endpoint<GetAllRequest, Month>
+public class GetMonthEndpoint : Endpoint<GetMonthRequest, Month>
 {
     public IGetByMonthService GetByMonthService { get; set; } = null!;
 
@@ -14,7 +14,7 @@ public class GetAllByMonth : Endpoint<GetAllRequest, Month>
         Claims("UserId");
     }
 
-    public override async Task HandleAsync(GetAllRequest req, CancellationToken ct)
+    public override async Task HandleAsync(GetMonthRequest req, CancellationToken ct)
     {
         var response = await GetByMonthService.GetMonth(req.Year, req.Month, req.UserId, ct);
         await SendAsync(response, cancellation: ct);

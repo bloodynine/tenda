@@ -1,14 +1,11 @@
-﻿using FastEndpoints;
-using Microsoft.AspNetCore.SignalR;
-using MongoDB.Entities;
+﻿using MongoDB.Entities;
 using Tenda.Shared;
-using Tenda.Shared.Hubs;
 using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
-namespace Tenda.OneOffs.CreateOneOff;
+namespace Tenda.OneOffs.PostOneOff;
 
-public class PostOneOff : Endpoint<CreateOneOffRequest, Month>
+public class PostOneOffEndpoint : Endpoint<PostOneOffRequest, Month>
 {
     public IGetByMonthService GetByMonthService { get; set; } = null!;
 
@@ -16,10 +13,10 @@ public class PostOneOff : Endpoint<CreateOneOffRequest, Month>
     {
         Post("/api/oneOffs");
         Claims("UserId");
-        PostProcessors(new TotalPostProcessor<CreateOneOffRequest, Month>());
+        PostProcessors(new TotalPostProcessor<PostOneOffRequest, Month>());
     }
 
-    public override async Task HandleAsync(CreateOneOffRequest req, CancellationToken ct)
+    public override async Task HandleAsync(PostOneOffRequest req, CancellationToken ct)
     {
         var transaction = req.ToTransaction();
         await transaction.SaveAsync(cancellation: ct);

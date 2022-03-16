@@ -1,9 +1,9 @@
 ﻿using Tenda.Shared;
 using Tenda.Shared.Models;
 
-namespace Tenda.OneOffs.GetOneOffById;
+namespace Tenda.OneOffs.GetOneOff;
 
-public class OneOffByIdRequest : FinancialTransactionRequestBase
+public class GetOneOffRequest : FinancialTransactionRequestBase
 {
     public string Id { get; set; } = "";
 
@@ -13,7 +13,7 @@ public class OneOffByIdRequest : FinancialTransactionRequestBase
     }
 }
 
-public class OneOffByIdRequestValidator : Validator<OneOffByIdRequest>
+public class OneOffByIdRequestValidator : Validator<GetOneOffRequest>
 {
     public OneOffByIdRequestValidator()
     {

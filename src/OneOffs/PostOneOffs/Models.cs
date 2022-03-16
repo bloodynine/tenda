@@ -1,11 +1,11 @@
 ﻿using Tenda.Shared;
 using Tenda.Shared.Models;
 
-namespace Tenda.OneOffs.CreateManyOneOffs;
+namespace Tenda.OneOffs.PostOneOffs;
 
-public class CreateManyOneOffsRequest : FinancialTransactionRequestBase
+public class PostOneOffsRequest : FinancialTransactionRequestBase
 {
-    public List<OneOffStub> OneOffs { get; set; } = new List<OneOffStub>();
+    public List<OneOffStub> OneOffs { get; init; } = new();
 
     public IEnumerable<FinancialTransaction> ToTransactions()
     {
@@ -31,11 +31,12 @@ public class OneOffStub
     public List<string> Tags { get; set; } = new List<string>();
 }
 
-public class CreateManyOneOffsRequestValidator : Validator<CreateManyOneOffsRequest>
+public class PostOneOffsRequestValidator : Validator<PostOneOffsRequest>
 {
-    public CreateManyOneOffsRequestValidator()
+    public PostOneOffsRequestValidator()
     {
         RuleFor(x => x.OneOffs.Count).GreaterThan(0);
+        RuleFor(x => x.UserId).NotEmpty();
         RuleForEach(x => x.OneOffs).ChildRules(y =>
         {
             y.RuleFor(x => x.Name).NotEmpty();

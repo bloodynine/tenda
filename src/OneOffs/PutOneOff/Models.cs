@@ -3,7 +3,7 @@ using Tenda.Shared.Models;
 
 namespace Tenda.OneOffs.UpdateOneOff;
 
-public class UpdateOneOffRequest : FinancialTransactionRequestBase
+public class PutOneOffRequest : FinancialTransactionRequestBase
 {
     public string Id { get; set; } = "";
     public bool IsResolved { get; set; } = false;
@@ -17,7 +17,7 @@ public class UpdateOneOffRequest : FinancialTransactionRequestBase
     }
 }
 
-public class UpdateOneOffRequestValidator : Validator<UpdateOneOffRequest>
+public class UpdateOneOffRequestValidator : Validator<PutOneOffRequest>
 {
     public UpdateOneOffRequestValidator()
     {

@@ -1,10 +1,10 @@
-﻿using FastEndpoints;
-using MongoDB.Entities;
+﻿using MongoDB.Entities;
+using Tenda.Shared.Errors;
 using Tenda.Shared.Models;
 
-namespace Tenda.OneOffs.GetOneOffById;
+namespace Tenda.OneOffs.GetOneOff;
 
-public class GetOneOffById : Endpoint<OneOffByIdRequest, OneOffResponse>
+public class GetOneOffEndPoint : Endpoint<GetOneOffRequest, OneOffResponse>
 {
     public override void Configure()
     {
@@ -12,10 +12,14 @@ public class GetOneOffById : Endpoint<OneOffByIdRequest, OneOffResponse>
         Claims("UserId");
     }
 
-    public override async Task HandleAsync(OneOffByIdRequest req, CancellationToken ct)
+    public override async Task HandleAsync(GetOneOffRequest req, CancellationToken ct)
     {
         var transaction = await DB.Find<FinancialTransaction>().OneAsync(req.Id, ct);
-        if (transaction is null) {await SendNotFoundAsync(); return;}
+        if (transaction is null)
+        {
+            await this.HandleApiErrorsAsync(new NotFoundException(), ct); 
+            return;
+        }
 
         if (transaction!.UserId != req.UserId) { await SendErrorsAsync(ct); return;}
 

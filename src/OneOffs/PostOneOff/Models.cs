@@ -3,9 +3,9 @@ using Tenda.Shared.Models;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace Tenda.OneOffs.CreateOneOff;
+namespace Tenda.OneOffs.PostOneOff;
 
-public class CreateOneOffRequest : FinancialTransactionRequestBase
+public class PostOneOffRequest : FinancialTransactionRequestBase
 {
     public bool? IsResolved { get; set; } = false;
 
@@ -19,7 +19,7 @@ public class CreateOneOffRequest : FinancialTransactionRequestBase
     }
 }
 
-public class CreateOneOffRequestValidator : Validator<CreateOneOffRequest>
+public class CreateOneOffRequestValidator : Validator<PostOneOffRequest>
 {
     public CreateOneOffRequestValidator()
     {
