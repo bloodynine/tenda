@@ -23,6 +23,7 @@ import { IconsModule } from "./Shared/icons/icons.module";
 import { TokenInterceptor } from "./token.interceptor";
 import { AppConfigModule } from "./app-config/app-config.module";
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 export let InjectorInstance: Injector;
 
@@ -52,7 +53,8 @@ export let InjectorInstance: Injector;
         ReactiveFormsModule,
         IconsModule,
         FormsModule,
-        AppConfigModule
+        AppConfigModule,
+        BrowserAnimationsModule
     ],
   providers: [ CookieService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
   bootstrap: [AppComponent]

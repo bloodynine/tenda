@@ -10,22 +10,18 @@ using NUnit.Framework;
 using Tenda.All;
 using Tenda.All.Models;
 using Tenda.OneOffs.PostOneOff;
-using Tenda.Shared;
 using Tenda.Shared.Models;
 using static IntegrationTests.Setup;
 
 namespace IntegrationTests;
 
-public class MonthTests
+public class MonthTests : BaseTest
 {
     private DateTime TestDate => new(1908, 1, 1);
 
     [SetUp]
     public void Init()
     {
-        DB.InitAsync(
-            "IntTests",
-            "localhost").GetAwaiter().GetResult();
         DeleteAllTransactions();
     }
 
@@ -127,11 +123,6 @@ public class MonthTests
     [TearDown]
     public void CleanUp()
     {
-        DB.DeleteAsync<FinancialTransaction>(x => x.UserId != "").GetAwaiter().GetResult();
-    }
-
-    private void DeleteAllTransactions()
-    {
-        DB.DeleteAsync<FinancialTransaction>(x => x.UserId != "").GetAwaiter().GetResult();
+        DeleteAllTransactions();
     }
 }

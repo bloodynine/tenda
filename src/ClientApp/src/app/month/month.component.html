@@ -17,6 +17,7 @@
       <a (click)="goToToday()" class="navbar-item">Today</a>
       <a (click)="goToNextMonth()" class="navbar-item">Next Month</a>
       <a *ngIf="isAdmin" (click)="openAdminPanel()" class="navbar-item">Settings</a>
+      <a (click)="goToReports()" class="navbar-item">Reports</a>
       <a (click)="signOut()" class="navbar-item">Sign Out</a>
     </div>
     <div class="navbar-end navbar-item"><h1 class="title is-5">Total: {{total | currency}}</h1></div>

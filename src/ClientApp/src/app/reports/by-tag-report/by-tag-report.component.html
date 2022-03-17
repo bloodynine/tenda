@@ -1,0 +1,17 @@
+<p>by-tag-report works!</p>
+
+<div *ngIf="report">
+    <ngx-charts-bar-vertical
+            [view]="[1000,400]"
+            [results]="report.byCount"
+            [xAxisLabel]="'Products'"
+            [legendTitle]="'Product Sale Chart'"
+            [yAxisLabel]="'Sale'"
+            [legend]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [gradient]="true">
+    </ngx-charts-bar-vertical>   
+</div>

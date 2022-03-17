@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'month', component: MonthComponent },
   { path: 'year/:year/month/:month', component: MonthComponent },
-  { path: 'year/:year/month/:month/day/:day', component: MonthComponent }
+  { path: 'year/:year/month/:month/day/:day', component: MonthComponent },
+  { path: 'reports', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) }
 ];
 
 @NgModule({

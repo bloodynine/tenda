@@ -120,4 +120,8 @@ export class MonthComponent implements OnInit {
     day.bills.forEach(x => this.monthlyTransactions.push(x));
     day.oneOffs.forEach(x => this.monthlyTransactions.push(x));
   }
+
+  goToReports() {
+    this.router.navigateByUrl('reports');
+  }
 }
