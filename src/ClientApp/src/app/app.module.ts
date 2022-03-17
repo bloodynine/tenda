@@ -24,6 +24,7 @@ import { TokenInterceptor } from "./token.interceptor";
 import { AppConfigModule } from "./app-config/app-config.module";
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MenuComponent } from './menu/menu.component';
 
 export let InjectorInstance: Injector;
 
@@ -45,6 +46,7 @@ export let InjectorInstance: Injector;
     TransactionSearchComponent,
     RepeatSettingsComponent,
     AdminPanelComponent,
+    MenuComponent,
   ],
     imports: [
         BrowserModule,
