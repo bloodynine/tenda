@@ -1,17 +1,75 @@
-<p>by-tag-report works!</p>
+<div *ngIf="report" style="min-height: 520px">
+    <form [formGroup]="form" class="box">
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label">Start Date</label>
+                    <div class="control">
+                        <app-date-selector formControlName="startDate"></app-date-selector>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label class="label">End Date</label>
+                    <div class="control">
+                        <app-date-selector formControlName="endDate"></app-date-selector>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <label class="checkbox">
+                    <input type="checkbox" formControlName="incomes">
+                    Incomes
+                </label>
+            </div>
+            <div class="column">
+                <label class="checkbox">
+                    <input type="checkbox" formControlName="bills">
+                    Bills
+                </label>
+            </div>
+            <div class="column">
+                <label class="checkbox">
+                    <input type="checkbox" formControlName="transactions">
+                    Transactions
+                </label>
+            </div>
+        </div>
+    </form>
+    <div class="reportContainer">
+        <p class="title is-4">Tags By Count of Items</p>
+        <ngx-charts-bar-vertical
+                [legendTitle]="'Tags Count'"
+                [legend]="true"
+                [results]="report.byCount"
+                [scheme]="'forest'"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [view]="[1000,400]"
+                [xAxisLabel]="'Tags'"
+                [xAxis]="true"
+                [yAxisLabel]="'Count'"
+                [yAxis]="true">
+        </ngx-charts-bar-vertical>
+    </div>
+    <div class="reportContainer">
+        <p class="title is-4">Total Dollar Amount By Tags</p>
+        <ngx-charts-bar-vertical
+                [legendTitle]="'Tags'"
+                [scheme]="'forest'"
+                [legend]="true"
+                [results]="report.byDollar"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [view]="[1000,400]"
+                [xAxisLabel]="'Tags'"
+                [xAxis]="true"
+                [yAxisLabel]="'Amount'"
+                [yAxis]="true">
+        </ngx-charts-bar-vertical>
+    </div>
 
-<div *ngIf="report">
-    <ngx-charts-bar-vertical
-            [view]="[1000,400]"
-            [results]="report.byCount"
-            [xAxisLabel]="'Products'"
-            [legendTitle]="'Product Sale Chart'"
-            [yAxisLabel]="'Sale'"
-            [legend]="true"
-            [showXAxisLabel]="true"
-            [showYAxisLabel]="true"
-            [xAxis]="true"
-            [yAxis]="true"
-            [gradient]="true">
-    </ngx-charts-bar-vertical>   
 </div>

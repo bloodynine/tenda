@@ -25,29 +25,29 @@ import { AppConfigModule } from "./app-config/app-config.module";
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MenuComponent } from './menu/menu.component';
+import { SharedModule } from "./Shared/shared.module";
 
 export let InjectorInstance: Injector;
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    MonthComponent,
-    DayComponent,
-    TransactionComponent,
-    TransactionFormComponent,
-    RepeatFormComponent,
-    DateSelectorComponent,
-    MultiTransactionFormComponent,
-    FocusDirective,
-    TagInputComponent,
-    RepeatTypeInputComponent,
-    NotificationsComponent,
-    TransactionSearchComponent,
-    RepeatSettingsComponent,
-    AdminPanelComponent,
-    MenuComponent,
-  ],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        MonthComponent,
+        DayComponent,
+        TransactionComponent,
+        TransactionFormComponent,
+        RepeatFormComponent,
+        MultiTransactionFormComponent,
+        FocusDirective,
+        TagInputComponent,
+        RepeatTypeInputComponent,
+        NotificationsComponent,
+        TransactionSearchComponent,
+        RepeatSettingsComponent,
+        AdminPanelComponent,
+        MenuComponent,
+    ],
     imports: [
         BrowserModule,
         HttpClientModule,
@@ -56,10 +56,14 @@ export let InjectorInstance: Injector;
         IconsModule,
         FormsModule,
         AppConfigModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        SharedModule
     ],
-  providers: [ CookieService, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
-  bootstrap: [AppComponent]
+    providers: [CookieService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
+    exports: [
+        DateSelectorComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(private injector: Injector) {

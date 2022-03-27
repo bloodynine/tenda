@@ -4,18 +4,25 @@ import { ReportWrapperComponent } from './report-wrapper/report-wrapper.componen
 import { ReportRoutingModule } from './report-routing.module';
 import { ByTagReportComponent } from './by-tag-report/by-tag-report.component';
 import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { SharedModule } from "../Shared/shared.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ProjectionReportComponent } from './projection-report/projection-report.component';
 
 
 
 @NgModule({
   declarations: [
     ReportWrapperComponent,
-    ByTagReportComponent
+    ByTagReportComponent,
+    ProjectionReportComponent
   ],
-  imports: [
-    CommonModule,
-    ReportRoutingModule,
-    NgxChartsModule
-  ],
+    imports: [
+        CommonModule,
+        ReportRoutingModule,
+        NgxChartsModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
 })
 export class ReportsModule { }

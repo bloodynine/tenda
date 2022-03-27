@@ -1,4 +1,20 @@
-<p>report-wrapper works!</p>
+<div class="columns" style="margin-top: 75px">
+    <div class="column is-1">
+        <aside class="menu">
+            <ul class="menu-list">
+                <li><a [class.is-active]="routeData.reportName === 'tags'" routerLink="/reports/tags">Tag Reports</a></li>
+                <li><a [class.is-active]="routeData.reportName === 'projection'" routerLink="/reports/projection">Projection Reports</a></li>
+            </ul>
+        </aside>
+    </div>
+    <div class="column is-11">
+        <div class="card">
+            <div class="card-content">
+                <p *ngIf="routeData.reportName == 'root'">Please Select a Report from the Left</p>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<app-by-tag-report></app-by-tag-report>

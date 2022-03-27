@@ -1,44 +1,47 @@
 ﻿using Tenda.Shared.BaseModels;
+using Tenda.Shared.Models;
 
 namespace Tenda.Reports;
 
-public class GetReportRequest : RequestBase
+public class GetReportRequest : DateRangeRequest
 {
     public ReportTypes Type { get; set; }
-    public NullableDateRange DateRange { get; set; } = new();
+    public IEnumerable<TransactionType>? Types { get; set; }
 }
 
 public class GetReportRequestValidator : Validator<GetReportRequest>
 {
     public GetReportRequestValidator()
     {
-        RuleFor(x => x.DateRange).SetValidator(new NullableDateRangeValidator());
+        Include(new NullableDateRangeValidator());
     }
 }
-
 
 public enum ReportTypes
 {
     Tag = 1
 }
 
-public class NullableDateRange
+public class DateRangeRequest : RequestBase
 {
+    /// These values "should" be nullable. But there is an issue in Fast endpoints where it wont serialize a nullable
+    /// query param
     public DateTime? StartDate { get; set; }
+
     public DateTime? EndDate { get; set; }
 
-    public NullableDateRange()
+    public DateRangeRequest()
     {
     }
 
-    public NullableDateRange(DateTime startDate, DateTime endDate)
+    public DateRangeRequest(DateTime startDate, DateTime endDate)
     {
         StartDate = startDate;
         EndDate = endDate;
     }
 }
 
-public class NullableDateRangeValidator : Validator<NullableDateRange>
+public class NullableDateRangeValidator : Validator<DateRangeRequest>
 {
     public NullableDateRangeValidator()
     {

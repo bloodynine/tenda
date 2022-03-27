@@ -7,7 +7,7 @@ using FluentAssertions;
 using MongoDB.Entities;
 using NUnit.Framework;
 using Tenda.Reports;
-using Tenda.Reports.GetReport;
+using Tenda.Reports.GetByTagReport;
 using Tenda.Shared.Models;
 using Tenda.Users;
 using static IntegrationTests.Setup;
@@ -58,7 +58,8 @@ public class GetByTagReportTests : BaseTest
         var (response, firstResult) = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
             new GetReportRequest
             {
-                DateRange = new NullableDateRange(TestDate, TestDate.AddMonths(1))
+                StartDate = TestDate,
+                EndDate = TestDate.AddMonths(1)
             }
         ).GetAwaiter().GetResult();
 
@@ -73,7 +74,8 @@ public class GetByTagReportTests : BaseTest
         var (_, secondResult) = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
             new GetReportRequest
             {
-                DateRange = new NullableDateRange(TestDate, TestDate.AddMonths(2).AddDays(1))
+                StartDate = TestDate,
+                EndDate = TestDate.AddMonths(2).AddDays(1)
             }
         ).GetAwaiter().GetResult();
 
@@ -88,13 +90,53 @@ public class GetByTagReportTests : BaseTest
     }
 
     [Test]
+    public void GetByTagReport_200TypesTest()
+    {
+        CreateTransactionsWithTags(new List<string> { "tag1" }, 2, TestDate, TransactionType.Bill);
+        CreateTransactionsWithTags(new List<string> { "tag1" }, 2, TestDate, TransactionType.Income);
+        CreateTransactionsWithTags(new List<string> { "tag1", "tag2" }, 2, TestDate, TransactionType.OneOff);
+        var (response, firstResult) = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
+            new GetReportRequest
+            {
+                StartDate = TestDate,
+                EndDate = TestDate.AddMonths(1),
+                Types = new [] { TransactionType.Bill , TransactionType.Income }
+            }
+        ).GetAwaiter().GetResult();
+
+        response!.StatusCode.Should().Be(HttpStatusCode.OK);
+        firstResult!.ByCount.Count.Should().Be(1);
+        firstResult.ByCount.Single(x => x.Name == "tag1").Value.Should().Be(2);
+        firstResult.ByDollar.Count.Should().Be(1);
+        firstResult.ByDollar.Single(x => x.Name == "tag1").Value.Should().Be(4);
+
+        var (_, secondResult) = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
+            new GetReportRequest
+            {
+                StartDate = TestDate,
+                EndDate = TestDate.AddMonths(2).AddDays(1)
+            }
+        ).GetAwaiter().GetResult();
+
+        secondResult!.ByCount.Count.Should().Be(2);
+        secondResult!.ByCount.Single(x => x.Name == "tag1").Value.Should().Be(3);
+        secondResult.ByCount.Single(x => x.Name == "tag2").Value.Should().Be(1);
+        secondResult.ByDollar.Count.Should().Be(2);
+        secondResult.ByDollar.Single(x => x.Name == "tag1").Value.Should().Be(6);
+        secondResult.ByDollar.Single(x => x.Name == "tag2").Value.Should().Be(2);
+
+        DeleteAllTransactions();
+    }
+
+    [Test]
     public void GetByTagsReport_400DateRangeTest()
     {
-        var badDateRanges = new List<(NullableDateRange, string)>
+        var badDateRanges = new List<(DateRangeRequest dateRange, string because)>
         {
-            (new () { StartDate = null, EndDate = TestDate }, "Only start date can't be null"),
-            (new() { StartDate = TestDate, EndDate = null }, "Only end date can't be null"),
-            (new() { StartDate = TestDate, EndDate = TestDate.AddDays(-1) }, "End date must be after start date")
+            (new DateRangeRequest { EndDate = TestDate }, "Only start date can't be null"),
+            (new DateRangeRequest { StartDate = TestDate }, "Only end date can't be null"),
+            (new DateRangeRequest { StartDate = TestDate, EndDate = TestDate.AddDays(-1) },
+                "End date must be after start date")
         };
 
         badDateRanges.ForEach(dateRange =>
@@ -102,19 +144,20 @@ public class GetByTagReportTests : BaseTest
             var response = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest>(
                 new GetReportRequest
                 {
-                    DateRange = dateRange.Item1
+                    StartDate = dateRange.dateRange.StartDate,
+                    EndDate = dateRange.dateRange.EndDate
                 }
             ).GetAwaiter().GetResult();
-            response!.StatusCode.Should().Be(HttpStatusCode.BadRequest, dateRange.Item2);
+            response!.StatusCode.Should().Be(HttpStatusCode.BadRequest, dateRange.because);
         });
     }
 
 
-    private void CreateTransactionsWithTags(List<string> tags, decimal amount, DateTime date)
+    private void CreateTransactionsWithTags(List<string> tags, decimal amount, DateTime date, TransactionType type = TransactionType.OneOff)
     {
         var user = DB.Find<User>().Match(x => x.UserName == "intAdmin").ExecuteFirstAsync().GetAwaiter().GetResult();
         var transaction = new FinancialTransaction(Guid.NewGuid().ToString(), amount, date, true,
-            TransactionType.OneOff,
+            type,
             user.ID, tags);
         transaction.SaveAsync().GetAwaiter().GetResult();
     }

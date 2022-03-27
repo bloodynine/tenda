@@ -1,7 +1,7 @@
-<nav class="navbar is-fixed-top has-shadow" *ngIf="monthlyTransactions.length > 1">
+<nav class="navbar is-fixed-top has-shadow">
     <div class="navbar-brand">
         <div class="navbar-item">Tenda</div>
-        <div class="navbar-item">
+        <div class="navbar-item" *ngIf="monthlyTransactions.length > 1">
             <app-transaction-search [transactions]="monthlyTransactions" [dates]="month?.days" (id)="scroll($event)"></app-transaction-search>
         </div>
         <a (click)="toggleMenu()" [class.is-active]="isMenuActive" aria-expanded="false" aria-label="menu" class="navbar-burger"

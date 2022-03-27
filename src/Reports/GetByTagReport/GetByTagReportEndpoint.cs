@@ -1,13 +1,14 @@
 ﻿using MongoDB.Entities;
 using Tenda.Shared.Models;
 
-namespace Tenda.Reports.GetReport;
+namespace Tenda.Reports.GetByTagReport;
 
 public class GetByTagReportEndpoint : Endpoint<GetReportRequest, GetByTagResponse>
 {
     public override void Configure()
     {
-        Get("/api/reports/GetByTagReport");
+        // This *should* be a GET endpoint, but there are too many bugs in FE query param deserialization to get it to work
+        Post("/api/reports/GetByTagReport");
         Claims("UserId");
     }
 
@@ -16,10 +17,15 @@ public class GetByTagReportEndpoint : Endpoint<GetReportRequest, GetByTagRespons
         var transactionsQuery = DB.Find<FinancialTransaction>()
             .Match(x => x.UserId == req.UserId);
 
-        if (req.DateRange.StartDate is not null)
+        if (req.StartDate != new DateTime())
         {
             transactionsQuery
-                .Match(x => x.Date >= req.DateRange.StartDate && x.Date <= req.DateRange.EndDate);
+                .Match(x => x.Date >= req.StartDate && x.Date <= req.EndDate);
+        }
+
+        if (req.Types.Any())
+        {
+            transactionsQuery.Match(x => req.Types.Contains(x.Type));
         }
 
         var transactions = await transactionsQuery.ExecuteAsync(ct);
