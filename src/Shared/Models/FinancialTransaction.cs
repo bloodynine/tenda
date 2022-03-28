@@ -1,4 +1,5 @@
 ﻿using MongoDB.Entities;
+using Tenda.Shared.BaseModels;
 
 namespace Tenda.Shared.Models;
 

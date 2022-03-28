@@ -1,0 +1,52 @@
+<div *ngIf="report" style="min-height: 520px">
+    <form [formGroup]="form" class="box">
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label">Start Date</label>
+                    <div class="control">
+                        <app-date-selector formControlName="startDate"></app-date-selector>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label class="label">End Date</label>
+                    <div class="control">
+                        <app-date-selector formControlName="endDate"></app-date-selector>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <label class="checkbox">
+                    <input formControlName="incomes" type="checkbox">
+                    Incomes
+                </label>
+            </div>
+            <div class="column">
+                <label class="checkbox">
+                    <input formControlName="bills" type="checkbox">
+                    Bills
+                </label>
+            </div>
+            <div class="column">
+                <label class="checkbox">
+                    <input formControlName="transactions" type="checkbox">
+                    Transactions
+                </label>
+            </div>
+        </div>
+    </form>
+    <app-chart-card [data]="report.byCount"
+                    [height]="'400px'"
+                    [type]="barChart"
+                    title="Tags By Count of Items">
+    </app-chart-card>
+    <app-chart-card [data]="report.byDollar"
+                    [height]="'400px'"
+                    [type]="barChart"
+                    title="Total Dollar Amount By Tags">
+    </app-chart-card>
+</div>

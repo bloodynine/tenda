@@ -1,6 +1,7 @@
 ﻿using FastEndpoints;
 using MongoDB.Entities;
 using Tenda.Shared;
+using Tenda.Shared.Models;
 
 namespace Tenda.Repeats.GetRepeatContract;
 

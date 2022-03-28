@@ -14,6 +14,7 @@ export class StateService {
   public month: BehaviorSubject<Month> = new BehaviorSubject<Month>({} as Month);
   public editingTransaction: Subject<Transaction> = new ReplaySubject();
   public multiTransactionDate: Subject<Date> = new ReplaySubject();
+  public selectedDate: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date());
 
   constructor() {
   }
@@ -75,6 +76,7 @@ export class StateService {
 
   public UpdateViewDate(date: Date): void {
     const state = this.currentState.getValue();
+    this.selectedDate.next(date);
     state.currentViewDate = date;
     this.currentState.next(state);
   }

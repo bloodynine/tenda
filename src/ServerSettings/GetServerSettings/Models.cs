@@ -1,21 +1,21 @@
-﻿namespace Tenda.ServerSettings.GetServerSettings;
+﻿using Tenda.Shared;
+using Tenda.Shared.Models;
 
-public class GetServerSettingsRequest
-{
-}
+namespace Tenda.ServerSettings.GetServerSettings;
 
-public class ServerSettingsResponse : ServerSettingsDoc
+public class GetServerSettingsResponse : ServerSettingsDoc
 {
     public bool IsFirstTime { get; init; }
-    public ServerSettingsResponse(ServerSettingsDoc doc, bool isFirstTime)
+
+    public GetServerSettingsResponse(ServerSettingsDoc doc, bool isFirstTime)
     {
-        this.AllowSignUps = doc.AllowSignUps;
-        this.UseKeyCloak = doc.UseKeyCloak;
-        this.ID = doc.ID;
-        this.IsFirstTime = isFirstTime;
+        AllowSignUps = doc.AllowSignUps;
+        UseKeyCloak = doc.UseKeyCloak;
+        ID = doc.ID;
+        IsFirstTime = isFirstTime;
     }
 
-    public ServerSettingsResponse()
+    public GetServerSettingsResponse()
     {
     }
 }

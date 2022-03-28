@@ -4,10 +4,10 @@ namespace Tenda.Users.GetUser;
 
 public class GetUserResponse
 {
-    public string Id { get; init; }
+    public string Id { get; init; } = "";
     public bool IsAdmin { get; init; }
-    public string Name { get; init; }
-    public string UserName { get; init; }
+    public string Name { get; init; } = "";
+    public string UserName { get; init; } = "";
 }
 
 public class GetUserRequest : RequestBase

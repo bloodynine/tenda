@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Tenda.Shared.Models;
 using Tenda.Shared.Services;
 
 namespace Tenda.Shared.Hubs;
