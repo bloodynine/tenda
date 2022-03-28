@@ -16,6 +16,7 @@ export class MenuComponent implements OnInit {
   selectedDate: Date = new Date();
   isMenuActive = false;
   isAdmin = false;
+  disableMenu = false;
   month: Month | undefined;
   monthlyTransactions: Transaction[] = [];
   total: number = 0;

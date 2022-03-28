@@ -3,6 +3,7 @@ import { ByTagReport } from "../Models/ByTagReport";
 import { ReportService } from "../report.service";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { TransactionType } from "../../Shared/Interfaces/Transaction";
+import { ChartTypes } from "../Models/ChartTypes";
 
 @Component({
   selector: 'app-by-tag-report',
@@ -12,6 +13,7 @@ import { TransactionType } from "../../Shared/Interfaces/Transaction";
 export class ByTagReportComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   report: ByTagReport | undefined;
+  barChart = ChartTypes.BarChart;
   constructor(
       private reportService: ReportService,
       private fb: FormBuilder

@@ -48,28 +48,11 @@
                 [scheme]="'forest'"
                 [showXAxisLabel]="true"
                 [showYAxisLabel]="true"
-                [view]="[1000,400]"
                 [xAxisLabel]="'Tags'"
                 [xAxis]="true"
                 [yAxisLabel]="'Count'"
                 [yAxis]="true">
         </ngx-charts-bar-vertical>
     </div>
-    <div class="reportContainer">
-        <p class="title is-4">Total Dollar Amount By Tags</p>
-        <ngx-charts-bar-vertical
-                [legendTitle]="'Tags'"
-                [scheme]="'forest'"
-                [legend]="true"
-                [results]="report.byDollar"
-                [showXAxisLabel]="true"
-                [showYAxisLabel]="true"
-                [view]="[1000,400]"
-                [xAxisLabel]="'Tags'"
-                [xAxis]="true"
-                [yAxisLabel]="'Amount'"
-                [yAxis]="true">
-        </ngx-charts-bar-vertical>
-    </div>
-
+    <app-chart-card title="Total Dollar Amount By Tags" [data]="report.byDollar" [type]="barChart"></app-chart-card>
 </div>

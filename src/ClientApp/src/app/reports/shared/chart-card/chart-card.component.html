@@ -1,0 +1,21 @@
+<div class="reportContainer" [style.height]="400">
+    <p class="title is-4">{{title}}</p>
+    <ng-container [ngSwitch]="type">
+        <ng-container *ngSwitchCase="'BarChart'">
+            <ngx-charts-bar-vertical
+                    [legendTitle]="'Tags'"
+                    [scheme]="'forest'"
+                    [legend]="true"
+                    [results]="data"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    [view]="[1000,400]"
+                    [xAxisLabel]="'Tags'"
+                    [xAxis]="xAxis"
+                    [yAxisLabel]="'Amount'"
+                    [yAxis]="yAxis">
+            </ngx-charts-bar-vertical>        
+        </ng-container>
+    </ng-container>
+    
+</div>

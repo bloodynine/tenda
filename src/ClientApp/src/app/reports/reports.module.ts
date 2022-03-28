@@ -7,6 +7,9 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { SharedModule } from "../Shared/shared.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProjectionReportComponent } from './projection-report/projection-report.component';
+import { ByMonthReportComponent } from './by-month-report/by-month-report.component';
+import { SummaryCardComponent } from './shared/summary-card/summary-card.component';
+import { ChartCardComponent } from './shared/chart-card/chart-card.component';
 
 
 
@@ -14,7 +17,10 @@ import { ProjectionReportComponent } from './projection-report/projection-report
   declarations: [
     ReportWrapperComponent,
     ByTagReportComponent,
-    ProjectionReportComponent
+    ProjectionReportComponent,
+    ByMonthReportComponent,
+    SummaryCardComponent,
+    ChartCardComponent
   ],
     imports: [
         CommonModule,

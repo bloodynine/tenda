@@ -1,0 +1,23 @@
+<div class="columns">
+    <div class="column">
+        <app-summary-card title="Average Monthly Income" [message]="report.averageIncome | currency"></app-summary-card>
+    </div>
+    <div class="column">
+        <app-summary-card title="Average Monthly Expenses" [message]="report.averageExpenses | currency"></app-summary-card>
+    </div>
+</div>
+
+<div>
+    <ngx-charts-bar-vertical-2d
+            [view]="[1000,400]"
+            [scheme]="'forest'"
+            [results]="report.incomeExpensesByMonth"
+            [gradient]="false"
+            [xAxis]="true"
+            [yAxis]="true"
+            [legend]="true"
+            [showXAxisLabel]="false"
+            [showYAxisLabel]="false"
+            >
+    </ngx-charts-bar-vertical-2d>
+</div>

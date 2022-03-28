@@ -1,10 +1,12 @@
 ﻿using System.Globalization;
+using System.Reflection;
 using MongoDB.Entities;
+using Tenda.Shared.Extensions;
 using Tenda.Shared.Models;
 
 namespace Tenda.Reports.GetByMonthReport;
 
-public class GetByMonthReportEndpoint : Endpoint<GetByMonthRequest, List<GroupedItem>>
+public class GetByMonthReportEndpoint : Endpoint<GetByMonthRequest, GetByMonthResponse>
 {
     public override void Configure()
     {
@@ -23,7 +25,19 @@ public class GetByMonthReportEndpoint : Endpoint<GetByMonthRequest, List<Grouped
         var transactionDictionary =
             transactions.GroupBy(x => x.Date.Month).ToDictionary(x => x.Key, x => x.Select(y => y));
 
-        await SendAsync(GetGroupedItems(req, transactionDictionary).ToList(), cancellation: ct);
+        var expenseAvg = transactions.Where(x => TransactionTypeExtensions.ExpenseTransactions.Contains(x.Type))
+            .Select(x => x.Amount).Sum() / 12;
+
+        var incomeAvg = transactions.Where(x => x.Type == TransactionType.Income)
+            .Select(x => x.Amount).Sum() / 12;
+        GetByMonthResponse response = new()
+        {
+            IncomeExpensesByMonth = GetGroupedItems(req, transactionDictionary),
+            AverageExpenses = expenseAvg,
+            AverageIncome = incomeAvg
+        };
+
+        await SendAsync(response, cancellation: ct);
     }
 
 
@@ -34,8 +48,8 @@ public class GetByMonthReportEndpoint : Endpoint<GetByMonthRequest, List<Grouped
 
         for (var i = 1; i < 13; i++)
         {
-            var income = transactions!.GetValueOrDefault(i)?.Where(x => x.Type == TransactionType.Income).Select(y => y.Amount);
-            var expenses = transactions!.GetValueOrDefault(i)?.Where(x => x.Type != TransactionType.Income).Select(y => y.Amount);
+            var income = transactions!.GetValueOrDefault(i)?.Where(x => x.Type == TransactionType.Income).Select(y => Math.Abs(y.Amount));
+            var expenses = transactions!.GetValueOrDefault(i)?.Where(x => x.Type != TransactionType.Income).Select(y => Math.Abs(y.Amount));
             var item = new GroupedItem
             {
                 Name = new DateTime(req.Year, i, 7).ToString("MMMM", CultureInfo.InvariantCulture),

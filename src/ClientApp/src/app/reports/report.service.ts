@@ -4,6 +4,7 @@ import { environment } from "../../environments/environment";
 import { ByTagReport } from "./Models/ByTagReport";
 import { HandleHttpError } from "../Shared/Services/handle-error.service";
 import { TransactionType } from "../Shared/Interfaces/Transaction";
+import { ByMonthReport } from "./Models/ByMonthReport";
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,11 @@ export class ReportService {
       endDate: endDate,
       types: typeFilter
     }).pipe(HandleHttpError()).toPromise();
+  }
+  
+  public getByMonthReportValues(year: number): Promise<ByMonthReport>{
+    const params = new HttpParams().set('year', year);
+    return this.http.get<ByMonthReport>(`${this.baseUrl}/reports/GetByMonthReport`, {params: params})
+    .pipe(HandleHttpError()).toPromise();
   }
 }

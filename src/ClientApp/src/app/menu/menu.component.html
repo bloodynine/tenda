@@ -1,4 +1,4 @@
-<nav class="navbar is-fixed-top has-shadow">
+<nav class="navbar is-fixed-top has-shadow" *ngIf="!disableMenu">
     <div class="navbar-brand">
         <div class="navbar-item">Tenda</div>
         <div class="navbar-item" *ngIf="monthlyTransactions.length > 1">

@@ -36,30 +36,33 @@ public class GetByMonthReport : BaseTest
         CreateTransaction(2, 4, TransactionType.Income);
         CreateTransaction(3, 4, TransactionType.Bill);
 
-        var (response, result) = AdminClient.GETAsync<GetByMonthReportEndpoint, GetByMonthRequest, List<GroupedItem>>(
+        var (response, result) = AdminClient.GETAsync<GetByMonthReportEndpoint, GetByMonthRequest, GetByMonthResponse>(
             new GetByMonthRequest { Year = Year }
         ).GetAwaiter().GetResult();
 
         response!.StatusCode.Should().Be(HttpStatusCode.OK);
-        result!.Count.Should().Be(12);
-        result[0].Name.Should().Be("January");
-        result[0].Series.Count().Should().Be(2);
-        result[0].Series.First().Name.Should().Be("Income");
-        result[0].Series.First().Value.Should().Be(2);
-        result[0].Series.Last().Name.Should().Be("Expenses");
-        result[0].Series.Last().Value.Should().Be(4);
+        result!.IncomeExpensesByMonth.Count().Should().Be(12);
+        result.IncomeExpensesByMonth.First().Name.Should().Be("January");
+        result.IncomeExpensesByMonth.First().Series.Count().Should().Be(2);
+        result.IncomeExpensesByMonth.First().Series.First().Name.Should().Be("Income");
+        result.IncomeExpensesByMonth.First().Series.First().Value.Should().Be(2);
+        result.IncomeExpensesByMonth.First().Series.Last().Name.Should().Be("Expenses");
+        result.IncomeExpensesByMonth.First().Series.Last().Value.Should().Be(4);
 
-        result[1].Name.Should().Be("February");
-        result[1].Series.Count().Should().Be(2);
-        result[1].Series.First().Name.Should().Be("Income");
-        result[1].Series.First().Value.Should().Be(6);
-        result[1].Series.Last().Name.Should().Be("Expenses");
-        result[1].Series.Last().Value.Should().Be(4);
+        result.IncomeExpensesByMonth.Skip(1).First().Name.Should().Be("February");
+        result.IncomeExpensesByMonth.Skip(1).First().Series.Count().Should().Be(2);
+        result.IncomeExpensesByMonth.Skip(1).First().Series.First().Name.Should().Be("Income");
+        result.IncomeExpensesByMonth.Skip(1).First().Series.First().Value.Should().Be(6);
+        result.IncomeExpensesByMonth.Skip(1).First().Series.Last().Name.Should().Be("Expenses");
+        result.IncomeExpensesByMonth.Skip(1).First().Series.Last().Value.Should().Be(4);
 
-        result[2].Name.Should().Be("March");
-        result[2].Series.Count().Should().Be(2);
-        result[2].Series.Last().Name.Should().Be("Expenses");
-        result[2].Series.Last().Value.Should().Be(4);
+        result.IncomeExpensesByMonth.Skip(2).First().Name.Should().Be("March");
+        result.IncomeExpensesByMonth.Skip(2).First().Series.Count().Should().Be(2);
+        result.IncomeExpensesByMonth.Skip(2).First().Series.Last().Name.Should().Be("Expenses");
+        result.IncomeExpensesByMonth.Skip(2).First().Series.Last().Value.Should().Be(4);
+
+        result.AverageExpenses.Should().Be(1);
+        result.AverageIncome.Should().BeApproximately(0.66666667m, 0.00000001m);
     }
 
     private void CreateTransaction(int month, decimal amount, TransactionType type)
