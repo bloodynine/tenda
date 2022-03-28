@@ -12,6 +12,13 @@ export class ChartCardComponent implements OnInit {
   @Input() data: any;
   @Input() type: ChartTypes = ChartTypes.None;
   @Input() title: string = '';
+  @Input() height: string = '90%'; // Labels bleed over at 100
+  @Input() width: string = '100%';
+  @Input() xLabel: string = '';
+  @Input() yLabel: string = '';
+  @Input() showAxisLabels = false;
+  @Input() showLegend = true;
+  
   constructor() { }
 
   ngOnInit(): void {

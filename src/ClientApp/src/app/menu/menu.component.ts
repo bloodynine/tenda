@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { LoginService } from "../Shared/Services/login.service";
 import { StateService } from "../Shared/Services/state.service";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
@@ -13,6 +13,7 @@ import { TransactionService } from "../Shared/Services/transaction.service";
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  @Input() disableTransactionMenu: boolean = false;
   selectedDate: Date = new Date();
   isMenuActive = false;
   isAdmin = false;

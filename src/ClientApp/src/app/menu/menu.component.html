@@ -1,7 +1,7 @@
 <nav class="navbar is-fixed-top has-shadow" *ngIf="!disableMenu">
     <div class="navbar-brand">
         <div class="navbar-item">Tenda</div>
-        <div class="navbar-item" *ngIf="monthlyTransactions.length > 1">
+        <div class="navbar-item" *ngIf="monthlyTransactions.length > 1 && !disableTransactionMenu">
             <app-transaction-search [transactions]="monthlyTransactions" [dates]="month?.days" (id)="scroll($event)"></app-transaction-search>
         </div>
         <a (click)="toggleMenu()" [class.is-active]="isMenuActive" aria-expanded="false" aria-label="menu" class="navbar-burger"
@@ -13,10 +13,10 @@
     </div>
     <div [class.is-active]="isMenuActive" class="navbar-menu">
         <div class="navbar-start">
-            <a (click)="goToPreviousMonth()" class="navbar-item">Previous Month</a>
+            <a (click)="goToPreviousMonth()" class="navbar-item" *ngIf="!disableTransactionMenu">Previous Month</a>
             <a (click)="goToToday()" class="navbar-item">Today</a>
-            <a (click)="goToNextMonth()" class="navbar-item">Next Month</a>
-            <a *ngIf="isAdmin" (click)="openAdminPanel()" class="navbar-item">Settings</a>
+            <a (click)="goToNextMonth()" class="navbar-item" *ngIf="!disableTransactionMenu">Next Month</a>
+            <a *ngIf="isAdmin && !disableTransactionMenu" (click)="openAdminPanel()" class="navbar-item">Settings</a>
             <a (click)="goToReports()" class="navbar-item">Reports</a>
             <a (click)="signOut()" class="navbar-item">Sign Out</a>
         </div>

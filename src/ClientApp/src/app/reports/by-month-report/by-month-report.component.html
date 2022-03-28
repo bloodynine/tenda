@@ -1,23 +1,34 @@
-<div class="columns">
-    <div class="column">
-        <app-summary-card title="Average Monthly Income" [message]="report.averageIncome | currency"></app-summary-card>
+<div *ngIf="report && reportSettings">
+    <form [formGroup]="form" class="box mb-5">
+        <div class="field">
+            <label class="label">Select a Year</label>
+            <div class="control">
+                <div class="select">
+                    <select formControlName="year">
+                        <option *ngFor="let year of reportSettings.validYears"
+                                [attr.selected]="currentYear === year ? '': null">{{year}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="columns">
+        <div class="column">
+            <app-summary-card [message]="report.averageIncome | currency"
+                              title="Average Monthly Income"></app-summary-card>
+        </div>
+        <div class="column">
+            <app-summary-card [message]="report.averageExpenses | currency"
+                              title="Average Monthly Expenses"></app-summary-card>
+        </div>
     </div>
-    <div class="column">
-        <app-summary-card title="Average Monthly Expenses" [message]="report.averageExpenses | currency"></app-summary-card>
-    </div>
-</div>
 
-<div>
-    <ngx-charts-bar-vertical-2d
-            [view]="[1000,400]"
-            [scheme]="'forest'"
-            [results]="report.incomeExpensesByMonth"
-            [gradient]="false"
-            [xAxis]="true"
-            [yAxis]="true"
-            [legend]="true"
-            [showXAxisLabel]="false"
-            [showYAxisLabel]="false"
-            >
-    </ngx-charts-bar-vertical-2d>
+    <div>
+        <app-chart-card
+                [data]="report.incomeExpensesByMonth"
+                [height]="'400px'"
+                [title]="'Monthly Income/Expenses'"
+                [type]="groupedBarChart">
+        </app-chart-card>
+    </div>
 </div>

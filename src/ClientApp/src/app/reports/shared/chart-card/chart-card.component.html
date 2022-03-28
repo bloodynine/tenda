@@ -1,21 +1,37 @@
-<div class="reportContainer" [style.height]="400">
-    <p class="title is-4">{{title}}</p>
-    <ng-container [ngSwitch]="type">
-        <ng-container *ngSwitchCase="'BarChart'">
-            <ngx-charts-bar-vertical
-                    [legendTitle]="'Tags'"
-                    [scheme]="'forest'"
-                    [legend]="true"
-                    [results]="data"
-                    [showXAxisLabel]="true"
-                    [showYAxisLabel]="true"
-                    [view]="[1000,400]"
-                    [xAxisLabel]="'Tags'"
-                    [xAxis]="xAxis"
-                    [yAxisLabel]="'Amount'"
-                    [yAxis]="yAxis">
-            </ngx-charts-bar-vertical>        
-        </ng-container>
-    </ng-container>
-    
+<div class="reportContainer">
+    <div class="box">
+        <p class="title is-4">{{title}}</p>
+        <div [style.height]="height" [style.width]="width">
+            <ng-container [ngSwitch]="type">
+                <ng-container *ngSwitchCase="'BarChart'">
+                    <ngx-charts-bar-vertical
+                            [legend]="showLegend"
+                            [results]="data"
+                            [scheme]="'forest'"
+                            [showXAxisLabel]="showAxisLabels"
+                            [showYAxisLabel]="showAxisLabels"
+                            [xAxisLabel]="xLabel"
+                            [xAxis]="xAxis"
+                            [yAxisLabel]="yLabel"
+                            [yAxis]="yAxis">
+                    </ngx-charts-bar-vertical>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'GroupedBarChart'">
+                    <ngx-charts-bar-vertical-2d
+                            [legend]="showLegend"
+                            [results]="data"
+                            [scheme]="'forest'"
+                            [showXAxisLabel]="showAxisLabels"
+                            [showYAxisLabel]="showAxisLabels"
+                            [xAxisLabel]="xLabel"
+                            [xAxis]="xAxis"
+                            [yAxisLabel]="yLabel"
+                            [yAxis]="yAxis"
+                    >
+                    </ngx-charts-bar-vertical-2d>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
 </div>

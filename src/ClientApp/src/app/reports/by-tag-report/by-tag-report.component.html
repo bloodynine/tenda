@@ -21,38 +21,32 @@
         <div class="columns">
             <div class="column">
                 <label class="checkbox">
-                    <input type="checkbox" formControlName="incomes">
+                    <input formControlName="incomes" type="checkbox">
                     Incomes
                 </label>
             </div>
             <div class="column">
                 <label class="checkbox">
-                    <input type="checkbox" formControlName="bills">
+                    <input formControlName="bills" type="checkbox">
                     Bills
                 </label>
             </div>
             <div class="column">
                 <label class="checkbox">
-                    <input type="checkbox" formControlName="transactions">
+                    <input formControlName="transactions" type="checkbox">
                     Transactions
                 </label>
             </div>
         </div>
     </form>
-    <div class="reportContainer">
-        <p class="title is-4">Tags By Count of Items</p>
-        <ngx-charts-bar-vertical
-                [legendTitle]="'Tags Count'"
-                [legend]="true"
-                [results]="report.byCount"
-                [scheme]="'forest'"
-                [showXAxisLabel]="true"
-                [showYAxisLabel]="true"
-                [xAxisLabel]="'Tags'"
-                [xAxis]="true"
-                [yAxisLabel]="'Count'"
-                [yAxis]="true">
-        </ngx-charts-bar-vertical>
-    </div>
-    <app-chart-card title="Total Dollar Amount By Tags" [data]="report.byDollar" [type]="barChart"></app-chart-card>
+    <app-chart-card [data]="report.byCount"
+                    [height]="'400px'"
+                    [type]="barChart"
+                    title="Tags By Count of Items">
+    </app-chart-card>
+    <app-chart-card [data]="report.byDollar"
+                    [height]="'400px'"
+                    [type]="barChart"
+                    title="Total Dollar Amount By Tags">
+    </app-chart-card>
 </div>

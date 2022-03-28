@@ -1,4 +1,4 @@
 <app-notifications></app-notifications>
-<app-menu *ngIf="!disableMenu"></app-menu>
+<app-menu *ngIf="!disableMenu" [disableTransactionMenu]="disableTransactionMenu"></app-menu>
 <router-outlet (activate)="onActivate(outlet)" #outlet="outlet"></router-outlet>
 
