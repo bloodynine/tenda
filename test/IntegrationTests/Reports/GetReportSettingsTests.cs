@@ -24,7 +24,7 @@ public class GetReportSettingsTests : BaseTest
     [Test]
     public void GetReportSettings_200Test()
     {
-        CreateTransaction(new DateTime(2020, 1, 1), new DateTime(2021, 1, 1), new DateTime(1900,1,1), new DateTime(2021, 2,2));
+        CreateTransaction(new DateOnly(2020, 1, 1), new DateOnly(2021, 1, 1), new DateOnly(1900,1,1), new DateOnly(2021, 2,2));
         var (response, result) = UserClient
             .GETAsync<GetReportSettingsEndpoint, GetReportSettingsRequest, GetReportSettingsResponse>(
                 new()).GetAwaiter().GetResult();
@@ -35,7 +35,7 @@ public class GetReportSettingsTests : BaseTest
         result.ValidYears.Last().Should().Be(1900);
     }
 
-    private void CreateTransaction(params DateTime[] dates)
+    private void CreateTransaction(params DateOnly[] dates)
     {
         var user = DB.Find<User>().Match(x => x.UserName == "intUser").ExecuteFirstAsync().GetAwaiter().GetResult();
         foreach (var date in dates)

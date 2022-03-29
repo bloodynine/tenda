@@ -13,7 +13,7 @@ public class GetReportSettingsEndpoint : Endpoint<GetReportSettingsRequest, GetR
 
     public override async Task HandleAsync(GetReportSettingsRequest req, CancellationToken ct)
     {
-        var dates = await DB.Find<FinancialTransaction, DateTime>()
+        var dates = await DB.Find<FinancialTransaction, DateOnly>()
             .Match(x => x.UserId == req.UserId)
             .Project(x => x.Date )
             .ExecuteAsync(ct);

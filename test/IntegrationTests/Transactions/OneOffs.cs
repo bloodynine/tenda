@@ -32,7 +32,7 @@ public class OneOffs
             {
                 OneOffs = new List<OneOffStub>
                 {
-                    new() { Amount = 1, Date = DateTime.Now, Name = "Seeded" }
+                    new() { Amount = 1, Date = DateOnly.FromDateTime(DateTime.Now), Name = "Seeded" }
                 }
             }
         ).GetAwaiter().GetResult();
@@ -121,9 +121,9 @@ public class OneOffs
     {
         var requests = new List<OneOffStub>
         {
-            new() { Name = Guid.NewGuid().ToString(), Amount = 1, Date = DateTime.Now },
-            new() { Name = Guid.NewGuid().ToString(), Amount = 1, Date = DateTime.Now },
-            new() { Name = Guid.NewGuid().ToString(), Amount = 1, Date = DateTime.Now }
+            new() { Name = Guid.NewGuid().ToString(), Amount = 1, Date = DateOnly.FromDateTime(DateTime.Now) },
+            new() { Name = Guid.NewGuid().ToString(), Amount = 1, Date = DateOnly.FromDateTime(DateTime.Now) },
+            new() { Name = Guid.NewGuid().ToString(), Amount = 1, Date = DateOnly.FromDateTime(DateTime.Now) }
         };
 
         var (response, result) = AdminClient.POSTAsync<PostOneOffsEndpoint, PostOneOffsRequest, Month>(
@@ -149,8 +149,8 @@ public class OneOffs
         var requests = new List<PostOneOffsRequest>
         {
             new(),
-            new() { OneOffs = new List<OneOffStub> { new() { Date = DateTime.Now, Name = "", Amount = 1 } } },
-            new() { OneOffs = new List<OneOffStub> { new() { Date = DateTime.Now, Name = "Name", Amount = 0 } } },
+            new() { OneOffs = new List<OneOffStub> { new() { Date = DateOnly.FromDateTime(DateTime.Now), Name = "", Amount = 1 } } },
+            new() { OneOffs = new List<OneOffStub> { new() { Date = DateOnly.FromDateTime(DateTime.Now), Name = "Name", Amount = 0 } } },
             new() { OneOffs = new List<OneOffStub> { new() { Name = "Name", Amount = 0 } } }
         };
 
@@ -178,7 +178,7 @@ public class OneOffs
             {
                 Name = "DeleteMe",
                 Amount = 1,
-                Date = DateTime.Now
+                Date = DateOnly.FromDateTime(DateTime.Now)
             }
         ).GetAwaiter().GetResult();
         var oneOff = GetTransactionFromMonth(origMonth, "DeleteMe", 1);

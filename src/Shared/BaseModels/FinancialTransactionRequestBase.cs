@@ -6,7 +6,7 @@ public abstract class FinancialTransactionRequestBase : RequestBase
 {
     public string Name { get; set; } = "";
     public decimal? Amount { get; set; }
-    public DateTime Date { get; set; } = new();
+    public DateOnly Date { get; set; } = new();
 
     public List<string> Tags { get; set; } = new();
     public abstract FinancialTransaction ToTransaction();

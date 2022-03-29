@@ -71,7 +71,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseDefaultExceptionHandler();
-app.UseFastEndpoints();
+app.UseFastEndpoints(x =>
+{
+    x.SerializerOptions = y =>
+    {
+        y.Converters.Add(new DateOnlyJsonConverter());
+    };
+});
 app.UseSwagger();
 app.UseSwaggerUI();
 

@@ -7,7 +7,7 @@ public class DeleteRequest : RequestBase
 {
     public string Id { get; set; } = "";
 
-    [FromQuery] public DateTime ViewDate { get; set; } = new DateTime();
+    [FromQuery] public DateOnly ViewDate { get; set; } = new DateOnly();
 }
 
 public class DeleteRequestValidator : Validator<DeleteRequest>
@@ -15,6 +15,6 @@ public class DeleteRequestValidator : Validator<DeleteRequest>
     public DeleteRequestValidator()
     {
         RuleFor(x => x.Id).NotEmpty();
-        RuleFor(x => x.ViewDate).GreaterThan(new DateTime());
+        RuleFor(x => x.ViewDate).GreaterThan(new DateOnly());
     }
 }

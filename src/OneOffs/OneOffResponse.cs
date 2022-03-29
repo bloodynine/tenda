@@ -29,5 +29,5 @@ public class OneOffResponse : ResponseBase
 
     public DateTime Updated { get; set; } = DateTime.Now;
 
-    public DateTime Date { get; set; }
+    public DateOnly Date { get; set; }
 }

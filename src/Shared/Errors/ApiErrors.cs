@@ -18,7 +18,7 @@ public static class ApiErrors
                 await endpoint.HttpContext.Response.SendNotFoundAsync(ct);
                 break;
             case BadHttpRequestException:
-                await endpoint.HttpContext.Response.SendAsync<string?>(null, 400, ct);
+                await endpoint.HttpContext.Response.SendAsync<string?>(null, 400, cancellation:ct);
                 break;
             default:
                 throw e;

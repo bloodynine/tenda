@@ -17,13 +17,13 @@ public class GetByTagReportEndpoint : Endpoint<GetReportRequest, GetByTagRespons
         var transactionsQuery = DB.Find<FinancialTransaction>()
             .Match(x => x.UserId == req.UserId);
 
-        if (req.StartDate != new DateTime())
+        if (req.StartDate is not null && req.StartDate != new DateOnly())
         {
             transactionsQuery
                 .Match(x => x.Date >= req.StartDate && x.Date <= req.EndDate);
         }
 
-        if (req.Types.Any())
+        if (req.Types?.Any() ?? false)
         {
             transactionsQuery.Match(x => req.Types.Contains(x.Type));
         }

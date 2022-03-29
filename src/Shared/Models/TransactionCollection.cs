@@ -11,14 +11,14 @@ public class TransactionCollection
 
     private List<FinancialTransaction> Transactions { get; }
 
-    public List<FinancialTransaction> GetByDayAndType(DateTime day, TransactionType type)
+    public List<FinancialTransaction> GetByDayAndType(DateOnly day, TransactionType type)
     {
-        return Transactions.Where(x => x.Date >= day.Date && x.Date <= day.AddDays(1).AddTicks(-1) && x.Type == type)
+        return Transactions.Where(x => x.Date == day && x.Type == type)
             .ToList();
     }
 
-    public decimal GetRunningTotal(DateTime day)
+    public decimal GetRunningTotal(DateOnly day)
     {
-        return Transactions.Where(x => x.Date <= day.AddDays(1).AddTicks(-1)).Select(x => x.Amount).Sum();
+        return Transactions.Where(x => x.Date <= day).Select(x => x.Amount).Sum();
     }
 }

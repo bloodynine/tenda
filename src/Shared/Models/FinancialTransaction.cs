@@ -1,5 +1,7 @@
-﻿using MongoDB.Entities;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Entities;
 using Tenda.Shared.BaseModels;
+using Tenda.Utilities;
 
 namespace Tenda.Shared.Models;
 
@@ -11,13 +13,15 @@ public class FinancialTransaction : Entity
     public decimal Amount { get; set; }
     public bool IsResolved { get; set; }
     public TransactionType Type { get; set; }
-    public DateTime Date { get; set; }
+
+    [BsonSerializer(typeof(DateOnlySerializer))]
+    public DateOnly Date { get; set; }
     public string UserId { get; set; }
     public string? AssociatedRepeatId { get; set; }
     public bool IsRepeating => !string.IsNullOrEmpty(AssociatedRepeatId);
     public List<string> Tags { get; set; } 
 
-    public FinancialTransaction(string name, decimal amount, DateTime date, bool isResolved, TransactionType type,
+    public FinancialTransaction(string name, decimal amount, DateOnly date, bool isResolved, TransactionType type,
         string userId, List<string>? tags)
     {
         Name = name;
@@ -40,7 +44,7 @@ public class FinancialTransaction : Entity
         Tags = request.Tags;
     }
 
-    public FinancialTransaction(RepeatContracts contract, DateTime date, string associatedRepeatId)
+    public FinancialTransaction(RepeatContracts contract, DateOnly date, string associatedRepeatId)
     {
         Name = contract.Name;
         Amount = contract.Amount;

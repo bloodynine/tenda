@@ -4,7 +4,7 @@ namespace Tenda.Shared.Models;
 
 public class Month
 {
-    public Month(DateTime startDate, DateTime endDate, decimal resolvedTotal, TransactionCollection transactions)
+    public Month(DateOnly startDate, DateOnly endDate, decimal resolvedTotal, TransactionCollection transactions)
     {
         ResolvedTotal = resolvedTotal;
         for (var day = startDate; day <= endDate; day = day.AddDays(1))

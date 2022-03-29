@@ -17,7 +17,7 @@ namespace IntegrationTests;
 
 public class MonthTests : BaseTest
 {
-    private DateTime TestDate => new(1908, 1, 1);
+    private DateOnly TestDate => new(1908, 1, 1);
 
     [SetUp]
     public void Init()
@@ -44,7 +44,7 @@ public class MonthTests : BaseTest
             {
                 Name = "DeleteMe",
                 Amount = -1,
-                Date = DateTime.Now,
+                Date = DateOnly.FromDateTime(DateTime.Now),
                 IsResolved = true
             }
         );
@@ -107,7 +107,7 @@ public class MonthTests : BaseTest
         result3!.Days.Single(x => x.Date.Day == TestDate.AddYears(1).Day).RunningTotal.Should().Be(1);
     }
 
-    private void CreateTransaction(DateTime date, decimal amount)
+    private void CreateTransaction(DateOnly date, decimal amount)
     {
         var (_, origMonth) = UserClient.POSTAsync<PostOneOffEndpoint, PostOneOffRequest, Month>(
             new PostOneOffRequest

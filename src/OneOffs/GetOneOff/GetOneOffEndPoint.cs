@@ -21,7 +21,7 @@ public class GetOneOffEndPoint : Endpoint<GetOneOffRequest, OneOffResponse>
             return;
         }
 
-        if (transaction!.UserId != req.UserId) { await SendErrorsAsync(ct); return;}
+        if (transaction!.UserId != req.UserId) { await SendErrorsAsync(cancellation: ct); return;}
 
         await SendAsync(new OneOffResponse(transaction), cancellation: ct);
     }

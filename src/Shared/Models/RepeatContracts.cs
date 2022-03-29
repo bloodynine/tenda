@@ -6,16 +6,16 @@ namespace Tenda.Shared.Models;
 
 public class RepeatContracts : Entity
 {
-    private static DateTime _endDate => DateTime.Parse("2050-01-01");
+    private static DateOnly _endDate => DateOnly.Parse("2050-01-01");
     public string UserId { get; set; }
     public TransactionType Type { get; set; }
     public RepeatType RepeatType { get; set; }
     public int Interval { get; set; }
-    public DateTime StartDate { get; set; }
+    public DateOnly StartDate { get; set; }
     public string Name { get; set; }
     public decimal Amount { get; set; }
     public IEnumerable<string> Tags { get; set; }
-    public DateTime EndDate { get; set; }
+    public DateOnly EndDate { get; set; }
 
     public RepeatContracts(RepeatRequest request, FinancialTransactionRequestBase transaction, TransactionType type)
     {

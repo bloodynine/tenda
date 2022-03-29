@@ -28,7 +28,7 @@ public class OneOffStub
 {
     public string Name { get; set; } = "";
     public decimal Amount { get; set; } = 0;
-    public DateTime Date { get; set; } = new ();
+    public DateOnly Date { get; set; } = new ();
     public List<string> Tags { get; set; } = new List<string>();
 }
 
@@ -42,7 +42,7 @@ public class PostOneOffsRequestValidator : Validator<PostOneOffsRequest>
         {
             y.RuleFor(x => x.Name).NotEmpty();
             y.RuleFor(x => x.Amount).NotEqual(0);
-            y.RuleFor(x => x.Date).GreaterThan(new DateTime());
+            y.RuleFor(x => x.Date).GreaterThan(new DateOnly());
         });
     }
 }

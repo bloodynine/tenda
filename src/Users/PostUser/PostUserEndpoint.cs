@@ -20,7 +20,7 @@ public class PostUserEndpoint : Endpoint<PostUserRequest, PostUserResponse>
         var settings = await DB.Find<ServerSettingsDoc>().ExecuteFirstAsync(ct);
         if (!settings.AllowSignUps)
         {
-            await SendErrorsAsync(ct);
+            await SendErrorsAsync(cancellation:ct);
             return;
         }
 

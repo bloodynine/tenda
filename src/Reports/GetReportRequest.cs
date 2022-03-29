@@ -26,19 +26,14 @@ public class DateRangeRequest : RequestBase
 {
     /// These values "should" be nullable. But there is an issue in Fast endpoints where it wont serialize a nullable
     /// query param
-    public DateTime? StartDate { get; set; }
+    public DateOnly? StartDate { get; set; }
 
-    public DateTime? EndDate { get; set; }
+    public DateOnly? EndDate { get; set; }
 
     public DateRangeRequest()
     {
     }
 
-    public DateRangeRequest(DateTime startDate, DateTime endDate)
-    {
-        StartDate = startDate;
-        EndDate = endDate;
-    }
 }
 
 public class NullableDateRangeValidator : Validator<DateRangeRequest>

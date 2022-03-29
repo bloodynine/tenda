@@ -40,9 +40,9 @@ public class GetRepeatContractResponse
     public int Interval { get; set; }
     public TransactionType Type { get; set; }
     public RepeatType RepeatType { get; set; }
-    public DateTime StartDate { get; set; }
+    public DateOnly StartDate { get; set; }
     public decimal Amount { get; set; }
     public string Id { get; set; } = "";
-    public DateTime? EndDate { get; set; }
+    public DateOnly? EndDate { get; set; }
     public IEnumerable<string> Tags { get; set; } = Enumerable.Empty<string>();
 }

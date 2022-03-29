@@ -68,7 +68,7 @@ public class GetByMonthReport : BaseTest
     private void CreateTransaction(int month, decimal amount, TransactionType type)
     {
         var user = DB.Find<User>().Match(x => x.UserName == "intAdmin").ExecuteFirstAsync().GetAwaiter().GetResult();
-        var transaction = new FinancialTransaction(Guid.NewGuid().ToString(), amount, new DateTime(Year, month, 3),
+        var transaction = new FinancialTransaction(Guid.NewGuid().ToString(), amount, new DateOnly(Year, month, 3),
             true,
             type,
             user.ID, new List<string>());

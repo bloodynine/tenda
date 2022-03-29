@@ -17,22 +17,22 @@ namespace IntegrationTests.Reports;
 
 public class GetByTagReportTests : BaseTest
 {
-    private DateTime TestDate;
+    private DateOnly TestDate;
 
     [SetUp]
     public void Init()
     {
         DeleteAllTransactions();
-        TestDate = new DateTime(1908, 1, 1);
+        TestDate = new DateOnly(1908, 1, 1);
     }
 
     [Test]
     public void GetByTagReport_200Test()
     {
-        CreateTransactionsWithTags(new List<string> { "tag1" }, 2, DateTime.Now);
-        CreateTransactionsWithTags(new List<string> { "tag1" }, 2, DateTime.Now);
-        CreateTransactionsWithTags(new List<string> { "tag1", "tag2" }, 2, DateTime.Now);
-        var (response, result) = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
+        CreateTransactionsWithTags(new List<string> { "tag1" }, 2, DateOnly.FromDateTime(DateTime.Now));
+        CreateTransactionsWithTags(new List<string> { "tag1" }, 2, DateOnly.FromDateTime(DateTime.Now));
+        CreateTransactionsWithTags(new List<string> { "tag1", "tag2" }, 2, DateOnly.FromDateTime(DateTime.Now));
+        var (response, result) = AdminClient.POSTAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
             new GetReportRequest()
         ).GetAwaiter().GetResult();
 
@@ -55,7 +55,7 @@ public class GetByTagReportTests : BaseTest
         CreateTransactionsWithTags(new List<string> { "tag1", "tag2" }, 2, TestDate.AddMonths(2));
         CreateTransactionsWithTags(new List<string> { "tag1" }, 2, TestDate.AddMonths(2));
         CreateTransactionsWithTags(new List<string> { "tag1", "tag2" }, 2, TestDate.AddMonths(4));
-        var (response, firstResult) = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
+        var (response, firstResult) = AdminClient.POSTAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
             new GetReportRequest
             {
                 StartDate = TestDate,
@@ -71,7 +71,7 @@ public class GetByTagReportTests : BaseTest
         firstResult.ByDollar.Single(x => x.Name == "tag1").Value.Should().Be(6);
         firstResult.ByDollar.Single(x => x.Name == "tag2").Value.Should().Be(2);
 
-        var (_, secondResult) = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
+        var (_, secondResult) = AdminClient.POSTAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
             new GetReportRequest
             {
                 StartDate = TestDate,
@@ -95,7 +95,7 @@ public class GetByTagReportTests : BaseTest
         CreateTransactionsWithTags(new List<string> { "tag1" }, 2, TestDate, TransactionType.Bill);
         CreateTransactionsWithTags(new List<string> { "tag1" }, 2, TestDate, TransactionType.Income);
         CreateTransactionsWithTags(new List<string> { "tag1", "tag2" }, 2, TestDate, TransactionType.OneOff);
-        var (response, firstResult) = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
+        var (response, firstResult) = AdminClient.POSTAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
             new GetReportRequest
             {
                 StartDate = TestDate,
@@ -110,7 +110,7 @@ public class GetByTagReportTests : BaseTest
         firstResult.ByDollar.Count.Should().Be(1);
         firstResult.ByDollar.Single(x => x.Name == "tag1").Value.Should().Be(4);
 
-        var (_, secondResult) = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
+        var (_, secondResult) = AdminClient.POSTAsync<GetByTagReportEndpoint, GetReportRequest, GetByTagResponse>(
             new GetReportRequest
             {
                 StartDate = TestDate,
@@ -141,7 +141,7 @@ public class GetByTagReportTests : BaseTest
 
         badDateRanges.ForEach(dateRange =>
         {
-            var response = AdminClient.GETAsync<GetByTagReportEndpoint, GetReportRequest>(
+            var response = AdminClient.POSTAsync<GetByTagReportEndpoint, GetReportRequest>(
                 new GetReportRequest
                 {
                     StartDate = dateRange.dateRange.StartDate,
@@ -153,7 +153,7 @@ public class GetByTagReportTests : BaseTest
     }
 
 
-    private void CreateTransactionsWithTags(List<string> tags, decimal amount, DateTime date, TransactionType type = TransactionType.OneOff)
+    private void CreateTransactionsWithTags(List<string> tags, decimal amount, DateOnly date, TransactionType type = TransactionType.OneOff)
     {
         var user = DB.Find<User>().Match(x => x.UserName == "intAdmin").ExecuteFirstAsync().GetAwaiter().GetResult();
         var transaction = new FinancialTransaction(Guid.NewGuid().ToString(), amount, date, true,
